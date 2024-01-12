@@ -27,10 +27,8 @@ public class CouleurController {
 
     @CrossOrigin(origins = "*", allowedHeaders ="*")
     @PostMapping("/add-couleur")
-    public void form(@RequestBody String nom)throws Exception{
-       Couleur c = new Couleur();
-       c.setIntitule(nom);
-       c.insert(c.getIntitule(), null);
+    public void form(@RequestBody Couleur couleur)throws Exception{
+       couleur.insert(null);
     }
 
     @CrossOrigin(origins = "*", allowedHeaders ="*")
