@@ -14,11 +14,11 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 
 
 @RestController
-@RequestMapping("api/project")
+@RequestMapping("api/voiture")
 public class CouleurController {
 
     @CrossOrigin(origins = "*", allowedHeaders ="*")
-    @GetMapping("/liste-couleur")
+    @GetMapping("/couleurs")
     public Couleur[] getListe()throws Exception{
         Couleur c = new Couleur();
         Couleur[] liste=c.getAll(null);
@@ -26,7 +26,7 @@ public class CouleurController {
     }
 
     @CrossOrigin(origins = "*", allowedHeaders ="*")
-    @PostMapping("/form-couleur")
+    @PostMapping("/add-couleur")
     public void form(@RequestBody String nom)throws Exception{
        Couleur c = new Couleur();
        c.setIntitule(nom);

@@ -14,11 +14,11 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 
 
 @RestController
-@RequestMapping("api/project")
+@RequestMapping("api/voiture")
 public class CategorieController {
 
    @CrossOrigin(origins = "*", allowedHeaders ="*")
-   @GetMapping("/liste-categorie")
+   @GetMapping("/categories")
    public Categorie[] getListe()throws Exception{
       Categorie c = new Categorie();
       Categorie[] liste=c.getAll(null);
@@ -26,7 +26,7 @@ public class CategorieController {
    }
 
     @CrossOrigin(origins = "*", allowedHeaders ="*")
-    @PostMapping("/form-categorie")
+    @PostMapping("/add-categorie")
     public void form(@RequestBody Categorie c)throws Exception{
        c.insert(null);
     }

@@ -14,11 +14,11 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 
 
 @RestController
-@RequestMapping("api/project")
+@RequestMapping("api/voiture")
 public class ModeleController {
 
     @CrossOrigin(origins = "*", allowedHeaders ="*")
-    @GetMapping("/liste-modele")
+    @GetMapping("/models")
     public Modele[] getListe()throws Exception{
         Modele c = new Modele();
         Modele[] liste=c.getAll(null);
@@ -26,7 +26,7 @@ public class ModeleController {
     }
 
     @CrossOrigin(origins = "*", allowedHeaders ="*")
-    @PostMapping("/form-modele")
+    @PostMapping("/add-modele")
     public void form(@RequestBody Modele modele)throws Exception{
        modele.insert(null);
     }
