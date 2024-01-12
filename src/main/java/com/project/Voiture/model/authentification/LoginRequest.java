@@ -1,4 +1,4 @@
-package com.project.Voiture.model;
+package com.project.Voiture.model.authentification;
 
 public class LoginRequest {
     private String username;

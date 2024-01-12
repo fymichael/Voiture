@@ -1,20 +1,22 @@
-package com.project.Voiture.model;
+package com.project.Voiture.model.caracteristique;
 
 import java.sql.Connection;
 import java.sql.Statement;
 import java.sql.ResultSet;
 import java.util.Vector;
 
-public class Energie {
-    String idEnergie;
+import com.project.Voiture.model.connection.Connect;
+
+public class Marque {
+    String idMarque;
     String intitule;
     int etat;
 
-    public String getIdEnergie(){
-        return this.idEnergie;
+    public String getIdMarque(){
+        return this.idMarque;
     }
-    public void setIdEnergie(String idEnergie)throws Exception{
-        this.idEnergie=idEnergie;
+    public void setIdMarque(String idMarque)throws Exception{
+        this.idMarque=idMarque;
     }
 
     public String getIntitule(){
@@ -26,10 +28,10 @@ public class Energie {
         }
         this.intitule=intitule;
     }
-
     public int getEtat(){
         return this.etat;
     }
+
     public void setEtat(int etat)throws Exception{
         if(etat<0){
             throw new Exception("etat invalide: negatif");
@@ -43,11 +45,9 @@ public class Energie {
         }
         this.setEtat(a);
     }
-
-    
-    public Energie()throws Exception{}
-    public Energie(String id, String intitule, int etat)throws Exception{
-        this.setIdEnergie(id);
+    public Marque()throws Exception{}
+    public Marque(String id, String intitule, int etat)throws Exception{
+        this.setIdMarque(id);
         this.setIntitule(intitule);
         this.setEtat(etat);
     }
@@ -62,7 +62,7 @@ public class Energie {
             } 
             stmt= con.createStatement();
             this.setIntitule(intitule);
-            String sql="INSERT INTO Energie VALUES(DEFAULT, '"+this.getIntitule()+"')";
+            String sql="INSERT INTO Marque VALUES(DEFAULT, '"+this.getIntitule()+"')";
             System.out.println(sql);
             stmt.executeUpdate(sql);
         }catch(Exception e){
@@ -72,8 +72,9 @@ public class Energie {
             if(!valid){ con.close(); }
         }
     }
-    public Energie[] getAll(Connection con)throws Exception{
-        Vector<Energie> listEnergie= new Vector<Energie>();
+
+    public Marque[] getAll(Connection con)throws Exception{
+        Vector<Marque> listMarque= new Vector<Marque>();
         boolean valid=true;
         Statement state=null;
         ResultSet result=null;
@@ -82,15 +83,15 @@ public class Energie {
                 con=Connect.connectDB();
                 valid=false;
             }
-            String sql = "SELECT * FROM Energie where etat != 10";
+            String sql = "SELECT * FROM Marque where etat != 10 ";
             state = con.createStatement();
             result = state.executeQuery(sql);
             while(result.next()){
                 String id= result.getString(1);
                 String intitule= result.getString(2);
                 int etat=result.getInt(3);
-                Energie m = new Energie(id, intitule, etat);
-                listEnergie.add(m);
+                Marque m = new Marque(id, intitule, etat);
+                listMarque.add(m);
             }
         } catch (Exception e) {   
             e.printStackTrace(); 
@@ -103,29 +104,9 @@ public class Energie {
                 e.printStackTrace();
             }
         }
-        Energie[] energies= new Energie[listEnergie.size()];
-        listEnergie.toArray(energies);
-        return energies;
-    }
-
-    public void delete(Connection con)throws Exception{
-        boolean valid=true;
-        Statement stmt =null;
-        try{
-            if(con==null){
-                con = Connect.connectDB();
-                valid=false;
-            } 
-            stmt= con.createStatement();
-            String sql="UPDATE Energie SET etat=10 WHERE id_energie='"+this.getIdEnergie()+"'";
-            System.out.println(sql);
-            stmt.executeUpdate(sql);
-        }catch(Exception e){
-            throw e;
-        }finally{
-            if(stmt!=null){ stmt.close(); }
-            if(!valid){ con.close(); }
-        }
+        Marque[] marques= new Marque[listMarque.size()];
+        listMarque.toArray(marques);
+        return marques;
     }
 
     public void update(Connection con)throws Exception{
@@ -137,7 +118,7 @@ public class Energie {
                 valid=false;
             } 
             stmt= con.createStatement();
-            String sql="UPDATE Energie SET intitule='"+this.getIntitule()+"' WHERE id_energie='"+this.getIdEnergie()+"'";
+            String sql="UPDATE Marque SET intitule='"+this.getIntitule()+"' WHERE id_marque='"+this.getIdMarque()+"'";
             System.out.println(sql);
             stmt.executeUpdate(sql);
         }catch(Exception e){
@@ -147,4 +128,25 @@ public class Energie {
             if(!valid){ con.close(); }
         }
     }
+
+    public void delete(Connection con)throws Exception{
+        boolean valid=true;
+        Statement stmt =null;
+        try{
+            if(con==null){
+                con = Connect.connectDB();
+                valid=false;
+            } 
+            stmt= con.createStatement();
+            String sql="UPDATE Marque SET etat=10 WHERE id_marque='"+this.getIdMarque()+"'";
+            System.out.println(sql);
+            stmt.executeUpdate(sql);
+        }catch(Exception e){
+            throw e;
+        }finally{
+            if(stmt!=null){ stmt.close(); }
+            if(!valid){ con.close(); }
+        }
+    }
+
 }

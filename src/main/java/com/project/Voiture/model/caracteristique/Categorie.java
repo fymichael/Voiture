@@ -1,21 +1,22 @@
-package com.project.Voiture.model;
-
+package com.project.Voiture.model.caracteristique;
 
 import java.sql.Connection;
 import java.sql.Statement;
 import java.sql.ResultSet;
 import java.util.Vector;
 
-public class Couleur {
-    String idCouleur;
+import com.project.Voiture.model.connection.Connect;
+
+public class Categorie {
+    String idCategorie;
     String intitule;
     int etat;
 
-    public String getIdCouleur(){
-        return this.idCouleur;
+    public String getIdCategorie(){
+        return this.idCategorie;
     }
-    public void setIdCouleur(String idCouleur)throws Exception{
-        this.idCouleur=idCouleur;
+    public void setIdCategorie(String idCategorie)throws Exception{
+        this.idCategorie=idCategorie;
     }
 
     public String getIntitule(){
@@ -27,10 +28,10 @@ public class Couleur {
         }
         this.intitule=intitule;
     }
-
     public int getEtat(){
         return this.etat;
     }
+
     public void setEtat(int etat)throws Exception{
         if(etat<0){
             throw new Exception("etat invalide: negatif");
@@ -45,9 +46,9 @@ public class Couleur {
         this.setEtat(a);
     }
 
-    public Couleur()throws Exception{}
-    public Couleur(String id, String intitule, int etat)throws Exception{
-        this.setIdCouleur(id);
+    public Categorie()throws Exception{}
+    public Categorie(String id, String intitule, int etat)throws Exception{
+        this.setIdCategorie(id);
         this.setIntitule(intitule);
         this.setEtat(etat);
     }
@@ -61,8 +62,9 @@ public class Couleur {
                 valid=false;
             } 
             stmt= con.createStatement();
-            this.setEtat(etat);
-            String sql="INSERT INTO Couleur VALUES(DEFAULT, '"+this.getIntitule()+"')";
+            this.setIntitule(intitule);
+            
+            String sql="INSERT INTO Categorie VALUES(DEFAULT, '"+this.getIntitule()+"')";
             System.out.println(sql);
             stmt.executeUpdate(sql);
         }catch(Exception e){
@@ -73,29 +75,8 @@ public class Couleur {
         }
     }
 
-    
-    public void update(Connection con)throws Exception{
-        boolean valid=true;
-        Statement stmt =null;
-        try{
-            if(con==null){
-                con = Connect.connectDB();
-                valid=false;
-            } 
-            stmt= con.createStatement();
-            String sql="UPDATE  Couleur SET intitule='"+this.getIntitule()+"' WHERE id_couleur='"+this.getIdCouleur()+"'";
-            System.out.println(sql);
-            stmt.executeUpdate(sql);
-        }catch(Exception e){
-            throw e;
-        }finally{
-            if(stmt!=null){ stmt.close(); }
-            if(!valid){ con.close(); }
-        }
-    }
-
-    public Couleur[] getAll(Connection con)throws Exception{
-        Vector<Couleur> listCouleur= new Vector<Couleur>();
+    public Categorie[] getAll(Connection con)throws Exception{
+        Vector<Categorie> listCategorie= new Vector<Categorie>();
         boolean valid=true;
         Statement state=null;
         ResultSet result=null;
@@ -104,15 +85,15 @@ public class Couleur {
                 con=Connect.connectDB();
                 valid=false;
             }
-            String sql = "SELECT * FROM Couleur where etat != 10";
+            String sql = "SELECT * FROM Categorie ";
             state = con.createStatement();
             result = state.executeQuery(sql);
             while(result.next()){
                 String id= result.getString(1);
                 String intitule= result.getString(2);
                 int etat=result.getInt(3);
-                Couleur m = new Couleur(id, intitule, etat);
-                listCouleur.add(m);
+                Categorie m = new Categorie(id, intitule, etat);
+                listCategorie.add(m);
             }
         } catch (Exception e) {   
             e.printStackTrace(); 
@@ -125,9 +106,29 @@ public class Couleur {
                 e.printStackTrace();
             }
         }
-        Couleur[] couleurs= new Couleur[listCouleur.size()];
-        listCouleur.toArray(couleurs);
-        return couleurs;
+        Categorie[] categories= new Categorie[listCategorie.size()];
+        listCategorie.toArray(categories);
+        return categories;
+    }
+
+    public void update(Connection con)throws Exception{
+        boolean valid=true;
+        Statement stmt =null;
+        try{
+            if(con==null){
+                con = Connect.connectDB();
+                valid=false;
+            } 
+            stmt= con.createStatement();
+            String sql="UPDATE  Categorie SET intitule='"+this.getIntitule()+"' WHERE id_categorie='"+this.getIdCategorie()+"'";
+            System.out.println(sql);
+            stmt.executeUpdate(sql);
+        }catch(Exception e){
+            throw e;
+        }finally{
+            if(stmt!=null){ stmt.close(); }
+            if(!valid){ con.close(); }
+        }
     }
 
     public void delete(Connection con)throws Exception{
@@ -139,7 +140,7 @@ public class Couleur {
                 valid=false;
             } 
             stmt= con.createStatement();
-            String sql="UPDATE Couleur SET etat=10 WHERE id_couleur='"+this.getIdCouleur()+"'";
+            String sql="UPDATE  Categorie SET etat=10 WHERE id_categorie='"+this.getIdCategorie()+"'";
             System.out.println(sql);
             stmt.executeUpdate(sql);
         }catch(Exception e){
@@ -149,4 +150,5 @@ public class Couleur {
             if(!valid){ con.close(); }
         }
     }
+
 }

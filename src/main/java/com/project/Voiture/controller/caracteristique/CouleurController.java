@@ -1,15 +1,16 @@
-package com.project.Voiture.controller;
+package com.project.Voiture.controller.caracteristique;
 
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.project.Voiture.model.caracteristique.Couleur;
+
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.CrossOrigin;
-
-import com.project.Voiture.model.Couleur;
 
 
 @RestController
@@ -17,7 +18,7 @@ import com.project.Voiture.model.Couleur;
 public class CouleurController {
 
     @CrossOrigin(origins = "*", allowedHeaders ="*")
-    @GetMapping("/couleurs")
+    @GetMapping("/liste-couleur")
     public Couleur[] getListe()throws Exception{
         Couleur c = new Couleur();
         Couleur[] liste=c.getAll(null);
@@ -25,9 +26,11 @@ public class CouleurController {
     }
 
     @CrossOrigin(origins = "*", allowedHeaders ="*")
-    @PostMapping("/add-couleur")
-    public void form(@RequestBody Couleur couleur)throws Exception{
-       couleur.insert(null);
+    @PostMapping("/form-couleur")
+    public void form(@RequestBody String nom)throws Exception{
+       Couleur c = new Couleur();
+       c.setIntitule(nom);
+       c.insert(c.getIntitule(), null);
     }
 
     @CrossOrigin(origins = "*", allowedHeaders ="*")

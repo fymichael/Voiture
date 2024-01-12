@@ -1,4 +1,4 @@
-package com.project.Voiture.controller;
+package com.project.Voiture.controller.statistique;
 
 
 import org.springframework.web.bind.annotation.GetMapping;

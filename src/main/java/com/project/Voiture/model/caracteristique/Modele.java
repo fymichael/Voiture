@@ -1,8 +1,10 @@
-package com.project.Voiture.model;
+package com.project.Voiture.model.caracteristique;
 import java.sql.Connection;
 import java.sql.Statement;
 import java.sql.ResultSet;
 import java.util.Vector;
+
+import com.project.Voiture.model.connection.Connect;
 
 
 public class Modele {

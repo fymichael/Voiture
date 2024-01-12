@@ -1,19 +1,14 @@
-package com.project.Voiture.model;
+package com.project.Voiture.model.authentification;
 
 
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.stereotype.Component;
 import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.JwtParser;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
-import jakarta.servlet.http.HttpServletRequest;
 import java.util.Date;
-import java.util.List;
-import org.springframework.stereotype.Service;
-import java.util.Date;
+
+import com.project.Voiture.model.caracteristique.Admin;
 
 @Component
 public class JwtUtil {

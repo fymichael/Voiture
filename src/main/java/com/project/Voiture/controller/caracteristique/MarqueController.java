@@ -1,15 +1,17 @@
-package com.project.Voiture.controller;
+package com.project.Voiture.controller.caracteristique;
 
 
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+
+import com.project.Voiture.model.caracteristique.Marque;
+
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.CrossOrigin;
-
-import com.project.Voiture.model.Marque;
 
 
 @RestController
@@ -17,7 +19,7 @@ import com.project.Voiture.model.Marque;
 public class MarqueController {
 
     @CrossOrigin(origins = "*", allowedHeaders ="*")
-    @GetMapping("/marques")
+    @GetMapping("/liste-marque")
     public Marque[] getListe()throws Exception{
         Marque c = new Marque();
         Marque[] liste=c.getAll(null);
@@ -25,7 +27,7 @@ public class MarqueController {
     }
 
     @CrossOrigin(origins = "*", allowedHeaders ="*")
-    @PostMapping("/add-marque")
+    @PostMapping("/form-marque")
     public void form(@RequestBody String nom)throws Exception{
        Marque c = new Marque();
        c.setIntitule(nom);

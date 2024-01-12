@@ -1,6 +1,9 @@
-package com.project.Voiture.model;
+package com.project.Voiture.model.caracteristique;
 import java.sql.Connection;
 import java.sql.Statement;
+
+import com.project.Voiture.model.connection.Connect;
+
 import java.sql.ResultSet;
 
 public class Admin{
