@@ -1,5 +1,4 @@
-package com.project.Voiture.model.caracteristique;
-
+package com.project.Voiture.model.backOffice.caracteristique;
 import java.sql.Connection;
 import java.sql.Statement;
 import java.sql.ResultSet;
@@ -7,16 +6,18 @@ import java.util.Vector;
 
 import com.project.Voiture.model.connection.Connect;
 
-public class Energie {
-    String idEnergie;
+
+public class Modele {
+    String idModele;
     String intitule;
+    int vinNum;
     int etat;
 
-    public String getIdEnergie(){
-        return this.idEnergie;
+    public String getIdModele(){
+        return this.idModele;
     }
-    public void setIdEnergie(String idEnergie)throws Exception{
-        this.idEnergie=idEnergie;
+    public void setIdModele(String idModele)throws Exception{
+        this.idModele=idModele;
     }
 
     public String getIntitule(){
@@ -27,6 +28,23 @@ public class Energie {
             throw new Exception("intitule nulle");
         }
         this.intitule=intitule;
+    }
+
+    public int getVinNum(){
+        return this.vinNum;
+    }
+    public void setVinNum(int vinNum)throws Exception{
+        if(vinNum<0){
+            throw new Exception("vinNum invalide: negatif");
+        }
+        this.vinNum=vinNum;
+    }
+    public void setVinNum(String vinNum)throws Exception{
+        int a =Integer.valueOf(vinNum);
+        if(vinNum.length()==0){
+            throw new Exception("vinNum invalide: null");
+        }
+        this.setVinNum(a);
     }
 
     public int getEtat(){
@@ -45,16 +63,14 @@ public class Energie {
         }
         this.setEtat(a);
     }
-
-    
-    public Energie()throws Exception{}
-    public Energie(String id, String intitule, int etat)throws Exception{
-        this.setIdEnergie(id);
+    public Modele()throws Exception{}
+    public Modele(String id, String intitule, int etat)throws Exception{
+        this.setIdModele(id);
         this.setIntitule(intitule);
         this.setEtat(etat);
     }
 
-    public void insert(String intitule,  Connection con)throws Exception{
+    public void insert(Connection con)throws Exception{
         boolean valid=true;
         Statement stmt =null;
         try{
@@ -63,8 +79,7 @@ public class Energie {
                 valid=false;
             } 
             stmt= con.createStatement();
-            this.setIntitule(intitule);
-            String sql="INSERT INTO Energie VALUES(DEFAULT, '"+this.getIntitule()+"')";
+            String sql="INSERT INTO Modele VALUES(DEFAULT, '"+this.getIntitule()+"', "+this.getVinNum()+")";
             System.out.println(sql);
             stmt.executeUpdate(sql);
         }catch(Exception e){
@@ -74,8 +89,9 @@ public class Energie {
             if(!valid){ con.close(); }
         }
     }
-    public Energie[] getAll(Connection con)throws Exception{
-        Vector<Energie> listEnergie= new Vector<Energie>();
+
+    public Modele[] getAll(Connection con)throws Exception{
+        Vector<Modele> listModele= new Vector<Modele>();
         boolean valid=true;
         Statement state=null;
         ResultSet result=null;
@@ -84,15 +100,15 @@ public class Energie {
                 con=Connect.connectDB();
                 valid=false;
             }
-            String sql = "SELECT * FROM Energie ";
+            String sql = "SELECT * FROM Modele where etat != 10";
             state = con.createStatement();
             result = state.executeQuery(sql);
             while(result.next()){
                 String id= result.getString(1);
                 String intitule= result.getString(2);
                 int etat=result.getInt(3);
-                Energie m = new Energie(id, intitule, etat);
-                listEnergie.add(m);
+                Modele m = new Modele(id, intitule, etat);
+                listModele.add(m);
             }
         } catch (Exception e) {   
             e.printStackTrace(); 
@@ -105,31 +121,11 @@ public class Energie {
                 e.printStackTrace();
             }
         }
-        Energie[] energies= new Energie[listEnergie.size()];
-        listEnergie.toArray(energies);
-        return energies;
+        Modele[] modeles= new Modele[listModele.size()];
+        listModele.toArray(modeles);
+        return modeles;
     }
-
-    public void delete(Connection con)throws Exception{
-        boolean valid=true;
-        Statement stmt =null;
-        try{
-            if(con==null){
-                con = Connect.connectDB();
-                valid=false;
-            } 
-            stmt= con.createStatement();
-            String sql="UPDATE Energie SET etat=10 WHERE id_energie='"+this.getIdEnergie()+"'";
-            System.out.println(sql);
-            stmt.executeUpdate(sql);
-        }catch(Exception e){
-            throw e;
-        }finally{
-            if(stmt!=null){ stmt.close(); }
-            if(!valid){ con.close(); }
-        }
-    }
-
+    
     public void update(Connection con)throws Exception{
         boolean valid=true;
         Statement stmt =null;
@@ -139,7 +135,7 @@ public class Energie {
                 valid=false;
             } 
             stmt= con.createStatement();
-            String sql="UPDATE Energie SET intitule='"+this.getIntitule()+"' WHERE id_energie='"+this.getIdEnergie()+"'";
+            String sql="UPDATE Modele SET intitule='"+this.getIntitule()+"' WHERE id_modele='"+this.getIdModele()+"'";
             System.out.println(sql);
             stmt.executeUpdate(sql);
         }catch(Exception e){
@@ -149,4 +145,24 @@ public class Energie {
             if(!valid){ con.close(); }
         }
     }
+    public void delete(Connection con)throws Exception{
+        boolean valid=true;
+        Statement stmt =null;
+        try{
+            if(con==null){
+                con = Connect.connectDB();
+                valid=false;
+            } 
+            stmt= con.createStatement();
+            String sql="UPDATE Modele SET etat=10 WHERE id_modele='"+this.getIdModele()+"'";
+            System.out.println(sql);
+            stmt.executeUpdate(sql);
+        }catch(Exception e){
+            throw e;
+        }finally{
+            if(stmt!=null){ stmt.close(); }
+            if(!valid){ con.close(); }
+        }
+    }
+
 }

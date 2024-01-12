@@ -1,4 +1,4 @@
-package com.project.Voiture.controller.statistique;
+package com.project.Voiture.controller.backOffice.caracteristique.statistique;
 
 
 import org.springframework.web.bind.annotation.GetMapping;

@@ -1,4 +1,5 @@
-package com.project.Voiture.model.caracteristique;
+package com.project.Voiture.model.backOffice.caracteristique;
+
 import java.sql.Connection;
 import java.sql.Statement;
 import java.sql.ResultSet;
@@ -6,18 +7,16 @@ import java.util.Vector;
 
 import com.project.Voiture.model.connection.Connect;
 
-
-public class Modele {
-    String idModele;
+public class Marque {
+    String idMarque;
     String intitule;
-    int vinNum;
     int etat;
 
-    public String getIdModele(){
-        return this.idModele;
+    public String getIdMarque(){
+        return this.idMarque;
     }
-    public void setIdModele(String idModele)throws Exception{
-        this.idModele=idModele;
+    public void setIdMarque(String idMarque)throws Exception{
+        this.idMarque=idMarque;
     }
 
     public String getIntitule(){
@@ -29,27 +28,10 @@ public class Modele {
         }
         this.intitule=intitule;
     }
-
-    public int getVinNum(){
-        return this.vinNum;
-    }
-    public void setVinNum(int vinNum)throws Exception{
-        if(vinNum<0){
-            throw new Exception("vinNum invalide: negatif");
-        }
-        this.vinNum=vinNum;
-    }
-    public void setVinNum(String vinNum)throws Exception{
-        int a =Integer.valueOf(vinNum);
-        if(vinNum.length()==0){
-            throw new Exception("vinNum invalide: null");
-        }
-        this.setVinNum(a);
-    }
-
     public int getEtat(){
         return this.etat;
     }
+
     public void setEtat(int etat)throws Exception{
         if(etat<0){
             throw new Exception("etat invalide: negatif");
@@ -63,14 +45,14 @@ public class Modele {
         }
         this.setEtat(a);
     }
-    public Modele()throws Exception{}
-    public Modele(String id, String intitule, int etat)throws Exception{
-        this.setIdModele(id);
+    public Marque()throws Exception{}
+    public Marque(String id, String intitule, int etat)throws Exception{
+        this.setIdMarque(id);
         this.setIntitule(intitule);
         this.setEtat(etat);
     }
 
-    public void insert(Connection con)throws Exception{
+    public void insert(String intitule,  Connection con)throws Exception{
         boolean valid=true;
         Statement stmt =null;
         try{
@@ -79,7 +61,8 @@ public class Modele {
                 valid=false;
             } 
             stmt= con.createStatement();
-            String sql="INSERT INTO Modele VALUES(DEFAULT, '"+this.getIntitule()+"', "+this.getVinNum()+")";
+            this.setIntitule(intitule);
+            String sql="INSERT INTO Marque VALUES(DEFAULT, '"+this.getIntitule()+"')";
             System.out.println(sql);
             stmt.executeUpdate(sql);
         }catch(Exception e){
@@ -90,8 +73,8 @@ public class Modele {
         }
     }
 
-    public Modele[] getAll(Connection con)throws Exception{
-        Vector<Modele> listModele= new Vector<Modele>();
+    public Marque[] getAll(Connection con)throws Exception{
+        Vector<Marque> listMarque= new Vector<Marque>();
         boolean valid=true;
         Statement state=null;
         ResultSet result=null;
@@ -100,15 +83,15 @@ public class Modele {
                 con=Connect.connectDB();
                 valid=false;
             }
-            String sql = "SELECT * FROM Modele where etat != 10";
+            String sql = "SELECT * FROM Marque where etat != 10 ";
             state = con.createStatement();
             result = state.executeQuery(sql);
             while(result.next()){
                 String id= result.getString(1);
                 String intitule= result.getString(2);
                 int etat=result.getInt(3);
-                Modele m = new Modele(id, intitule, etat);
-                listModele.add(m);
+                Marque m = new Marque(id, intitule, etat);
+                listMarque.add(m);
             }
         } catch (Exception e) {   
             e.printStackTrace(); 
@@ -121,11 +104,11 @@ public class Modele {
                 e.printStackTrace();
             }
         }
-        Modele[] modeles= new Modele[listModele.size()];
-        listModele.toArray(modeles);
-        return modeles;
+        Marque[] marques= new Marque[listMarque.size()];
+        listMarque.toArray(marques);
+        return marques;
     }
-    
+
     public void update(Connection con)throws Exception{
         boolean valid=true;
         Statement stmt =null;
@@ -135,7 +118,7 @@ public class Modele {
                 valid=false;
             } 
             stmt= con.createStatement();
-            String sql="UPDATE Modele SET intitule='"+this.getIntitule()+"' WHERE id_modele='"+this.getIdModele()+"'";
+            String sql="UPDATE Marque SET intitule='"+this.getIntitule()+"' WHERE id_marque='"+this.getIdMarque()+"'";
             System.out.println(sql);
             stmt.executeUpdate(sql);
         }catch(Exception e){
@@ -145,6 +128,7 @@ public class Modele {
             if(!valid){ con.close(); }
         }
     }
+
     public void delete(Connection con)throws Exception{
         boolean valid=true;
         Statement stmt =null;
@@ -154,7 +138,7 @@ public class Modele {
                 valid=false;
             } 
             stmt= con.createStatement();
-            String sql="UPDATE Modele SET etat=10 WHERE id_modele='"+this.getIdModele()+"'";
+            String sql="UPDATE Marque SET etat=10 WHERE id_marque='"+this.getIdMarque()+"'";
             System.out.println(sql);
             stmt.executeUpdate(sql);
         }catch(Exception e){

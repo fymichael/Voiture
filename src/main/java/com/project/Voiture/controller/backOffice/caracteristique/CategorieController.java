@@ -1,4 +1,4 @@
-package com.project.Voiture.controller.caracteristique;
+package com.project.Voiture.controller.backOffice.caracteristique;
 
 
 import org.springframework.web.bind.annotation.GetMapping;
@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.project.Voiture.model.caracteristique.Categorie;
+import com.project.Voiture.model.backOffice.caracteristique.Categorie;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.PutMapping;

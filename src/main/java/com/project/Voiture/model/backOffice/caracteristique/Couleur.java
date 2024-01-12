@@ -1,4 +1,5 @@
-package com.project.Voiture.model.caracteristique;
+package com.project.Voiture.model.backOffice.caracteristique;
+
 
 import java.sql.Connection;
 import java.sql.Statement;
@@ -7,16 +8,16 @@ import java.util.Vector;
 
 import com.project.Voiture.model.connection.Connect;
 
-public class Marque {
-    String idMarque;
+public class Couleur {
+    String idCouleur;
     String intitule;
     int etat;
 
-    public String getIdMarque(){
-        return this.idMarque;
+    public String getIdCouleur(){
+        return this.idCouleur;
     }
-    public void setIdMarque(String idMarque)throws Exception{
-        this.idMarque=idMarque;
+    public void setIdCouleur(String idCouleur)throws Exception{
+        this.idCouleur=idCouleur;
     }
 
     public String getIntitule(){
@@ -28,10 +29,10 @@ public class Marque {
         }
         this.intitule=intitule;
     }
+
     public int getEtat(){
         return this.etat;
     }
-
     public void setEtat(int etat)throws Exception{
         if(etat<0){
             throw new Exception("etat invalide: negatif");
@@ -45,9 +46,10 @@ public class Marque {
         }
         this.setEtat(a);
     }
-    public Marque()throws Exception{}
-    public Marque(String id, String intitule, int etat)throws Exception{
-        this.setIdMarque(id);
+
+    public Couleur()throws Exception{}
+    public Couleur(String id, String intitule, int etat)throws Exception{
+        this.setIdCouleur(id);
         this.setIntitule(intitule);
         this.setEtat(etat);
     }
@@ -62,7 +64,8 @@ public class Marque {
             } 
             stmt= con.createStatement();
             this.setIntitule(intitule);
-            String sql="INSERT INTO Marque VALUES(DEFAULT, '"+this.getIntitule()+"')";
+            this.setEtat(etat);
+            String sql="INSERT INTO Couleur VALUES(DEFAULT, '"+this.getIntitule()+"')";
             System.out.println(sql);
             stmt.executeUpdate(sql);
         }catch(Exception e){
@@ -73,8 +76,29 @@ public class Marque {
         }
     }
 
-    public Marque[] getAll(Connection con)throws Exception{
-        Vector<Marque> listMarque= new Vector<Marque>();
+    
+    public void update(Connection con)throws Exception{
+        boolean valid=true;
+        Statement stmt =null;
+        try{
+            if(con==null){
+                con = Connect.connectDB();
+                valid=false;
+            } 
+            stmt= con.createStatement();
+            String sql="UPDATE  Couleur SET intitule='"+this.getIntitule()+"' WHERE id_couleur='"+this.getIdCouleur()+"'";
+            System.out.println(sql);
+            stmt.executeUpdate(sql);
+        }catch(Exception e){
+            throw e;
+        }finally{
+            if(stmt!=null){ stmt.close(); }
+            if(!valid){ con.close(); }
+        }
+    }
+
+    public Couleur[] getAll(Connection con)throws Exception{
+        Vector<Couleur> listCouleur= new Vector<Couleur>();
         boolean valid=true;
         Statement state=null;
         ResultSet result=null;
@@ -83,15 +107,15 @@ public class Marque {
                 con=Connect.connectDB();
                 valid=false;
             }
-            String sql = "SELECT * FROM Marque where etat != 10 ";
+            String sql = "SELECT * FROM Couleur ";
             state = con.createStatement();
             result = state.executeQuery(sql);
             while(result.next()){
                 String id= result.getString(1);
                 String intitule= result.getString(2);
                 int etat=result.getInt(3);
-                Marque m = new Marque(id, intitule, etat);
-                listMarque.add(m);
+                Couleur m = new Couleur(id, intitule, etat);
+                listCouleur.add(m);
             }
         } catch (Exception e) {   
             e.printStackTrace(); 
@@ -104,29 +128,9 @@ public class Marque {
                 e.printStackTrace();
             }
         }
-        Marque[] marques= new Marque[listMarque.size()];
-        listMarque.toArray(marques);
-        return marques;
-    }
-
-    public void update(Connection con)throws Exception{
-        boolean valid=true;
-        Statement stmt =null;
-        try{
-            if(con==null){
-                con = Connect.connectDB();
-                valid=false;
-            } 
-            stmt= con.createStatement();
-            String sql="UPDATE Marque SET intitule='"+this.getIntitule()+"' WHERE id_marque='"+this.getIdMarque()+"'";
-            System.out.println(sql);
-            stmt.executeUpdate(sql);
-        }catch(Exception e){
-            throw e;
-        }finally{
-            if(stmt!=null){ stmt.close(); }
-            if(!valid){ con.close(); }
-        }
+        Couleur[] couleurs= new Couleur[listCouleur.size()];
+        listCouleur.toArray(couleurs);
+        return couleurs;
     }
 
     public void delete(Connection con)throws Exception{
@@ -138,7 +142,7 @@ public class Marque {
                 valid=false;
             } 
             stmt= con.createStatement();
-            String sql="UPDATE Marque SET etat=10 WHERE id_marque='"+this.getIdMarque()+"'";
+            String sql="UPDATE Couleur SET etat=10 WHERE id_couleur='"+this.getIdCouleur()+"'";
             System.out.println(sql);
             stmt.executeUpdate(sql);
         }catch(Exception e){
@@ -148,5 +152,4 @@ public class Marque {
             if(!valid){ con.close(); }
         }
     }
-
 }

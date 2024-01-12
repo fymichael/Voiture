@@ -1,5 +1,4 @@
-package com.project.Voiture.model.caracteristique;
-
+package com.project.Voiture.model.backOffice.caracteristique;
 
 import java.sql.Connection;
 import java.sql.Statement;
@@ -8,16 +7,16 @@ import java.util.Vector;
 
 import com.project.Voiture.model.connection.Connect;
 
-public class Couleur {
-    String idCouleur;
+public class Energie {
+    String idEnergie;
     String intitule;
     int etat;
 
-    public String getIdCouleur(){
-        return this.idCouleur;
+    public String getIdEnergie(){
+        return this.idEnergie;
     }
-    public void setIdCouleur(String idCouleur)throws Exception{
-        this.idCouleur=idCouleur;
+    public void setIdEnergie(String idEnergie)throws Exception{
+        this.idEnergie=idEnergie;
     }
 
     public String getIntitule(){
@@ -47,9 +46,10 @@ public class Couleur {
         this.setEtat(a);
     }
 
-    public Couleur()throws Exception{}
-    public Couleur(String id, String intitule, int etat)throws Exception{
-        this.setIdCouleur(id);
+    
+    public Energie()throws Exception{}
+    public Energie(String id, String intitule, int etat)throws Exception{
+        this.setIdEnergie(id);
         this.setIntitule(intitule);
         this.setEtat(etat);
     }
@@ -64,8 +64,7 @@ public class Couleur {
             } 
             stmt= con.createStatement();
             this.setIntitule(intitule);
-            this.setEtat(etat);
-            String sql="INSERT INTO Couleur VALUES(DEFAULT, '"+this.getIntitule()+"')";
+            String sql="INSERT INTO Energie VALUES(DEFAULT, '"+this.getIntitule()+"')";
             System.out.println(sql);
             stmt.executeUpdate(sql);
         }catch(Exception e){
@@ -75,30 +74,8 @@ public class Couleur {
             if(!valid){ con.close(); }
         }
     }
-
-    
-    public void update(Connection con)throws Exception{
-        boolean valid=true;
-        Statement stmt =null;
-        try{
-            if(con==null){
-                con = Connect.connectDB();
-                valid=false;
-            } 
-            stmt= con.createStatement();
-            String sql="UPDATE  Couleur SET intitule='"+this.getIntitule()+"' WHERE id_couleur='"+this.getIdCouleur()+"'";
-            System.out.println(sql);
-            stmt.executeUpdate(sql);
-        }catch(Exception e){
-            throw e;
-        }finally{
-            if(stmt!=null){ stmt.close(); }
-            if(!valid){ con.close(); }
-        }
-    }
-
-    public Couleur[] getAll(Connection con)throws Exception{
-        Vector<Couleur> listCouleur= new Vector<Couleur>();
+    public Energie[] getAll(Connection con)throws Exception{
+        Vector<Energie> listEnergie= new Vector<Energie>();
         boolean valid=true;
         Statement state=null;
         ResultSet result=null;
@@ -107,15 +84,15 @@ public class Couleur {
                 con=Connect.connectDB();
                 valid=false;
             }
-            String sql = "SELECT * FROM Couleur ";
+            String sql = "SELECT * FROM Energie ";
             state = con.createStatement();
             result = state.executeQuery(sql);
             while(result.next()){
                 String id= result.getString(1);
                 String intitule= result.getString(2);
                 int etat=result.getInt(3);
-                Couleur m = new Couleur(id, intitule, etat);
-                listCouleur.add(m);
+                Energie m = new Energie(id, intitule, etat);
+                listEnergie.add(m);
             }
         } catch (Exception e) {   
             e.printStackTrace(); 
@@ -128,9 +105,9 @@ public class Couleur {
                 e.printStackTrace();
             }
         }
-        Couleur[] couleurs= new Couleur[listCouleur.size()];
-        listCouleur.toArray(couleurs);
-        return couleurs;
+        Energie[] energies= new Energie[listEnergie.size()];
+        listEnergie.toArray(energies);
+        return energies;
     }
 
     public void delete(Connection con)throws Exception{
@@ -142,7 +119,27 @@ public class Couleur {
                 valid=false;
             } 
             stmt= con.createStatement();
-            String sql="UPDATE Couleur SET etat=10 WHERE id_couleur='"+this.getIdCouleur()+"'";
+            String sql="UPDATE Energie SET etat=10 WHERE id_energie='"+this.getIdEnergie()+"'";
+            System.out.println(sql);
+            stmt.executeUpdate(sql);
+        }catch(Exception e){
+            throw e;
+        }finally{
+            if(stmt!=null){ stmt.close(); }
+            if(!valid){ con.close(); }
+        }
+    }
+
+    public void update(Connection con)throws Exception{
+        boolean valid=true;
+        Statement stmt =null;
+        try{
+            if(con==null){
+                con = Connect.connectDB();
+                valid=false;
+            } 
+            stmt= con.createStatement();
+            String sql="UPDATE Energie SET intitule='"+this.getIntitule()+"' WHERE id_energie='"+this.getIdEnergie()+"'";
             System.out.println(sql);
             stmt.executeUpdate(sql);
         }catch(Exception e){
