@@ -83,7 +83,7 @@ public class Categorie {
                 con=Connect.connectDB();
                 valid=false;
             }
-            String sql = "SELECT * FROM Categorie ";
+            String sql = "SELECT * FROM Categorie where etat != 10";
             state = con.createStatement();
             result = state.executeQuery(sql);
             while(result.next()){

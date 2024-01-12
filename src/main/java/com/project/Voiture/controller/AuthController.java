@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.project.Voiture.model.JwtUtil;
-import com.project.Voiture.model.LoginRequest;
 import com.project.Voiture.model.Admin;
 
 

@@ -2,7 +2,6 @@ package com.project.Voiture.controller;
 
 
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -18,7 +17,7 @@ import com.project.Voiture.model.Categorie;
 public class CategorieController {
 
    @CrossOrigin(origins = "*", allowedHeaders ="*")
-   @GetMapping("/liste-categorie")
+   @GetMapping("/categories")
    public Categorie[] getListe()throws Exception{
       Categorie c = new Categorie();
       Categorie[] liste=c.getAll(null);
@@ -26,7 +25,7 @@ public class CategorieController {
    }
 
     @CrossOrigin(origins = "*", allowedHeaders ="*")
-    @PostMapping("/form-categorie")
+    @PostMapping("/add-categorie")
     public void form(@RequestBody Categorie c)throws Exception{
        c.insert(null);
     }

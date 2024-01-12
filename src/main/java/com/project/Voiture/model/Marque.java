@@ -1,4 +1,5 @@
 package com.project.Voiture.model;
+
 import java.sql.Connection;
 import java.sql.Statement;
 import java.sql.ResultSet;
@@ -80,7 +81,7 @@ public class Marque {
                 con=Connect.connectDB();
                 valid=false;
             }
-            String sql = "SELECT * FROM Marque ";
+            String sql = "SELECT * FROM Marque where etat != 10 ";
             state = con.createStatement();
             result = state.executeQuery(sql);
             while(result.next()){

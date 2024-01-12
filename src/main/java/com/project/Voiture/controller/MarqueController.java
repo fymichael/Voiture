@@ -2,7 +2,6 @@ package com.project.Voiture.controller;
 
 
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -18,7 +17,7 @@ import com.project.Voiture.model.Marque;
 public class MarqueController {
 
     @CrossOrigin(origins = "*", allowedHeaders ="*")
-    @GetMapping("/liste-marque")
+    @GetMapping("/marques")
     public Marque[] getListe()throws Exception{
         Marque c = new Marque();
         Marque[] liste=c.getAll(null);
@@ -26,7 +25,7 @@ public class MarqueController {
     }
 
     @CrossOrigin(origins = "*", allowedHeaders ="*")
-    @PostMapping("/form-marque")
+    @PostMapping("/add-marque")
     public void form(@RequestBody String nom)throws Exception{
        Marque c = new Marque();
        c.setIntitule(nom);

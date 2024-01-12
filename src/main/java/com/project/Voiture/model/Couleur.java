@@ -52,7 +52,7 @@ public class Couleur {
         this.setEtat(etat);
     }
 
-    public void insert(String intitule,  Connection con)throws Exception{
+    public void insert(Connection con)throws Exception{
         boolean valid=true;
         Statement stmt =null;
         try{
@@ -61,7 +61,6 @@ public class Couleur {
                 valid=false;
             } 
             stmt= con.createStatement();
-            this.setIntitule(intitule);
             this.setEtat(etat);
             String sql="INSERT INTO Couleur VALUES(DEFAULT, '"+this.getIntitule()+"')";
             System.out.println(sql);
@@ -105,7 +104,7 @@ public class Couleur {
                 con=Connect.connectDB();
                 valid=false;
             }
-            String sql = "SELECT * FROM Couleur ";
+            String sql = "SELECT * FROM Couleur where etat != 10";
             state = con.createStatement();
             result = state.executeQuery(sql);
             while(result.next()){
