@@ -51,6 +51,7 @@ public class Voiture {
                 v.setAnneeSortie(result.getString("annee_sortie"));
                 v.setAutonomie(result.getDouble("autonomie"));
                 v.setImmatriculation(result.getString("immatriculation"));
+                listVoiture.add(v);
             }
         } catch (Exception e) {
             e.printStackTrace();

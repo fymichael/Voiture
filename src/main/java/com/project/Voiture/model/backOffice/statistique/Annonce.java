@@ -4,12 +4,13 @@ import java.sql.Connection;
 import java.sql.Date;
 import java.sql.Statement;
 
+import com.project.Voiture.model.backOffice.caracteristique.Voiture;
 import com.project.Voiture.model.connection.Connect;
 
 
 public class Annonce {
     String idAnnonce;
-    int idVoiture;
+    Voiture voiture;
     String description;
     Date date;
     double prix;
@@ -18,7 +19,7 @@ public class Annonce {
     double commission;
 
     // methods
-    public void insert(Connection con){
+    public void insert(Connection con) throws Exception{
                 boolean valid=true;
         Statement stmt =null;
         try{
@@ -27,8 +28,7 @@ public class Annonce {
                 valid=false;
             } 
             stmt= con.createStatement();
-            this.setEtat(etat);
-            String sql="INSERT INTO Couleur VALUES(DEFAULT, '"+this.getIntitule()+"')";
+            String sql="INSERT INTO Couleur VALUES(DEFAULT, "+this.getVoiture().getIdVoiture()+", '"+ this.getDescription() +"'', default, "+ this.getPrix() +", "+ this.getIdClient() +", 1)";
             System.out.println(sql);
             stmt.executeUpdate(sql);
         }catch(Exception e){
@@ -61,8 +61,8 @@ public class Annonce {
         return idClient;
     }
 
-    public int getIdVoiture() {
-        return idVoiture;
+    public Voiture getVoiture() {
+        return voiture;
     }
 
     public double getPrix() {
@@ -89,8 +89,8 @@ public class Annonce {
         this.idClient = idClient;
     }
 
-    public void setIdVoiture(int idVoiture) {
-        this.idVoiture = idVoiture;
+    public void setVoiture(Voiture idVoiture) {
+        this.voiture = idVoiture;
     }
 
     public void setPrix(double prix) {
