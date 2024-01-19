@@ -5,8 +5,6 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.stereotype.Component;
 
-import com.project.Voiture.model.backOffice.caracteristique.Admin;
-
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtParser;
 import java.util.Date;

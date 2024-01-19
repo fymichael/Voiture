@@ -20,41 +20,41 @@ public class Annonce {
 
     // methods
     // stat 6 : avoir les commission par mois
-    public double[] getCommission(Connection con) throws Exception {
-        boolean valid = true;
-        Statement state = null;
-        ResultSet result = null;
-        int nombre = 0;
-        try {
-            if (con == null) {
-                con = Connect.connectDB();
-                valid = false;
-            }
-            String sql = "SELECT count(id_annonce) as nombre_annonce FROM annonce where status = 5";
-            state = con.createStatement();
-            result = state.executeQuery(sql);
-            while (result.next()) {
-                nombre = result.getInt("nombre_annonce");
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                if (state != null) {
-                    state.close();
-                }
-                if (result != null) {
-                    result.close();
-                }
-                if (valid == false || con != null) {
-                    con.close();
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-        return nombre;
-    }
+    // public double[] getCommission(Connection con) throws Exception {
+    //     boolean valid = true;
+    //     Statement state = null;
+    //     ResultSet result = null;
+    //     int nombre = 0;
+    //     try {
+    //         if (con == null) {
+    //             con = Connect.connectDB();
+    //             valid = false;
+    //         }
+    //         String sql = "SELECT count(id_annonce) as nombre_annonce FROM annonce where status = 5";
+    //         state = con.createStatement();
+    //         result = state.executeQuery(sql);
+    //         while (result.next()) {
+    //             nombre = result.getInt("nombre_annonce");
+    //         }
+    //     } catch (Exception e) {
+    //         e.printStackTrace();
+    //     } finally {
+    //         try {
+    //             if (state != null) {
+    //                 state.close();
+    //             }
+    //             if (result != null) {
+    //                 result.close();
+    //             }
+    //             if (valid == false || con != null) {
+    //                 con.close();
+    //             }
+    //         } catch (Exception e) {
+    //             e.printStackTrace();
+    //         }
+    //     }
+    //     return nombre;
+    // }
 
     // stat 5 : avoir la marque la plus vendues
     public String getBestMarque(Connection con) throws Exception {

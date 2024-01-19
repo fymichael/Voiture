@@ -6,8 +6,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.project.Voiture.model.authentification.Admin;
 import com.project.Voiture.model.authentification.JwtUtil;
-import com.project.Voiture.model.backOffice.caracteristique.Admin;
 
 
 @RestController

@@ -1,4 +1,4 @@
-package com.project.Voiture.model.backOffice.caracteristique;
+package com.project.Voiture.model.authentification;
 import java.sql.Connection;
 import java.sql.Statement;
 

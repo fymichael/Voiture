@@ -143,7 +143,7 @@ CREATE OR REPLACE VIEW "public".v_annonce_client AS SELECT a.id_annonce,     a.i
    FROM (annonce a
      JOIN client c ON (((c.id_client)::text = (a.id_client)::text)));
 
-CREATE OR REPLACE VIEW "public".v_detail_annonce AS SELECT vdv.id_voiture,     vdv.id_marque,     vdv.id_categorie,     vdv.id_modele,     vdv.id_energie,     vdv.id_couleur,     vdv.anne_sortie,     vdv.immatriculation,     vdv.autonomie,     vdv.marque,     vdv.categorie,     vdv.model,     vdv.energie,     vdv.couleur,     vac.id_annonce,     vac.description,     vac.date AS date_annonce,     vac.prix,     vac.id_client,     vac.status_annonce,     vac.nom,     vac.prenom,     vac.date_naissance,     vac.email,     vac.mdp,     vac.status_client,     vac.contact    FROM (v_detail_voiture vdv      JOIN v_annonce_client vac ON (((vac.id_voiture)::text = (vdv.id_voiture)::text)))
+CREATE OR REPLACE VIEW "public".v_detail_annonce AS
  SELECT vdv.id_voiture,
     vdv.id_marque,
     vdv.id_categorie,

@@ -85,7 +85,7 @@ public class Couleur {
                 valid=false;
             } 
             stmt= con.createStatement();
-            String sql="UPDATE  Couleur SET intitule='"+this.getIntitule()+"' WHERE id_couleur='"+this.getIdCouleur()+"'";
+            String sql="UPDATE Couleur SET intitule='"+this.getIntitule()+"' WHERE id_couleur='"+this.getIdCouleur()+"'";
             System.out.println(sql);
             stmt.executeUpdate(sql);
         }catch(Exception e){
