@@ -7,17 +7,18 @@ import java.util.Vector;
 
 import com.project.Voiture.model.connection.Connect;
 
-public class Energie {
-    String idEnergie;
+public class ModeTransmission {
+
+    String idModeTransmission;
     String intitule;
     int etat;
 
-    public String getIdEnergie() {
-        return this.idEnergie;
+    public String getIdModeTransmission() {
+        return this.idModeTransmission;
     }
 
-    public void setIdEnergie(String idEnergie) throws Exception {
-        this.idEnergie = idEnergie;
+    public void setIdModeTransmission(String idModeTransmission) throws Exception {
+        this.idModeTransmission = idModeTransmission;
     }
 
     public String getIntitule() {
@@ -50,16 +51,16 @@ public class Energie {
         this.setEtat(a);
     }
 
-    public Energie() throws Exception {
-    }
+    public ModeTransmission() throws Exception {
+        }
 
-    public Energie(String id, String intitule, int etat) throws Exception {
-        this.setIdEnergie(id);
-        this.setIntitule(intitule);
-        this.setEtat(etat);
-    }
+    public ModeTransmission(String id, String intitule, int etat) throws Exception {
+            this.setIdModeTransmission(id);
+            this.setIntitule(intitule);
+            this.setEtat(etat);
+        }
 
-    public void insert(String intitule, Connection con) throws Exception {
+    public void insert(Connection con) throws Exception {
         boolean valid = true;
         Statement stmt = null;
         try {
@@ -68,8 +69,7 @@ public class Energie {
                 valid = false;
             }
             stmt = con.createStatement();
-            this.setIntitule(intitule);
-            String sql = "INSERT INTO Energie VALUES(DEFAULT, '" + this.getIntitule() + "')";
+            String sql = "INSERT INTO Mode_Transmission VALUES(DEFAULT, '" + this.getIntitule() + "')";
             System.out.println(sql);
             stmt.executeUpdate(sql);
         } catch (Exception e) {
@@ -84,24 +84,24 @@ public class Energie {
         }
     }
 
-    public Energie getById(Connection con, int idEnergie) throws Exception {
+    public ModeTransmission getById(Connection con, int idModeTransmission) throws Exception {
         boolean valid = true;
         Statement state = null;
         ResultSet result = null;
-        Energie energie = null;
+        ModeTransmission ModeTransmission = null;
         try {
             if (con == null) {
                 con = Connect.connectDB();
                 valid = false;
             }
-            String sql = "SELECT * FROM Energie where etat != 10 and id_energie = "+idEnergie;
+            String sql = "SELECT * FROM Mode_Transmission where etat != 10 and id_Mode_Transmission = " + idModeTransmission;
             state = con.createStatement();
             result = state.executeQuery(sql);
             while (result.next()) {
                 String id = result.getString(1);
                 String intitule = result.getString(2);
                 int etat = result.getInt(3);
-                energie = new Energie(id, intitule, etat);
+                ModeTransmission = new ModeTransmission(id, intitule, etat);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -120,11 +120,11 @@ public class Energie {
                 e.printStackTrace();
             }
         }
-        return energie;
+        return ModeTransmission;
     }
 
-    public Energie[] getAll(Connection con) throws Exception {
-        Vector<Energie> listEnergie = new Vector<Energie>();
+    public ModeTransmission[] getAll(Connection con) throws Exception {
+        Vector<ModeTransmission> listModeTransmission = new Vector<ModeTransmission>();
         boolean valid = true;
         Statement state = null;
         ResultSet result = null;
@@ -133,15 +133,15 @@ public class Energie {
                 con = Connect.connectDB();
                 valid = false;
             }
-            String sql = "SELECT * FROM Energie where etat != 10";
+            String sql = "SELECT * FROM Mode_Transmission where etat != 10";
             state = con.createStatement();
             result = state.executeQuery(sql);
             while (result.next()) {
                 String id = result.getString(1);
                 String intitule = result.getString(2);
                 int etat = result.getInt(3);
-                Energie m = new Energie(id, intitule, etat);
-                listEnergie.add(m);
+                ModeTransmission m = new ModeTransmission(id, intitule, etat);
+                listModeTransmission.add(m);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -160,9 +160,9 @@ public class Energie {
                 e.printStackTrace();
             }
         }
-        Energie[] energies = new Energie[listEnergie.size()];
-        listEnergie.toArray(energies);
-        return energies;
+        ModeTransmission[] ModeTransmissions = new ModeTransmission[listModeTransmission.size()];
+        listModeTransmission.toArray(ModeTransmissions);
+        return ModeTransmissions;
     }
 
     public void delete(Connection con) throws Exception {
@@ -174,7 +174,7 @@ public class Energie {
                 valid = false;
             }
             stmt = con.createStatement();
-            String sql = "UPDATE Energie SET etat=10 WHERE id_energie='" + this.getIdEnergie() + "'";
+            String sql = "UPDATE Mode_Transmission SET etat=10 WHERE id_Mode_Transmission='" + this.getIdModeTransmission() + "'";
             System.out.println(sql);
             stmt.executeUpdate(sql);
         } catch (Exception e) {
@@ -198,8 +198,8 @@ public class Energie {
                 valid = false;
             }
             stmt = con.createStatement();
-            String sql = "UPDATE Energie SET intitule='" + this.getIntitule() + "' WHERE id_energie='"
-                    + this.getIdEnergie() + "'";
+            String sql = "UPDATE Mode_Transmission SET intitule='" + this.getIntitule() + "' WHERE id_Mode_Transmission='"
+                    + this.getIdModeTransmission() + "'";
             System.out.println(sql);
             stmt.executeUpdate(sql);
         } catch (Exception e) {
