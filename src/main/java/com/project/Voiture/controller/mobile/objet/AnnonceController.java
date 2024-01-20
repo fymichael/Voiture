@@ -11,25 +11,51 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import java.util.Vector;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
+
 
 @RestController
 @RequestMapping("api/voiture")
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 public class AnnonceController {
 
-    @GetMapping("/annonce/{idClient}")
-    public Vector<Annonce> getClientAnnnonce(@PathVariable String idClient) throws Exception{
+    @GetMapping("/client/annonce/{idClient}")
+    public Vector<Annonce> getClientAnnnonce(@PathVariable String idClient) throws Exception {
         Vector<Annonce> clientAnnonce = new Annonce().clientAnnonces(idClient, null);
         return clientAnnonce;
 
     }
+
+    @GetMapping("/annonces/{idAnnonce}")
+    public Vector<Annonce> getAnnonceById(@PathVariable String idAnnonce) throws Exception {
+        Vector<Annonce> clientAnnonce = new Annonce().clientAnnonces(idAnnonce, null);
+        return clientAnnonce;
+
+    }
+
+    @PutMapping("/vente/annonce/{idAnnonce}")
+    public void annonceVendue(@PathVariable String idAnnonce) throws Exception {
+        new Annonce().vendre(null, idAnnonce);
+    }
+
+    @PutMapping("/annonce/{idAnnonce}")
+    public void update(@PathVariable String idAnnonce, @RequestBody Annonce annonce) throws Exception {
+        annonce.update(null, idAnnonce);
+    }
+
+    @DeleteMapping("/annonce/{idAnnonce}")
+    public void delete(@PathVariable String idAnnonce) throws Exception {
+        new Annonce().delete(null, idAnnonce);
+    }
+
     @PostMapping("/annonce")
     public void form(@RequestBody Annonce newAnnonce) throws Exception {
         newAnnonce.insert(null);
         /*
-         *format JSON attendus
+         * format JSON attendus
          * {
          * "voiture": {
          * "idVoiture" : "CAR0002",

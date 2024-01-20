@@ -8,6 +8,9 @@ import com.project.Voiture.model.mobile.objet.Voiture;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+
 
 @RestController
 @RequestMapping("api/voiture")
@@ -18,5 +21,8 @@ public class VoitureController {
     public void form(@RequestBody Voiture newVoiture) throws Exception {
         newVoiture.insert(null);
     }
-
+    @PutMapping("/voiture/{idVoiture}")
+    public void update(@PathVariable String idVoiture, @RequestBody Voiture voiture) throws Exception {
+        voiture.update(null, idVoiture);
+    }
 }

@@ -21,6 +21,94 @@ public class Annonce {
     int status;
 
     // methods
+    // modifier une annonce
+    public void update(Connection con, String idAnnonce) throws Exception {
+        boolean valid = true;
+        PreparedStatement pstmt = null;
+
+        try {
+            if (con == null) {
+                con = Connect.connectDB();
+                valid = false;
+            }
+
+            String sql = "UPDATE Annonce SET idVoiture = ?, description = ?, prix = ?, idClient = ? WHERE idAnnonce = ?";
+            pstmt = con.prepareStatement(sql);
+
+            pstmt.setString(1, this.getIdVoiture());
+            pstmt.setString(2, this.getDescription());
+            pstmt.setDouble(3, this.getPrix());
+            pstmt.setString(4, this.getIdClient());
+            pstmt.setString(5, idAnnonce); 
+
+            pstmt.executeUpdate();
+
+        } catch (Exception e) {
+            throw e;
+        } finally {
+            if (pstmt != null) {
+                pstmt.close();
+            }
+            if (!valid) {
+                con.close();
+            }
+        }
+    }
+
+    // fonction pour marquer une annonce deja vendus
+    public void vendre(Connection con, String idAnnonce) throws Exception {
+        boolean valid = true;
+        Statement pstmt = null;
+
+        try {
+            if (con == null) {
+                con = Connect.connectDB();
+                valid = false;
+            }
+
+            String sql = "update annonce set status = 10 where id_annonce = '" + idAnnonce + "'";
+            pstmt = con.createStatement();
+            pstmt.executeUpdate(sql);
+
+        } catch (Exception e) {
+            throw e;
+        } finally {
+            if (pstmt != null) {
+                pstmt.close();
+            }
+            if (!valid) {
+                con.close();
+            }
+        }
+    }
+
+    // suppression d'une annonce
+    public void delete(Connection con, String idAnnonce) throws Exception {
+        boolean valid = true;
+        Statement pstmt = null;
+
+        try {
+            if (con == null) {
+                con = Connect.connectDB();
+                valid = false;
+            }
+
+            String sql = "update annonce set status = 0 where id_annonce = '" + idAnnonce + "'";
+            pstmt = con.createStatement();
+            pstmt.executeUpdate(sql);
+
+        } catch (Exception e) {
+            throw e;
+        } finally {
+            if (pstmt != null) {
+                pstmt.close();
+            }
+            if (!valid) {
+                con.close();
+            }
+        }
+    }
+
     // separateur de milliers
     public String formatArgent(double number) {
         DecimalFormat decimalFormat = new DecimalFormat("#,###.##");
@@ -136,10 +224,12 @@ public class Annonce {
                 valid = false;
             }
 
+            Voiture derniere = new Voiture().lastVoiture(null);
+
             String sql = "INSERT INTO Annonce VALUES(DEFAULT, ?, ?, default, ?, ?, 1)";
             pstmt = con.prepareStatement(sql);
 
-            pstmt.setString(1, this.getIdVoiture());
+            pstmt.setString(1, derniere.getIdVoiture());
             pstmt.setString(2, this.getDescription());
             pstmt.setDouble(3, this.getPrix());
             pstmt.setString(4, this.getIdClient());

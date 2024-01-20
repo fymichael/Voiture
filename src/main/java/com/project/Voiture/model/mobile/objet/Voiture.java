@@ -21,6 +21,44 @@ public class Voiture {
     String[] photos;
 
     // methods
+    // modifier une voiture
+    public void update(Connection con, String idVoiture) throws Exception {
+        boolean valid = true;
+        Statement stmt = null;
+        try {
+            if (con == null) {
+                con = Connect.connectDB();
+                valid = false;
+            }
+            stmt = con.createStatement();
+            String sql = " update voiture set id_marque = '" + this.getIdMarque() + "', id_categorie = '"
+                    + this.getIdCategorie() + "', id_modele = '" + this.getIdModele() + "', id_energie = '"
+                    + this.getIdEnergie() + "', id_couleur = '" + this.getIdCouleur() + "', anne_sortie = '" + this.getAnneeSortie() + "', immatriculation = '"
+                    + this.getImmatriculation() + "', autonomie = " + this.getAutonomie() + ", id_mode_transmission = '" + this.getIdModeTransmission()
+                    + "', status = 1 where id_voiture = "+ idVoiture +")";
+            System.out.println(sql);
+            stmt.executeUpdate(sql);
+
+            Voiture lastVoiture = this.lastVoiture(null);
+            for (String photo : photos) {
+                String sql1 = "insert into voiture_photo values ('" + lastVoiture.getIdVoiture() + "', '" + photo
+                        + "')";
+                System.out.println(sql1);
+                stmt.executeUpdate(sql1);
+            }
+
+        } catch (Exception e) {
+            throw e;
+        } finally {
+            if (stmt != null) {
+                stmt.close();
+            }
+            if (!valid) {
+                con.close();
+            }
+        }
+    }
+
     // inserer une nouvelle voiture
     public void insert(Connection con) throws Exception {
         boolean valid = true;
