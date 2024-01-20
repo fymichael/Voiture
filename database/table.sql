@@ -201,3 +201,6 @@ INSERT INTO "public".categorie( id_categorie, intitule, etat ) VALUES ( 'CTG0002
 INSERT INTO "public".couleur( id_couleur, intitule, etat ) VALUES ( 'CLR0001', '{\r\n    "nom" : "Bleu"\r\n}', 10);
 INSERT INTO "public".couleur( id_couleur, intitule, etat ) VALUES ( 'CLR0002', '"bleu"', 10);
 INSERT INTO "public".couleur( id_couleur, intitule, etat ) VALUES ( 'CLR0003', 'Bleu', 1);
+INSERT INTO "public".marque( id_marque, intitule, etat ) VALUES ( 'MRQ001', 'TOYOTA', 1);
+INSERT INTO "public".marque( id_marque, intitule, etat ) VALUES ( 'MRQ002', 'NISSAN', 1);
+INSERT INTO "public".marque( id_marque, intitule, etat ) VALUES ( 'MRQ003', 'RENAULT', 1);

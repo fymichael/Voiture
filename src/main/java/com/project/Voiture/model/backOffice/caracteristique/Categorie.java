@@ -4,18 +4,21 @@ import java.sql.Connection;
 import java.sql.Statement;
 import java.sql.ResultSet;
 import java.util.Vector;
+import java.util.List;
+import java.util.ArrayList;
+import java.sql.PreparedStatement;
 
 import com.project.Voiture.model.connection.Connect;
 
 public class Categorie {
-    String idCategorie;
+    Integer idCategorie;
     String intitule;
     int etat;
 
-    public String getIdCategorie(){
+    public Integer getIdCategorie(){
         return this.idCategorie;
     }
-    public void setIdCategorie(String idCategorie)throws Exception{
+    public void setIdCategorie(Integer idCategorie)throws Exception{
         this.idCategorie=idCategorie;
     }
 
@@ -47,7 +50,7 @@ public class Categorie {
     }
 
     public Categorie()throws Exception{}
-    public Categorie(String id, String intitule, int etat)throws Exception{
+    public Categorie(Integer id, String intitule, int etat)throws Exception{
         this.setIdCategorie(id);
         this.setIntitule(intitule);
         this.setEtat(etat);
@@ -89,7 +92,7 @@ public class Categorie {
             state = con.createStatement();
             result = state.executeQuery(sql);
             while(result.next()){
-                String id= result.getString(1);
+                Integer id= result.getInt(1);
                 String intitule= result.getString(2);
                 int etat=result.getInt(3);
                 Categorie m = new Categorie(id, intitule, etat);
@@ -140,7 +143,7 @@ public class Categorie {
                 valid=false;
             } 
             stmt= con.createStatement();
-            String sql="UPDATE  Categorie SET etat=10 WHERE id_categorie='"+this.getIdCategorie()+"'";
+            String sql="UPDATE  Categorie SET status=10 WHERE id_categorie='"+this.getIdCategorie()+"'";
             System.out.println(sql);
             stmt.executeUpdate(sql);
         }catch(Exception e){
@@ -151,4 +154,29 @@ public class Categorie {
         }
     }
 
+    //Toutes les categories
+    public static List<Categorie> getAllCategorie(Connection connection) throws Exception {
+        List<Categorie> models = new ArrayList<>();
+        boolean wasConnected = true;
+        if (connection == null) {
+            wasConnected = false;
+            connection = Connect.getConnection();
+        } 
+        String sql = "SELECT * FROM categorie WHERE status > 0";
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                Categorie model = new Categorie();
+                model.setIdCategorie(rs.getInt("id_categorie"));
+                model.setIntitule(rs.getString("intitule"));
+                model.setEtat(rs.getInt("status"));
+                models.add(model);
+            }
+        }
+
+        if (!wasConnected) {
+            connection.close();
+        }
+        return models;
+    }
 }

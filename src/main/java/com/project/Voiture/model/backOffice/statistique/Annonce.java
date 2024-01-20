@@ -5,6 +5,9 @@ import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.Vector;
+import java.util.List;
+import java.util.ArrayList;
+import java.sql.PreparedStatement;
 
 import com.project.Voiture.model.connection.Connect;
 
@@ -20,7 +23,7 @@ public class Annonce {
 
     // methods
     // stat 6 : avoir les commission par mois
-    public double[] getCommission(Connection con) throws Exception {
+   /* public double[] getCommission(Connection con) throws Exception {
         boolean valid = true;
         Statement state = null;
         ResultSet result = null;
@@ -55,7 +58,7 @@ public class Annonce {
         }
         return nombre;
     }
-
+*/
     // stat 5 : avoir la marque la plus vendues
     public String getBestMarque(Connection con) throws Exception {
         boolean valid = true;
@@ -250,6 +253,133 @@ public class Annonce {
             }
         }
         return nombre;
+    }
+
+    //Toutes les annonces
+    public static List<Annonce> getAllAnnonce(Connection connection) throws Exception {
+        List<Annonce> models = new ArrayList<>();
+        boolean wasConnected = true;
+        if (connection == null) {
+            wasConnected = false;
+            connection = Connect.getConnection();
+        } 
+        String sql = "SELECT * FROM annonce WHERE status > 0";
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            System.out.println(stmt.toString());
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                Annonce model = new Annonce();
+                model.setIdAnnonce(rs.getString("id_annonce"));
+                model.setIdVoiture(rs.getInt("id_voiture"));
+                model.setDescription(rs.getString("description"));
+                model.setDate(rs.getDate("date"));
+                model.setPrix(rs.getDouble("prix"));
+                model.setIdClient(rs.getInt("id_client"));
+                model.setStatus(rs.getInt("status"));
+                model.setCommission(rs.getDouble("commission"));
+                models.add(model);
+            }
+        }
+
+        if (!wasConnected) {
+            connection.close();
+        }
+        return models;
+    }
+
+     //Toutes les annonces d'une categorie
+     public static List<Annonce> getAllAnnonceByCategorie(int idCategorie, Connection connection) throws Exception {
+        List<Annonce> models = new ArrayList<>();
+        boolean wasConnected = true;
+        if (connection == null) {
+            wasConnected = false;
+            connection = Connect.getConnection();
+        } 
+        String sql = "SELECT * FROM annonce WHERE status > 0 AND idCategorie = ?";
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setInt(1, idCategorie);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                Annonce model = new Annonce();
+                model.setIdAnnonce(rs.getString("id_annonce"));
+                model.setIdVoiture(rs.getInt("id_voiture"));
+                model.setDescription(rs.getString("description"));
+                model.setDate(rs.getDate("date"));
+                model.setPrix(rs.getDouble("prix"));
+                model.setIdClient(rs.getInt("id_client"));
+                model.setStatus(rs.getInt("status"));
+                model.setCommission(rs.getDouble("commission"));
+                models.add(model);
+            }
+        }
+
+        if (!wasConnected) {
+            connection.close();
+        }
+        return models;
+    }
+    
+    //Toutes les annonces d'une marque
+    public static List<Annonce> getAllAnnonceByMarque(int idMarque, Connection connection) throws Exception {
+        List<Annonce> models = new ArrayList<>();
+        boolean wasConnected = true;
+        if (connection == null) {
+            wasConnected = false;
+            connection = Connect.getConnection();
+        } 
+        String sql = "SELECT * FROM annonce WHERE status > 0 AND idMarque = ?";
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setInt(1, idMarque);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                Annonce model = new Annonce();
+                model.setIdAnnonce(rs.getString("id_annonce"));
+                model.setIdVoiture(rs.getInt("id_voiture"));
+                model.setDescription(rs.getString("description"));
+                model.setDate(rs.getDate("date"));
+                model.setPrix(rs.getDouble("prix"));
+                model.setIdClient(rs.getInt("id_client"));
+                model.setStatus(rs.getInt("status"));
+                model.setCommission(rs.getDouble("commission"));
+                models.add(model);
+            }
+        }
+
+        if (!wasConnected) {
+            connection.close();
+        }
+        return models;
+    }
+
+    //Annonce par son id 
+    public static Annonce findById(int id, Connection connection) throws Exception {
+        Annonce model = null;
+        boolean wasConnected = true;
+        if (connection == null) {
+            wasConnected = false;
+            connection = Connect.getConnection();
+        } 
+        String sql = "SELECT * FROM annonce WHERE id_annonce = ?";
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setInt(1, id);
+            System.out.println(stmt.toString());
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                model.setIdAnnonce(rs.getString("id_annonce"));
+                model.setIdVoiture(rs.getInt("id_voiture"));
+                model.setDescription(rs.getString("description"));
+                model.setDate(rs.getDate("date"));
+                model.setPrix(rs.getDouble("prix"));
+                model.setIdClient(rs.getInt("id_client"));
+                model.setStatus(rs.getInt("status"));
+                model.setCommission(rs.getDouble("commission"));
+            }
+        }
+
+        if (!wasConnected) {
+            connection.close();
+        }
+        return model;
     }
 
     // fields / getter / setter / constructor
