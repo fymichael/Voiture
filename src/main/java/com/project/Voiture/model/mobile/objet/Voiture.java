@@ -80,7 +80,7 @@ public class Voiture {
                 v.setIdEnergie(result.getString("id_energie"));
                 v.setIdModele(result.getString("id_modele"));
                 v.setIdMarque(result.getString("id_marque"));
-                v.setIdModeTransmission(result.getString("id_mode_transformation"));
+                v.setIdModeTransmission(result.getString("id_mode_transmission"));
                 v.setAnneeSortie(result.getString("annee_sortie"));
                 v.setAutonomie(result.getDouble("autonomie"));
                 v.setImmatriculation(result.getString("immatriculation"));
@@ -127,7 +127,7 @@ public class Voiture {
                 v.setIdEnergie(result.getString("id_energie"));
                 v.setIdModele(result.getString("id_modele"));
                 v.setIdMarque(result.getString("id_marque"));
-                v.setIdModeTransmission(result.getString("id_mode_transformation"));
+                v.setIdModeTransmission(result.getString("id_mode_transmission"));
                 v.setAnneeSortie(result.getString("annee_sortie"));
                 v.setAutonomie(result.getDouble("autonomie"));
                 v.setImmatriculation(result.getString("immatriculation"));
@@ -174,7 +174,7 @@ public class Voiture {
                 v.setIdEnergie(result.getString("id_energie"));
                 v.setIdModele(result.getString("id_modele"));
                 v.setIdMarque(result.getString("id_marque"));
-                v.setIdModeTransmission(result.getString("id_mode_transformation"));
+                v.setIdModeTransmission(result.getString("id_mode_transmission"));
                 v.setAnneeSortie(result.getString("annee_sortie"));
                 v.setAutonomie(result.getDouble("autonomie"));
                 v.setImmatriculation(result.getString("immatriculation"));
