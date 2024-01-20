@@ -74,7 +74,7 @@ public class AnnoncesListController {
       return json;
    }
 
-   @GetMapping(path = "/annonces/{id}")
+   @GetMapping(path = "/annonce/{id}")
    public MyJSON getFicheAnnonce(@PathVariable("id") int id) {
       MyJSON json = new MyJSON();
 
