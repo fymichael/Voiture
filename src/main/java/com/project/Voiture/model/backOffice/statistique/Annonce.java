@@ -2,11 +2,11 @@ package com.project.Voiture.model.backOffice.statistique;
 
 import java.sql.Connection;
 import java.sql.Date;
+import java.sql.PreparedStatement;
 import java.sql.Statement;
 
 import com.project.Voiture.model.backOffice.caracteristique.Voiture;
 import com.project.Voiture.model.connection.Connect;
-
 
 public class Annonce {
     String idAnnonce;
@@ -14,28 +14,39 @@ public class Annonce {
     String description;
     Date date;
     double prix;
-    int idClient;
+    String idClient;
     int status;
-    double commission;
 
     // methods
-    public void insert(Connection con) throws Exception{
-                boolean valid=true;
-        Statement stmt =null;
-        try{
-            if(con==null){
+    public void insert(Connection con) throws Exception {
+        boolean valid = true;
+        PreparedStatement pstmt = null;
+
+        try {
+            if (con == null) {
                 con = Connect.connectDB();
-                valid=false;
-            } 
-            stmt= con.createStatement();
-            String sql="INSERT INTO Couleur VALUES(DEFAULT, "+this.getVoiture().getIdVoiture()+", '"+ this.getDescription() +"'', default, "+ this.getPrix() +", "+ this.getIdClient() +", 1)";
-            System.out.println(sql);
-            stmt.executeUpdate(sql);
-        }catch(Exception e){
+                valid = false;
+            }
+
+            String sql = "INSERT INTO Annonce VALUES(DEFAULT, ?, ?, default, ?, ?, 1)";
+            pstmt = con.prepareStatement(sql);
+
+            pstmt.setString(1, this.getVoiture().getIdVoiture());
+            pstmt.setString(2, this.getDescription());
+            pstmt.setDouble(3, this.getPrix());
+            pstmt.setString(4, this.getIdClient());
+
+            pstmt.executeUpdate();
+
+        } catch (Exception e) {
             throw e;
-        }finally{
-            if(stmt!=null){ stmt.close(); }
-            if(!valid){ con.close(); }
+        } finally {
+            if (pstmt != null) {
+                pstmt.close();
+            }
+            if (!valid) {
+                con.close();
+            }
         }
     }
 
@@ -57,7 +68,7 @@ public class Annonce {
         return idAnnonce;
     }
 
-    public int getIdClient() {
+    public String getIdClient() {
         return idClient;
     }
 
@@ -85,7 +96,7 @@ public class Annonce {
         this.idAnnonce = idAnnonce;
     }
 
-    public void setIdClient(int idClient) {
+    public void setIdClient(String idClient) {
         this.idClient = idClient;
     }
 
@@ -95,14 +106,6 @@ public class Annonce {
 
     public void setPrix(double prix) {
         this.prix = prix;
-    }
-
-    public double getCommission() {
-        return commission;
-    }
-
-    public void setCommission(double commission) {
-        this.commission = commission;
     }
 
     public Annonce() {

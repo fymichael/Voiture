@@ -8,7 +8,7 @@ import java.util.Vector;
 import com.project.Voiture.model.connection.Connect;
 
 public class Voiture {
-    int idVoiture;
+    String idVoiture;
     Marque marque;
     Categorie categorie;
     Modele modele;
@@ -20,6 +20,34 @@ public class Voiture {
     ModeTransmission modeTransmission;
 
     // methods
+    // inserer une nouvelle voiture
+    public void insert(Connection con) throws Exception {
+        boolean valid = true;
+        Statement stmt = null;
+        try {
+            if (con == null) {
+                con = Connect.connectDB();
+                valid = false;
+            }
+            stmt = con.createStatement();
+            String sql = "INSERT INTO Voiture VALUES(DEFAULT, '" + this.getMarque().getIdMarque() + "', '"
+                    + this.getCategorie().getIdCategorie() + "', '"+ this.getModele().getIdModele() +"', '"
+                     + this.getEnergie().getIdEnergie() + "', '" + this.getCouleur().getIdCouleur() + "', '"+ this.getAnneeSortie() +"', "+ this.getAutonomie() +", '"+ this.getModeTransmission().getIdModeTransmission() +"', 1)";
+            System.out.println(sql);
+            stmt.executeUpdate(sql);
+        } catch (Exception e) {
+            throw e;
+        } finally {
+            if (stmt != null) {
+                stmt.close();
+            }
+            if (!valid) {
+                con.close();
+            }
+        }
+    }
+
+    // avoir toutes les voitures
     public Voiture[] getAll(Connection con) throws Exception {
         Vector<Voiture> listVoiture = new Vector<Voiture>();
         boolean valid = true;
@@ -35,13 +63,14 @@ public class Voiture {
             result = state.executeQuery(sql);
             while (result.next()) {
                 Voiture v = new Voiture();
-                this.setIdVoiture(result.getInt("id_voiture"));
+                this.setIdVoiture(result.getString("id_voiture"));
                 Marque marque = new Marque().getById(con, result.getInt("id_marque"));
                 Categorie categorie = new Categorie().getById(con, result.getInt("id_categorie"));
                 Modele modele = new Modele().getById(con, result.getInt("id_modele"));
                 Energie energie = new Energie().getById(con, result.getInt("id_energie"));
                 Couleur couleur = new Couleur().getById(con, result.getInt("id_couleur"));
-                ModeTransmission modeTransmission = new ModeTransmission().getById(con, result.getInt("id_mode_transformation"));
+                ModeTransmission modeTransmission = new ModeTransmission().getById(con,
+                        result.getInt("id_mode_transformation"));
                 v.setCategorie(categorie);
                 v.setCouleur(couleur);
                 v.setEnergie(energie);
@@ -123,7 +152,7 @@ public class Voiture {
         this.immatriculation = immatriculation;
     }
 
-    public void setIdVoiture(int idVoiture) {
+    public void setIdVoiture(String idVoiture) {
         this.idVoiture = idVoiture;
     }
 
@@ -155,7 +184,7 @@ public class Voiture {
         return marque;
     }
 
-    public int getIdVoiture() {
+    public String getIdVoiture() {
         return idVoiture;
     }
 }

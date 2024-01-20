@@ -10,7 +10,6 @@ import com.project.Voiture.model.connection.Connect;
 public class Modele {
     String idModele;
     String intitule;
-    int vinNum;
     int etat;
 
     public String getIdModele() {
@@ -30,25 +29,6 @@ public class Modele {
             throw new Exception("intitule nulle");
         }
         this.intitule = intitule;
-    }
-
-    public int getVinNum() {
-        return this.vinNum;
-    }
-
-    public void setVinNum(int vinNum) throws Exception {
-        if (vinNum < 0) {
-            throw new Exception("vinNum invalide: negatif");
-        }
-        this.vinNum = vinNum;
-    }
-
-    public void setVinNum(String vinNum) throws Exception {
-        int a = Integer.valueOf(vinNum);
-        if (vinNum.length() == 0) {
-            throw new Exception("vinNum invalide: null");
-        }
-        this.setVinNum(a);
     }
 
     public int getEtat() {
@@ -88,7 +68,7 @@ public class Modele {
                 valid = false;
             }
             stmt = con.createStatement();
-            String sql = "INSERT INTO Modele VALUES(DEFAULT, '" + this.getIntitule() + "', " + this.getVinNum() + ")";
+            String sql = "INSERT INTO Modele VALUES(DEFAULT, '" + this.getIntitule() + ",1)";
             System.out.println(sql);
             stmt.executeUpdate(sql);
         } catch (Exception e) {
