@@ -15,9 +15,9 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 
 @RestController
 @RequestMapping("api/voiture")
+@CrossOrigin(origins = "*", allowedHeaders ="*")
 public class EnergieController {
 
-    @CrossOrigin(origins = "*", allowedHeaders ="*")
     @GetMapping("/energies")
     public Energie[] getListe()throws Exception{
         Energie c = new Energie();
@@ -25,7 +25,6 @@ public class EnergieController {
         return liste;
     }
 
-    @CrossOrigin(origins = "*", allowedHeaders ="*")
     @PostMapping("/add-energie")
     public void form(@RequestBody String nom)throws Exception{
        Energie c = new Energie();
@@ -33,13 +32,11 @@ public class EnergieController {
        c.insert(c.getIntitule(), null);
     }
 
-    @CrossOrigin(origins = "*", allowedHeaders ="*")
     @PutMapping("/update-energie")
     public void update(@RequestBody Energie Energie)throws Exception{
        Energie.update(null);
     }
 
-    @CrossOrigin(origins = "*", allowedHeaders ="*")
     @PutMapping("/delete-energie")
     public void delete(@RequestBody Energie Energie)throws Exception{
        Energie.delete(null);

@@ -201,7 +201,7 @@ public class Categorie {
                 valid = false;
             }
             stmt = con.createStatement();
-            String sql = "UPDATE  Categorie SET etat=10 WHERE id_categorie='" + this.getIdCategorie() + "'";
+            String sql = "UPDATE  Categorie SET etat=0 WHERE id_categorie='" + this.getIdCategorie() + "'";
             System.out.println(sql);
             stmt.executeUpdate(sql);
         } catch (Exception e) {

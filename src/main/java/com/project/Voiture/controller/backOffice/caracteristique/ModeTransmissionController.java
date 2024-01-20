@@ -15,9 +15,9 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 
 @RestController
 @RequestMapping("api/voiture")
+@CrossOrigin(origins = "*", allowedHeaders ="*")
 public class ModeTransmissionController {
 
-    @CrossOrigin(origins = "*", allowedHeaders ="*")
     @GetMapping("/ModeTransmissions")
     public ModeTransmission[] getListe()throws Exception{
         ModeTransmission c = new ModeTransmission();
@@ -25,19 +25,16 @@ public class ModeTransmissionController {
         return liste;
     }
 
-    @CrossOrigin(origins = "*", allowedHeaders ="*")
     @PostMapping("/add-ModeTransmission")
     public void form(@RequestBody ModeTransmission ModeTransmission)throws Exception{
        ModeTransmission.insert(null);
     }
 
-    @CrossOrigin(origins = "*", allowedHeaders ="*")
     @PutMapping("/update-ModeTransmission")
     public void update(@RequestBody ModeTransmission ModeTransmission)throws Exception{
        ModeTransmission.update(null);
     }
 
-    @CrossOrigin(origins = "*", allowedHeaders ="*")
     @PutMapping("/delete-ModeTransmission")
     public void delete(@RequestBody ModeTransmission ModeTransmission)throws Exception{
        ModeTransmission.delete(null);

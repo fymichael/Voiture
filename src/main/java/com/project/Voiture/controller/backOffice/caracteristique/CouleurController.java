@@ -15,9 +15,9 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 
 @RestController
 @RequestMapping("api/voiture")
+@CrossOrigin(origins = "*", allowedHeaders ="*")
 public class CouleurController {
 
-    @CrossOrigin(origins = "*", allowedHeaders ="*")
     @GetMapping("/couleurs")
     public Couleur[] getListe()throws Exception{
         Couleur c = new Couleur();
@@ -25,19 +25,16 @@ public class CouleurController {
         return liste;
     }
 
-    @CrossOrigin(origins = "*", allowedHeaders ="*")
     @PostMapping("/add-couleur")
     public void form(@RequestBody Couleur couleur)throws Exception{
        couleur.insert(null);
     }
 
-    @CrossOrigin(origins = "*", allowedHeaders ="*")
     @PutMapping("/update-couleur")
     public void update(@RequestBody Couleur Couleur)throws Exception{
        Couleur.update(null);
     }
 
-    @CrossOrigin(origins = "*", allowedHeaders ="*")
     @PutMapping("/delete-couleur")
     public void delete(@RequestBody Couleur Couleur)throws Exception{
        Couleur.delete(null);

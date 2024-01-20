@@ -93,7 +93,7 @@ public class Modele {
                 con = Connect.connectDB();
                 valid = false;
             }
-            String sql = "SELECT * FROM Modele where etat != 10 and id_modele = "+idModele;
+            String sql = "SELECT * FROM Modele where etat != 0 and id_modele = "+idModele;
             state = con.createStatement();
             result = state.executeQuery(sql);
             while (result.next()) {
@@ -133,7 +133,7 @@ public class Modele {
                 con = Connect.connectDB();
                 valid = false;
             }
-            String sql = "SELECT * FROM Modele where etat != 10";
+            String sql = "SELECT * FROM Modele where etat != 0";
             state = con.createStatement();
             result = state.executeQuery(sql);
             while (result.next()) {
@@ -199,7 +199,7 @@ public class Modele {
                 valid = false;
             }
             stmt = con.createStatement();
-            String sql = "UPDATE Modele SET etat=10 WHERE id_modele='" + this.getIdModele() + "'";
+            String sql = "UPDATE Modele SET etat=0 WHERE id_modele='" + this.getIdModele() + "'";
             System.out.println(sql);
             stmt.executeUpdate(sql);
         } catch (Exception e) {

@@ -94,7 +94,7 @@ public class Marque {
                 con = Connect.connectDB();
                 valid = false;
             }
-            String sql = "SELECT * FROM Marque where etat != 10 and id_marque = "+idMarque;
+            String sql = "SELECT * FROM Marque where etat != 0 and id_marque = "+idMarque;
             state = con.createStatement();
             result = state.executeQuery(sql);
             while (result.next()) {
@@ -133,7 +133,7 @@ public class Marque {
                 con = Connect.connectDB();
                 valid = false;
             }
-            String sql = "SELECT * FROM Marque where etat != 10 ";
+            String sql = "SELECT * FROM Marque where etat != 0 ";
             state = con.createStatement();
             result = state.executeQuery(sql);
             while (result.next()) {
@@ -199,7 +199,7 @@ public class Marque {
                 valid = false;
             }
             stmt = con.createStatement();
-            String sql = "UPDATE Marque SET etat=10 WHERE id_marque='" + this.getIdMarque() + "'";
+            String sql = "UPDATE Marque SET etat=0 WHERE id_marque='" + this.getIdMarque() + "'";
             System.out.println(sql);
             stmt.executeUpdate(sql);
         } catch (Exception e) {

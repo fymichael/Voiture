@@ -94,7 +94,7 @@ public class ModeTransmission {
                 con = Connect.connectDB();
                 valid = false;
             }
-            String sql = "SELECT * FROM Mode_Transmission where etat != 10 and id_Mode_Transmission = " + idModeTransmission;
+            String sql = "SELECT * FROM Mode_Transmission where etat != 0 and id_Mode_Transmission = " + idModeTransmission;
             state = con.createStatement();
             result = state.executeQuery(sql);
             while (result.next()) {
@@ -133,7 +133,7 @@ public class ModeTransmission {
                 con = Connect.connectDB();
                 valid = false;
             }
-            String sql = "SELECT * FROM Mode_Transmission where etat != 10";
+            String sql = "SELECT * FROM Mode_Transmission where etat != 0";
             state = con.createStatement();
             result = state.executeQuery(sql);
             while (result.next()) {
@@ -174,7 +174,7 @@ public class ModeTransmission {
                 valid = false;
             }
             stmt = con.createStatement();
-            String sql = "UPDATE Mode_Transmission SET etat=10 WHERE id_Mode_Transmission='" + this.getIdModeTransmission() + "'";
+            String sql = "UPDATE Mode_Transmission SET etat=0 WHERE id_Mode_Transmission='" + this.getIdModeTransmission() + "'";
             System.out.println(sql);
             stmt.executeUpdate(sql);
         } catch (Exception e) {

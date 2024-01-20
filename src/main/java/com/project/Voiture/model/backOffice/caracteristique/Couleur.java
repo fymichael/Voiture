@@ -119,7 +119,7 @@ public class Couleur {
                 con = Connect.connectDB();
                 valid = false;
             }
-            String sql = "SELECT * FROM Couleur where etat != 10 and id_couleur = "+idCouleur;
+            String sql = "SELECT * FROM Couleur where etat != 0 and id_couleur = "+idCouleur;
             state = con.createStatement();
             result = state.executeQuery(sql);
             while (result.next()) {
@@ -158,7 +158,7 @@ public class Couleur {
                 con = Connect.connectDB();
                 valid = false;
             }
-            String sql = "SELECT * FROM Couleur where etat != 10 ";
+            String sql = "SELECT * FROM Couleur where etat != 0 ";
             state = con.createStatement();
             result = state.executeQuery(sql);
             while (result.next()) {
@@ -199,7 +199,7 @@ public class Couleur {
                 valid = false;
             }
             stmt = con.createStatement();
-            String sql = "UPDATE Couleur SET etat=10 WHERE id_couleur='" + this.getIdCouleur() + "'";
+            String sql = "UPDATE Couleur SET etat=0 WHERE id_couleur='" + this.getIdCouleur() + "'";
             System.out.println(sql);
             stmt.executeUpdate(sql);
         } catch (Exception e) {

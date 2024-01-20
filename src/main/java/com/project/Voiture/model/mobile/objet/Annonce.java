@@ -1,16 +1,14 @@
-package com.project.Voiture.model.backOffice.statistique;
+package com.project.Voiture.model.mobile.objet;
 
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
-import java.sql.Statement;
 
-import com.project.Voiture.model.backOffice.caracteristique.Voiture;
 import com.project.Voiture.model.connection.Connect;
 
 public class Annonce {
     String idAnnonce;
-    Voiture voiture;
+    String idVoiture;
     String description;
     Date date;
     double prix;
@@ -18,6 +16,9 @@ public class Annonce {
     int status;
 
     // methods
+    // avoir toutes les annoc
+
+    //ajouter une nouvelle annonce
     public void insert(Connection con) throws Exception {
         boolean valid = true;
         PreparedStatement pstmt = null;
@@ -31,7 +32,7 @@ public class Annonce {
             String sql = "INSERT INTO Annonce VALUES(DEFAULT, ?, ?, default, ?, ?, 1)";
             pstmt = con.prepareStatement(sql);
 
-            pstmt.setString(1, this.getVoiture().getIdVoiture());
+            pstmt.setString(1, this.getIdVoiture());
             pstmt.setString(2, this.getDescription());
             pstmt.setDouble(3, this.getPrix());
             pstmt.setString(4, this.getIdClient());
@@ -72,8 +73,8 @@ public class Annonce {
         return idClient;
     }
 
-    public Voiture getVoiture() {
-        return voiture;
+    public String getIdVoiture() {
+        return idVoiture;
     }
 
     public double getPrix() {
@@ -100,8 +101,8 @@ public class Annonce {
         this.idClient = idClient;
     }
 
-    public void setVoiture(Voiture idVoiture) {
-        this.voiture = idVoiture;
+    public void setIdVoiture(String idVoiture) {
+        this.idVoiture = idVoiture;
     }
 
     public void setPrix(double prix) {

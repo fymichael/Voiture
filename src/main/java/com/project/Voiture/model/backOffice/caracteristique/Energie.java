@@ -94,7 +94,7 @@ public class Energie {
                 con = Connect.connectDB();
                 valid = false;
             }
-            String sql = "SELECT * FROM Energie where etat != 10 and id_energie = "+idEnergie;
+            String sql = "SELECT * FROM Energie where etat != 0 and id_energie = "+idEnergie;
             state = con.createStatement();
             result = state.executeQuery(sql);
             while (result.next()) {
@@ -133,7 +133,7 @@ public class Energie {
                 con = Connect.connectDB();
                 valid = false;
             }
-            String sql = "SELECT * FROM Energie where etat != 10";
+            String sql = "SELECT * FROM Energie where etat != 0";
             state = con.createStatement();
             result = state.executeQuery(sql);
             while (result.next()) {
@@ -174,7 +174,7 @@ public class Energie {
                 valid = false;
             }
             stmt = con.createStatement();
-            String sql = "UPDATE Energie SET etat=10 WHERE id_energie='" + this.getIdEnergie() + "'";
+            String sql = "UPDATE Energie SET etat=0 WHERE id_energie='" + this.getIdEnergie() + "'";
             System.out.println(sql);
             stmt.executeUpdate(sql);
         } catch (Exception e) {

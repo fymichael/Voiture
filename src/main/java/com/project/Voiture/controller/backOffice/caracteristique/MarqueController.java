@@ -15,9 +15,9 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 
 @RestController
 @RequestMapping("api/voiture")
+@CrossOrigin(origins = "*", allowedHeaders ="*")
 public class MarqueController {
 
-    @CrossOrigin(origins = "*", allowedHeaders ="*")
     @GetMapping("/marques")
     public Marque[] getListe()throws Exception{
         Marque c = new Marque();
@@ -25,7 +25,6 @@ public class MarqueController {
         return liste;
     }
 
-    @CrossOrigin(origins = "*", allowedHeaders ="*")
     @PostMapping("/add-marque")
     public void form(@RequestBody String nom)throws Exception{
        Marque c = new Marque();
@@ -33,13 +32,11 @@ public class MarqueController {
        c.insert(c.getIntitule(), null);
     }
 
-    @CrossOrigin(origins = "*", allowedHeaders ="*")
     @PutMapping("/update-marque")
     public void update(@RequestBody Marque Marque)throws Exception{
        Marque.update(null);
     }
 
-    @CrossOrigin(origins = "*", allowedHeaders ="*")
     @PutMapping("/delete-marque")
     public void delete(@RequestBody Marque Marque)throws Exception{
        Marque.delete(null);
