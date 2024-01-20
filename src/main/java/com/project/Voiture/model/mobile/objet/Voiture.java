@@ -119,7 +119,7 @@ public class Voiture {
                 v.setIdModele(result.getString("id_modele"));
                 v.setIdMarque(result.getString("id_marque"));
                 v.setIdModeTransmission(result.getString("id_mode_transmission"));
-                v.setAnneeSortie(result.getString("annee_sortie"));
+                v.setAnneeSortie(result.getString("anne_sortie"));
                 v.setAutonomie(result.getDouble("autonomie"));
                 v.setImmatriculation(result.getString("immatriculation"));
             }
@@ -166,7 +166,7 @@ public class Voiture {
                 v.setIdModele(result.getString("id_modele"));
                 v.setIdMarque(result.getString("id_marque"));
                 v.setIdModeTransmission(result.getString("id_mode_transmission"));
-                v.setAnneeSortie(result.getString("annee_sortie"));
+                v.setAnneeSortie(result.getString("anne_sortie"));
                 v.setAutonomie(result.getDouble("autonomie"));
                 v.setImmatriculation(result.getString("immatriculation"));
             }
@@ -213,7 +213,7 @@ public class Voiture {
                 v.setIdModele(result.getString("id_modele"));
                 v.setIdMarque(result.getString("id_marque"));
                 v.setIdModeTransmission(result.getString("id_mode_transmission"));
-                v.setAnneeSortie(result.getString("annee_sortie"));
+                v.setAnneeSortie(result.getString("anne_sortie"));
                 v.setAutonomie(result.getDouble("autonomie"));
                 v.setImmatriculation(result.getString("immatriculation"));
                 listVoiture.add(v);
