@@ -47,6 +47,44 @@ public class Annonce {
         return "status annonce inconnue";
     }
 
+    // avoir une annonce par son id
+    public Annonce getById(String idAnnonce, Connection con) throws Exception {
+        boolean valid = true;
+        Statement pstmt = null;
+        ResultSet rs = null;
+
+        Annonce a = new Annonce();
+        try {
+            if (con == null) {
+                con = Connect.connectDB();
+                valid = false;
+            }
+
+            String sql = " select * from annonce where id_annonce = '" + idAnnonce + "'";
+            pstmt = con.createStatement();
+            rs = pstmt.executeQuery(sql);
+            while (rs.next()) {
+                a.setIdClient(rs.getString("id_client"));
+                a.setIdVoiture(rs.getString("id_voiture"));
+                a.setDate(rs.getDate("date"));
+                a.setDescription(rs.getString("description"));
+                a.setIdAnnonce(rs.getString("id_annonce"));
+                a.setPrix(rs.getDouble("prix"));
+                a.setStatus(rs.getInt("status"));
+            }
+        } catch (Exception e) {
+            throw e;
+        } finally {
+            if (pstmt != null) {
+                pstmt.close();
+            }
+            if (!valid) {
+                con.close();
+            }
+        }
+        return a;
+    }
+
     // avoir toutes les annonces du client connecter
     public Vector<Annonce> clientAnnonces(String idClient, Connection con) throws Exception {
         boolean valid = true;
