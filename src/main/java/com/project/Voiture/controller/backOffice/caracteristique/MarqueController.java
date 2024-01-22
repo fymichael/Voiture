@@ -11,6 +11,7 @@ import com.project.Voiture.model.backOffice.caracteristique.Marque;
 
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 
 
 @RestController
@@ -25,19 +26,19 @@ public class MarqueController {
         return liste;
     }
 
-    @PostMapping("/add-marque")
+    @PostMapping("/marque")
     public void form(@RequestBody String nom)throws Exception{
        Marque c = new Marque();
        c.setIntitule(nom);
        c.insert(c.getIntitule(), null);
     }
 
-    @PutMapping("/update-marque")
+    @PutMapping("/marque")
     public void update(@RequestBody Marque Marque)throws Exception{
        Marque.update(null);
     }
 
-    @PutMapping("/delete-marque")
+    @DeleteMapping("/marque")
     public void delete(@RequestBody Marque Marque)throws Exception{
        Marque.delete(null);
     }

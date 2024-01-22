@@ -18,24 +18,24 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 @CrossOrigin(origins = "*", allowedHeaders ="*")
 public class ModeTransmissionController {
 
-    @GetMapping("/ModeTransmissions")
+    @GetMapping("/modeTransmissions")
     public ModeTransmission[] getListe()throws Exception{
         ModeTransmission c = new ModeTransmission();
         ModeTransmission[] liste=c.getAll(null);
         return liste;
     }
 
-    @PostMapping("/add-ModeTransmission")
+    @PostMapping("/modeTransmission")
     public void form(@RequestBody ModeTransmission ModeTransmission)throws Exception{
        ModeTransmission.insert(null);
     }
 
-    @PutMapping("/update-ModeTransmission")
+    @PutMapping("/modeTransmission")
     public void update(@RequestBody ModeTransmission ModeTransmission)throws Exception{
        ModeTransmission.update(null);
     }
 
-    @PutMapping("/delete-ModeTransmission")
+    @PutMapping("/modeTransmission")
     public void delete(@RequestBody ModeTransmission ModeTransmission)throws Exception{
        ModeTransmission.delete(null);
     }

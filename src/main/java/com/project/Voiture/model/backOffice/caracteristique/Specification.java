@@ -7,17 +7,17 @@ import java.util.Vector;
 
 import com.project.Voiture.model.connection.Connect;
 
-public class Modele {
-    String idModele;
+public class Specification {
+    String idSpecification;
     String intitule;
     int etat;
 
-    public String getIdModele() {
-        return this.idModele;
+    public String getIdSpecification() {
+        return this.idSpecification;
     }
 
-    public void setIdModele(String idModele) throws Exception {
-        this.idModele = idModele;
+    public void setIdSpecification(String idModele) throws Exception {
+        this.idSpecification = idModele;
     }
 
     public String getIntitule() {
@@ -50,11 +50,11 @@ public class Modele {
         this.setEtat(a);
     }
 
-    public Modele() throws Exception {
+    public Specification() throws Exception {
     }
 
-    public Modele(String id, String intitule, int etat) throws Exception {
-        this.setIdModele(id);
+    public Specification(String id, String intitule, int etat) throws Exception {
+        this.setIdSpecification(id);
         this.setIntitule(intitule);
         this.setEtat(etat);
     }
@@ -68,7 +68,7 @@ public class Modele {
                 valid = false;
             }
             stmt = con.createStatement();
-            String sql = "INSERT INTO Modele VALUES(DEFAULT, '" + this.getIntitule() + ",1)";
+            String sql = "INSERT INTO specification VALUES(DEFAULT, '" + this.getIntitule() + ",1)";
             System.out.println(sql);
             stmt.executeUpdate(sql);
         } catch (Exception e) {
@@ -83,24 +83,24 @@ public class Modele {
         }
     }
 
-    public Modele getById(Connection con, int idModele) throws Exception {
+    public Specification getById(Connection con, int idModele) throws Exception {
         boolean valid = true;
         Statement state = null;
         ResultSet result = null;
-        Modele modele = null;
+        Specification modele = null;
         try {
             if (con == null) {
                 con = Connect.connectDB();
                 valid = false;
             }
-            String sql = "SELECT * FROM Modele where etat != 0 and id_modele = "+idModele;
+            String sql = "SELECT * FROM specification where etat != 0 and id_specification = "+idModele;
             state = con.createStatement();
             result = state.executeQuery(sql);
             while (result.next()) {
                 String id = result.getString(1);
                 String intitule = result.getString(2);
                 int etat = result.getInt(3);
-                modele = new Modele(id, intitule, etat);
+                modele = new Specification(id, intitule, etat);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -123,8 +123,8 @@ public class Modele {
         return modele;
     }
 
-    public Modele[] getAll(Connection con) throws Exception {
-        Vector<Modele> listModele = new Vector<Modele>();
+    public Specification[] getAll(Connection con) throws Exception {
+        Vector<Specification> listModele = new Vector<Specification>();
         boolean valid = true;
         Statement state = null;
         ResultSet result = null;
@@ -133,14 +133,14 @@ public class Modele {
                 con = Connect.connectDB();
                 valid = false;
             }
-            String sql = "SELECT * FROM Modele where etat != 0";
+            String sql = "SELECT * FROM specification where etat != 0";
             state = con.createStatement();
             result = state.executeQuery(sql);
             while (result.next()) {
                 String id = result.getString(1);
                 String intitule = result.getString(2);
                 int etat = result.getInt(3);
-                Modele m = new Modele(id, intitule, etat);
+                Specification m = new Specification(id, intitule, etat);
                 listModele.add(m);
             }
         } catch (Exception e) {
@@ -160,7 +160,7 @@ public class Modele {
                 e.printStackTrace();
             }
         }
-        Modele[] modeles = new Modele[listModele.size()];
+        Specification[] modeles = new Specification[listModele.size()];
         listModele.toArray(modeles);
         return modeles;
     }
@@ -174,8 +174,8 @@ public class Modele {
                 valid = false;
             }
             stmt = con.createStatement();
-            String sql = "UPDATE Modele SET intitule='" + this.getIntitule() + "' WHERE id_modele='"
-                    + this.getIdModele() + "'";
+            String sql = "UPDATE specification SET intitule='" + this.getIntitule() + "' WHERE id_specification='"
+                    + this.getIdSpecification() + "'";
             System.out.println(sql);
             stmt.executeUpdate(sql);
         } catch (Exception e) {
@@ -199,7 +199,7 @@ public class Modele {
                 valid = false;
             }
             stmt = con.createStatement();
-            String sql = "UPDATE Modele SET etat=0 WHERE id_modele='" + this.getIdModele() + "'";
+            String sql = "UPDATE specification SET etat=0 WHERE id_specification='" + this.getIdSpecification() + "'";
             System.out.println(sql);
             stmt.executeUpdate(sql);
         } catch (Exception e) {

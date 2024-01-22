@@ -11,6 +11,7 @@ import com.project.Voiture.model.backOffice.caracteristique.Categorie;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 
 
 @RestController
@@ -25,17 +26,17 @@ public class CategorieController {
       return liste;
    }
 
-    @PostMapping("/add-categorie")
+    @PostMapping("/categorie")
     public void form(@RequestBody Categorie c)throws Exception{
        c.insert(null);
     }
 
-    @PutMapping("/update-categorie")
+    @PutMapping("/categorie")
     public void update(@RequestBody Categorie categorie)throws Exception{
        categorie.update(null);
     }
 
-    @PutMapping("/delete-categorie")
+    @DeleteMapping("/categorie")
     public void delete(@RequestBody Categorie categorie)throws Exception{
        categorie.delete(null);
     }
