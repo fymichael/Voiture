@@ -1,4 +1,4 @@
-package com.project.Voiture.controller.frontOffice.listAnnonces;
+package com.project.Voiture.controller.frontOffice.listeAnnonces;
 
 
 import org.springframework.web.bind.annotation.GetMapping;

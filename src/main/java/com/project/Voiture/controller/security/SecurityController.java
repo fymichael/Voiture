@@ -1,4 +1,4 @@
-package com.project.Voiture.controller.frontOffice.security;
+package com.project.Voiture.controller.security;
 
 
 import org.springframework.web.bind.annotation.GetMapping;

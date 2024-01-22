@@ -32,7 +32,7 @@ public class Voiture {
             }
             stmt = con.createStatement();
             String sql = " update voiture set id_marque = '" + this.getIdMarque() + "', id_categorie = '"
-                    + this.getIdCategorie() + "', id_modele = '" + this.getIdModele() + "', id_energie = '"
+                    + this.getIdCategorie() + "', id_modele = '" + this.getIdSpecification() + "', id_energie = '"
                     + this.getIdEnergie() + "', id_couleur = '" + this.getIdCouleur() + "', anne_sortie = '" + this.getAnneeSortie() + "', immatriculation = '"
                     + this.getImmatriculation() + "', autonomie = " + this.getAutonomie() + ", id_mode_transmission = '" + this.getIdModeTransmission()
                     + "', status = 1 where id_voiture = "+ idVoiture +")";
