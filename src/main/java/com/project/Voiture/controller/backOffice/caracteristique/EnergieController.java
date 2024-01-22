@@ -11,6 +11,7 @@ import com.project.Voiture.model.backOffice.caracteristique.Energie;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 
 
 @RestController
@@ -25,19 +26,19 @@ public class EnergieController {
         return liste;
     }
 
-    @PostMapping("/add-energie")
+    @PostMapping("/energie")
     public void form(@RequestBody String nom)throws Exception{
        Energie c = new Energie();
        c.setIntitule(nom);
        c.insert(c.getIntitule(), null);
     }
 
-    @PutMapping("/update-energie")
+    @PutMapping("/energie")
     public void update(@RequestBody Energie Energie)throws Exception{
        Energie.update(null);
     }
 
-    @PutMapping("/delete-energie")
+    @DeleteMapping("/energie")
     public void delete(@RequestBody Energie Energie)throws Exception{
        Energie.delete(null);
     }

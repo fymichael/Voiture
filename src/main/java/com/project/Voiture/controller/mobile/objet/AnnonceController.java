@@ -26,32 +26,7 @@ public class AnnonceController {
 
     }
     @PostMapping("/annonce")
-    public void form(@RequestBody Annonce newAnnonce) throws Exception {
+    public void insert(@RequestBody Annonce newAnnonce) throws Exception {
         newAnnonce.insert(null);
-        /*
-         *format JSON attendus
-         * {
-         * "voiture": {
-         * "idVoiture" : "CAR0002",
-         * "idMarque": "MRQ0001",
-         * "idCategorie": "CTG0001",
-         * "idModele": "MDL0001",
-         * "idEnergie": "ENG0001",
-         * "idCouleur": "CLR0003",
-         * "anneeSortie": "2020",
-         * "immatriculation": "2020TBR",
-         * "autonomie": 15,
-         * "idModeTransmission": "MTR0001"
-         * },
-         * "description":
-         * "Une voiture japonaise de luxe 4 vitres électriques et d'une élégance incomparable"
-         * ,
-         * "prix": 255000000,
-         * "idClient": "CLT0001",
-         * "status": 1
-         * }
-         * 
-         * 
-         */
     }
 }

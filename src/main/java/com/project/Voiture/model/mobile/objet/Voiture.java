@@ -11,7 +11,7 @@ public class Voiture {
     String idVoiture;
     String idMarque;
     String idCategorie;
-    String idModele;
+    String idSpecification;
     String idEnergie;
     String idCouleur;
     String anneeSortie;
@@ -70,7 +70,7 @@ public class Voiture {
             }
             stmt = con.createStatement();
             String sql = "INSERT INTO Voiture VALUES(DEFAULT, '" + this.getIdMarque() + "', '"
-                    + this.getIdCategorie() + "', '" + this.getIdModele() + "', '"
+                    + this.getIdCategorie() + "', '" + this.getIdSpecification() + "', '"
                     + this.getIdEnergie() + "', '" + this.getIdCouleur() + "', '" + this.getAnneeSortie() + "', '"
                     + this.getImmatriculation() + "'," + this.getAutonomie() + ", '" + this.getIdModeTransmission()
                     + "', 1)";
@@ -116,7 +116,7 @@ public class Voiture {
                 v.setIdCategorie(result.getString("id_categorie"));
                 v.setIdCouleur(result.getString("id_couleur"));
                 v.setIdEnergie(result.getString("id_energie"));
-                v.setIdModele(result.getString("id_modele"));
+                v.setIdSpecificationgetIdSpecification(result.getString("id_modele"));
                 v.setIdMarque(result.getString("id_marque"));
                 v.setIdModeTransmission(result.getString("id_mode_transmission"));
                 v.setAnneeSortie(result.getString("anne_sortie"));
@@ -163,7 +163,7 @@ public class Voiture {
                 v.setIdCategorie(result.getString("id_categorie"));
                 v.setIdCouleur(result.getString("id_couleur"));
                 v.setIdEnergie(result.getString("id_energie"));
-                v.setIdModele(result.getString("id_modele"));
+                v.setIdSpecificationgetIdSpecification(result.getString("id_modele"));
                 v.setIdMarque(result.getString("id_marque"));
                 v.setIdModeTransmission(result.getString("id_mode_transmission"));
                 v.setAnneeSortie(result.getString("anne_sortie"));
@@ -210,7 +210,7 @@ public class Voiture {
                 v.setIdCategorie(result.getString("id_categorie"));
                 v.setIdCouleur(result.getString("id_couleur"));
                 v.setIdEnergie(result.getString("id_energie"));
-                v.setIdModele(result.getString("id_modele"));
+                v.setIdSpecificationgetIdSpecification(result.getString("id_modele"));
                 v.setIdMarque(result.getString("id_marque"));
                 v.setIdModeTransmission(result.getString("id_mode_transmission"));
                 v.setAnneeSortie(result.getString("anne_sortie"));
@@ -260,8 +260,8 @@ public class Voiture {
         this.idVoiture = idVoiture;
     }
 
-    public void setIdModele(String idModele) {
-        this.idModele = idModele;
+    public void setIdSpecificationgetIdSpecification(String idSpecification) {
+        this.idSpecification = idSpecification;
     }
 
     public void setIdModeTransmission(String idModeTransmission) {
@@ -300,8 +300,8 @@ public class Voiture {
         return idVoiture;
     }
 
-    public String getIdModele() {
-        return idModele;
+    public String getIdSpecification() {
+        return idSpecification;
     }
 
     public String getIdModeTransmission() {
