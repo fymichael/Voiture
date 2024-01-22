@@ -11,6 +11,7 @@ import com.project.Voiture.model.backOffice.caracteristique.ModeTransmission;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 
 
 @RestController
@@ -35,7 +36,7 @@ public class ModeTransmissionController {
        ModeTransmission.update(null);
     }
 
-    @PutMapping("/modeTransmission")
+    @DeleteMapping("/modeTransmission")
     public void delete(@RequestBody ModeTransmission ModeTransmission)throws Exception{
        ModeTransmission.delete(null);
     }
