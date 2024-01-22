@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
+import org.springframework.security.access.prepost.PostAuthorize;
+
 import java.util.*;
 
 import com.project.Voiture.model.backOffice.caracteristique.*;
@@ -21,6 +23,7 @@ import com.project.Voiture.util.*;
 public class AnnoncesListController {
 
    @GetMapping(path = "/accueil")
+   @PostAuthorize("hasAuthority('ROLE_Client')")
    public MyJSON getAccueil() {
       AccueilPage accueilPage = new AccueilPage();
       MyJSON json = new MyJSON();
@@ -40,6 +43,7 @@ public class AnnoncesListController {
    }
 
    @GetMapping(path = "/annonces")
+   @PostAuthorize("hasAuthority('ROLE_Administrateur')")
    public MyJSON getAnnonces() {
       AnnoncePage annoncePage = new AnnoncePage();
       MyJSON json = new MyJSON();
@@ -58,6 +62,7 @@ public class AnnoncesListController {
    }
 
    @GetMapping(path = "/annonces/filter")
+   @PostAuthorize("hasAuthority('ROLE_Administrateur')")
    public MyJSON getAnnonces(@RequestParam("param") String filter, @RequestParam("value") String value) {
       AnnoncePage annoncePage = new AnnoncePage();
       MyJSON json = new MyJSON();
@@ -75,6 +80,7 @@ public class AnnoncesListController {
    }
 
    @GetMapping(path = "/annonce/{id}")
+   @PostAuthorize("hasAuthority('ROLE_Administrateur')")
    public MyJSON getFicheAnnonce(@PathVariable("id") int id) {
       MyJSON json = new MyJSON();
 

@@ -14,3 +14,19 @@ JOIN couleur coul ON v.id_couleur = coul.id_couleur
 JOIN mode_transmission t ON v.id_mode_transmission = t.id_mode_transmission
 JOIN lieu l ON v.id_lieu = l.id_lieu
 JOIN modele mod ON v.id_modele = mod.id_modele;
+
+CREATE TABLE profil(
+    id_profil INTEGER PRIMARY KEY default nextval('seq_profil'),
+    nom VARCHAR(30) NOT NULL,
+    prenom VARCHAR(30) NOT NULL,
+    date_naissance DATE NOT NULL,
+    email VARCHAR(100) NOT NULL,
+    mdp VARCHAR(30) NOT NULL,
+    contact VARCHAR(20) NULL,
+    id_role INTEGER REFERENCES role(id_role),
+    status INTEGER NOT NULL
+);
+--Vue d'un profil et role
+CREATE OR REPLACE VIEW v_profil AS
+SELECT p.id_profil, p.nom, p.prenom, p.date_naissance, p.email, p.mdp, p.contact, p.id_role, 
+r.intitule role FROM profil p JOIN role r ON p.id_role = r.id_role;
