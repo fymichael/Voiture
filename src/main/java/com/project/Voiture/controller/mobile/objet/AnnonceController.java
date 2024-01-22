@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 public class AnnonceController {
 
-    @GetMapping("/annonce/{idClient}")
+    @GetMapping("/annonce/client/{idClient}")
     public Vector<Annonce> getClientAnnnonce(@PathVariable String idClient) throws Exception{
         Vector<Annonce> clientAnnonce = new Annonce().clientAnnonces(idClient, null);
         return clientAnnonce;
