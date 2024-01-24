@@ -4,18 +4,20 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.project.Voiture.model.mobile.auth.Client;
+import com.project.Voiture.securite.entite.Profil;
 
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 
 @RestController
 @RequestMapping("api/voiture")
 @CrossOrigin(origins = "*", allowedHeaders = "*")
-public class ClientController {
+public class ProfilController {
 
     @PostMapping("/client")
-    public void form(@RequestBody Client newClient) throws Exception {
+    @PostAuthorize("hasAuthority('ROLE_Administrateur')")
+    public void form(@RequestBody Profil newClient) throws Exception {
         newClient.insert(null);
     }
 

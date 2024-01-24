@@ -22,7 +22,7 @@ public class Annonce {
 
     // methods
     // modifier une annonce
-    public void update(Connection con, String idAnnonce) throws Exception {
+    public void changePrice(Connection con, String idAnnonce) throws Exception {
         boolean valid = true;
         PreparedStatement pstmt = null;
 
@@ -32,13 +32,10 @@ public class Annonce {
                 valid = false;
             }
 
-            String sql = "UPDATE Annonce SET idVoiture = ?, description = ?, prix = ?, idClient = ? WHERE idAnnonce = ?";
+            String sql = "UPDATE Annonce SET prix = ? WHERE idAnnonce = ?";
             pstmt = con.prepareStatement(sql);
 
-            pstmt.setString(1, this.getIdVoiture());
-            pstmt.setString(2, this.getDescription());
-            pstmt.setDouble(3, this.getPrix());
-            pstmt.setString(4, this.getIdClient());
+            pstmt.setDouble(1, this.getPrix());
             pstmt.setString(5, idAnnonce); 
 
             pstmt.executeUpdate();

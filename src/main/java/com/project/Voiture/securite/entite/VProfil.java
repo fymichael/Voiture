@@ -1,8 +1,5 @@
 package com.project.Voiture.securite.entite;
 
-import com.project.Voiture.model.connection.Connect;
-import com.project.Voiture.model.backOffice.caracteristique.*;
-import java.util.*;
 import lombok.*;
 import java.time.*;
 

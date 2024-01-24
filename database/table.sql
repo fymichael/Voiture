@@ -139,7 +139,7 @@ CREATE  TABLE "public".annonce (
 	CONSTRAINT fk_annonce_client FOREIGN KEY ( id_profil ) REFERENCES "public".profil( id_profil )   
  );
 
-CREATE OR REPLACE VIEW v_annonce_client AS SELECT "public".v_annonce_client,
+CREATE OR REPLACE VIEW v_annonce_client AS SELECT a.id_annonce,
     a.id_voiture,
     a.description,
     a.date,
@@ -156,7 +156,7 @@ CREATE OR REPLACE VIEW v_annonce_client AS SELECT "public".v_annonce_client,
      JOIN profil c ON (((c.id_profil)::text = (a.id_profil)::text)))
   WHERE ((a.status <> 0) AND (c.status <> 0));
 
-CREATE OR REPLACE VIEW v_detail_voiture AS SELECT "public".v_detail_voiture,
+CREATE OR REPLACE VIEW v_detail_voiture AS SELECT v.id_voiture,
     v.id_categorie,
     v.id_marque,
     v.id_specification,
@@ -183,7 +183,7 @@ CREATE OR REPLACE VIEW v_detail_voiture AS SELECT "public".v_detail_voiture,
      JOIN couleur co ON (((co.id_couleur)::text = (v.id_couleur)::text)))
   WHERE ((m.etat <> 0) AND (c.etat <> 0) AND (mo.etat <> 0) AND (e.etat <> 0) AND (co.etat <> 0));
 
-CREATE OR REPLACE VIEW v_detail_annonce AS SELECT "public".v_detail_annonce,
+CREATE OR REPLACE VIEW v_detail_annonce AS SELECT vdv.id_voiture,
     vdv.id_categorie,
     vdv.id_marque,
     vdv.id_specification,
@@ -215,7 +215,7 @@ CREATE OR REPLACE VIEW v_detail_annonce AS SELECT "public".v_detail_annonce,
     vac.mdp,
     vac.contact
    FROM (v_detail_voiture vdv
-     JOIN v_annonce_client vac ON (((vac.id_voiture)::text = ("public".v_detail_annonce)::text)));
+     JOIN v_annonce_client vac ON (((vac.id_voiture)::text = ( vdv.id_voiture)::text)));
 
 INSERT INTO "public"."role"( id_role, intitule ) VALUES ( 1, 'Administrateur');
 INSERT INTO "public"."role"( id_role, intitule ) VALUES ( 2, 'Utilisateur');
