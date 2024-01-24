@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 public class ProfilController {
 
     @PostMapping("/client")
-    @PostAuthorize("hasAuthority('ROLE_Administrateur')")
+    @PostAuthorize("hasAuthority('ROLE_Client')")
     public void form(@RequestBody Profil newClient) throws Exception {
         newClient.insert(null);
     }

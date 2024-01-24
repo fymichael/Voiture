@@ -31,7 +31,7 @@ public class Profil {
                 valid = false;
             }
 
-            String sql = "INSERT INTO profil VALUES(DEFAULT, ?, ?, ?, ?, ?, 1, ?, ?, ?)";
+            String sql = "INSERT INTO profil VALUES(DEFAULT, ?, ?, ?, ?, ?, 1, ?, 3, ?)";
             pstmt = con.prepareStatement(sql);
 
             pstmt.setString(1, this.getNom());
@@ -40,8 +40,7 @@ public class Profil {
             pstmt.setString(4, this.getEmail());
             pstmt.setString(5, this.getMdp());
             pstmt.setString(6, this.getContact());
-            pstmt.setInt(7, this.getIdRole());
-            pstmt.setString(8, this.getUsername());
+            pstmt.setString(7, this.getUsername());
 
             pstmt.executeUpdate();
 

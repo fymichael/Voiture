@@ -68,8 +68,7 @@ public class Couleur {
                 valid = false;
             }
             stmt = con.createStatement();
-            this.setEtat(etat);
-            String sql = "INSERT INTO Couleur VALUES(DEFAULT, '" + this.getIntitule() + "')";
+            String sql = "INSERT INTO Couleur VALUES(DEFAULT, '" + this.getIntitule() + "', 1)";
             System.out.println(sql);
             stmt.executeUpdate(sql);
         } catch (Exception e) {
