@@ -34,7 +34,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.csrf().disable();
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         http.headers().frameOptions().disable();
-        http.authorizeRequests().antMatchers("/api/voiture/refreshToken/**", "/api/voiture/*").permitAll();
+        http.authorizeRequests().antMatchers("/api/voiture/refreshToken/**", "/api/voiture/client/**").permitAll();
 
         http.authorizeRequests().anyRequest().authenticated();
         http.addFilter(new JwtAuthenticationFilter(authenticationManagerBean()));

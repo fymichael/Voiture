@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.project.Voiture.securite.entite.Profil;
 
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 
 @RestController
@@ -16,7 +15,6 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 public class ProfilController {
 
     @PostMapping("/client")
-    @PostAuthorize("hasAuthority('ROLE_Client')")
     public void form(@RequestBody Profil newClient) throws Exception {
         newClient.insert(null);
     }

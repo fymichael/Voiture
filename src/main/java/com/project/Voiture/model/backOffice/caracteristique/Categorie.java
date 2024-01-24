@@ -67,7 +67,7 @@ public class Categorie {
             stmt= con.createStatement();
             this.setIntitule(intitule);
             
-            String sql="INSERT INTO Categorie VALUES(DEFAULT, '"+this.getIntitule()+"')";
+            String sql="INSERT INTO Categorie VALUES(DEFAULT, '"+this.getIntitule()+"', 1)";
             System.out.println(sql);
             stmt.executeUpdate(sql);
         }catch(Exception e){
