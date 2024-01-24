@@ -5,7 +5,7 @@ import java.time.*;
 
 @Data @NoArgsConstructor @AllArgsConstructor
 public class VProfil {
-    private Integer idProfil;
+    private String idProfil;
     private String nom;
     private String prenom;
     private LocalDate dateNaissance;
@@ -14,5 +14,6 @@ public class VProfil {
     private String contact;
     private Integer idRole;
     private String role;
+    private String username;
 
 }

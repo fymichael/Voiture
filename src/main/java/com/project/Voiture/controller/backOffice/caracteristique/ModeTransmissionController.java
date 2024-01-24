@@ -10,6 +10,7 @@ import com.project.Voiture.model.backOffice.caracteristique.ModeTransmission;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 @RestController
 @RequestMapping("api/voiture")
 @CrossOrigin(origins = "*", allowedHeaders ="*")
+@PostAuthorize("hasAuthority('ROLE_Administrateur')")
 public class ModeTransmissionController {
 
     @GetMapping("/modeTransmissions")
