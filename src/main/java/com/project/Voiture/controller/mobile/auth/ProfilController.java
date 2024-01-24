@@ -14,9 +14,14 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 public class ProfilController {
 
-    @PostMapping("/client")
+    @PostMapping("/inscription")
     public void form(@RequestBody Profil newClient) throws Exception {
         newClient.insert(null);
+    }
+
+    @PostMapping("/login")
+    public Profil login(@RequestBody Profil newClient) throws Exception {
+        return newClient.login(null);
     }
 
 }
