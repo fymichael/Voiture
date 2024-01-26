@@ -5,6 +5,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.PathVariable;
+
 
 import com.project.Voiture.model.backOffice.caracteristique.Couleur;
 
@@ -15,31 +17,44 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 
 
+@CrossOrigin(origins="*", allowedHeaders="*")
 @RestController
 @RequestMapping("api/voiture")
-@CrossOrigin(origins = "*", allowedHeaders ="*")
 @PostAuthorize("hasAuthority('ROLE_Administrateur')")
 public class CouleurController {
 
-    @GetMapping("/couleurs")
-    public Couleur[] getListe()throws Exception{
+   @GetMapping("/couleurs")
+   public Couleur[] getListe()throws Exception{
+      Couleur c = new Couleur();
+      Couleur[] liste=c.getAll(null);
+      return liste;
+   }
+
+   @GetMapping("/couleur/{id}")
+   public Couleur getById(@PathVariable String id)throws Exception{
         Couleur c = new Couleur();
-        Couleur[] liste=c.getAll(null);
-        return liste;
+        c.setIdCouleur(id);
+        c=c.getById(null);
+        return c;
     }
 
-    @PostMapping("/couleur")
-    public void form(@RequestBody Couleur couleur)throws Exception{
-       couleur.insert(null);
+    @PostMapping("/couleur-form")
+    public Couleur form(@RequestBody Couleur couleur)throws Exception{
+      return couleur.insert(null);
     }
 
-    @PutMapping("/couleur")
-    public void update(@RequestBody Couleur Couleur)throws Exception{
-       Couleur.update(null);
+    @PutMapping("/couleur-update")
+    public void update(@RequestBody Couleur couleur)throws Exception{
+       couleur.update(null);
     }
 
-    @DeleteMapping("/couleur")
-    public void delete(@RequestBody Couleur Couleur)throws Exception{
-       Couleur.delete(null);
+    @DeleteMapping("/couleur-delete/{id}")
+    public void delete(@PathVariable String id)throws Exception{
+        Couleur couleur=new Couleur();
+        couleur.setIdCouleur(id);
+        System.out.println(couleur.getIdCouleur());
+        couleur.delete(null);
     }
+
 }
+

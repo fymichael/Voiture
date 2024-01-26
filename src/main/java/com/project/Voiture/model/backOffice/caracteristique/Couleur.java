@@ -59,87 +59,114 @@ public class Couleur {
         this.setEtat(etat);
     }
 
-    public void insert(Connection con) throws Exception {
-        boolean valid = true;
-        Statement stmt = null;
-        try {
-            if (con == null) {
+    public Couleur insert(Connection con)throws Exception{
+        boolean valid=true;
+        Statement stmt =null;
+        ResultSet res=null;
+        try{
+            if(con==null){
                 con = Connect.connectDB();
-                valid = false;
-            }
-            stmt = con.createStatement();
-            String sql = "INSERT INTO Couleur VALUES(DEFAULT, '" + this.getIntitule() + "', 1)";
+                valid=false;
+            } 
+            stmt= con.createStatement();
+            String sql="INSERT INTO couleur VALUES(DEFAULT, '"+this.getIntitule()+"', 1) returning id_couleur";
+            System.out.println(sql);
+            res=stmt.executeQuery(sql);
+            if(res.next()) this.setIdCouleur(res.getString("id_couleur"));
+            System.out.println(this.getIdCouleur());
+        }catch(Exception e){
+            throw e;
+        }finally{
+            if(stmt!=null){ stmt.close(); }
+            if(!valid){ con.close(); }
+        }
+        return this;
+    }
+
+    
+    public void update(Connection con)throws Exception{
+        boolean valid=true;
+        Statement stmt =null;
+        try{
+            if(con==null){
+                con = Connect.connectDB();
+                valid=false;
+            } 
+            stmt= con.createStatement();
+            String sql="UPDATE  couleur SET intitule='"+this.getIntitule()+"' WHERE id_couleur='"+this.getIdCouleur()+"'";
             System.out.println(sql);
             stmt.executeUpdate(sql);
-        } catch (Exception e) {
+        }catch(Exception e){
             throw e;
-        } finally {
-            if (stmt != null) {
-                stmt.close();
-            }
-            if (!valid) {
-                con.close();
-            }
+        }finally{
+            if(stmt!=null){ stmt.close(); }
+            if(!valid){ con.close(); }
         }
     }
 
-    public void update(Connection con) throws Exception {
-        boolean valid = true;
-        Statement stmt = null;
+    public Couleur[] getAll(Connection con)throws Exception{
+        Vector<Couleur> listCouleur= new Vector<Couleur>();
+        boolean valid=true;
+        Statement state=null;
+        ResultSet result=null;
         try {
-            if (con == null) {
-                con = Connect.connectDB();
-                valid = false;
+            if(con==null){
+                con=Connect.connectDB();
+                valid=false;
             }
-            stmt = con.createStatement();
-            String sql = "UPDATE Couleur SET intitule='" + this.getIntitule() + "' WHERE id_couleur='"
-                    + this.getIdCouleur() + "'";
-            System.out.println(sql);
-            stmt.executeUpdate(sql);
-        } catch (Exception e) {
-            throw e;
-        } finally {
-            if (stmt != null) {
-                stmt.close();
-            }
-            if (!valid) {
-                con.close();
-            }
-        }
-    }
-
-    public Couleur getById(Connection con, int idCouleur) throws Exception {
-        boolean valid = true;
-        Statement state = null;
-        ResultSet result = null;
-        Couleur couleur = null;
-        try {
-            if (con == null) {
-                con = Connect.connectDB();
-                valid = false;
-            }
-            String sql = "SELECT * FROM Couleur where etat != 0 and id_couleur = "+idCouleur;
+            String sql = "SELECT * FROM couleur WHERE etat=1";
             state = con.createStatement();
             result = state.executeQuery(sql);
-            while (result.next()) {
-                String id = result.getString(1);
-                String intitule = result.getString(2);
-                int etat = result.getInt(3);
-                couleur = new Couleur(id, intitule, etat);
+            while(result.next()){
+                String id= result.getString(1);
+                String intitule= result.getString(2);
+                int etat=result.getInt(3);
+                Couleur m = new Couleur(id, intitule, etat);
+                listCouleur.add(m);
             }
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
+        } catch (Exception e) {   
+            e.printStackTrace(); 
+        }finally{
             try {
-                if (state != null) {
-                    state.close();
-                }
-                if (result != null) {
-                    result.close();
-                }
-                if (valid == false || con != null) {
-                    con.close();
-                }
+                if(state!=null ){ state.close(); }
+                if(result!=null ){ result.close(); }
+                if(valid==false || con !=null){ con.close(); }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        Couleur[] couleurs= new Couleur[listCouleur.size()];
+        listCouleur.toArray(couleurs);
+        return couleurs;
+    }
+
+    public Couleur getById(Connection con)throws Exception{
+        Couleur couleur= null;
+        boolean valid=true;
+        Statement state=null;
+        ResultSet result=null;
+        try {
+            if(con==null){
+                con=Connect.connectDB();
+                valid=false;
+            }
+            String sql = "SELECT * FROM couleur WHERE id_couleur='"+this.getIdCouleur()+"'";
+            state = con.createStatement();
+            System.out.println(sql);
+            result = state.executeQuery(sql);
+            while(result.next()){
+                String id= result.getString(1);
+                String intitule= result.getString(2);
+                int etat=result.getInt(3);
+                couleur= new Couleur(id, intitule, etat);
+            }
+        } catch (Exception e) {   
+            e.printStackTrace(); 
+        }finally{
+            try {
+                if(state!=null ){ state.close(); }
+                if(result!=null ){ result.close(); }
+                if(valid==false || con !=null){ con.close(); }
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -147,69 +174,23 @@ public class Couleur {
         return couleur;
     }
 
-    public Couleur[] getAll(Connection con) throws Exception {
-        Vector<Couleur> listCouleur = new Vector<Couleur>();
-        boolean valid = true;
-        Statement state = null;
-        ResultSet result = null;
-        try {
-            if (con == null) {
+    public void delete(Connection con)throws Exception{
+        boolean valid=true;
+        Statement stmt =null;
+        try{
+            if(con==null){
                 con = Connect.connectDB();
-                valid = false;
-            }
-            String sql = "SELECT * FROM Couleur where etat != 0 ";
-            state = con.createStatement();
-            result = state.executeQuery(sql);
-            while (result.next()) {
-                String id = result.getString(1);
-                String intitule = result.getString(2);
-                int etat = result.getInt(3);
-                Couleur m = new Couleur(id, intitule, etat);
-                listCouleur.add(m);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                if (state != null) {
-                    state.close();
-                }
-                if (result != null) {
-                    result.close();
-                }
-                if (valid == false || con != null) {
-                    con.close();
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-        Couleur[] couleurs = new Couleur[listCouleur.size()];
-        listCouleur.toArray(couleurs);
-        return couleurs;
-    }
-
-    public void delete(Connection con) throws Exception {
-        boolean valid = true;
-        Statement stmt = null;
-        try {
-            if (con == null) {
-                con = Connect.connectDB();
-                valid = false;
-            }
-            stmt = con.createStatement();
-            String sql = "UPDATE Couleur SET etat=0 WHERE id_couleur='" + this.getIdCouleur() + "'";
+                valid=false;
+            } 
+            stmt= con.createStatement();
+            String sql="UPDATE couleur SET etat=10 WHERE id_couleur='"+this.getIdCouleur()+"'";
             System.out.println(sql);
             stmt.executeUpdate(sql);
-        } catch (Exception e) {
+        }catch(Exception e){
             throw e;
-        } finally {
-            if (stmt != null) {
-                stmt.close();
-            }
-            if (!valid) {
-                con.close();
-            }
+        }finally{
+            if(stmt!=null){ stmt.close(); }
+            if(!valid){ con.close(); }
         }
     }
 }

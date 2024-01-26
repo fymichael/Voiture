@@ -5,6 +5,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.PathVariable;
+
 
 import com.project.Voiture.model.backOffice.caracteristique.Energie;
 
@@ -15,33 +17,43 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 
 
+@CrossOrigin(origins="*", allowedHeaders="*")
 @RestController
 @RequestMapping("api/voiture")
-@CrossOrigin(origins = "*", allowedHeaders ="*")
 @PostAuthorize("hasAuthority('ROLE_Administrateur')")
 public class EnergieController {
 
-    @GetMapping("/energies")
-    public Energie[] getListe()throws Exception{
+   @GetMapping("/energies")
+   public Energie[] getListe()throws Exception{
+      Energie c = new Energie();
+      Energie[] liste=c.getAll(null);
+      return liste;
+   }
+
+   @GetMapping("/energie/{id}")
+   public Energie getById(@PathVariable String id)throws Exception{
         Energie c = new Energie();
-        Energie[] liste=c.getAll(null);
-        return liste;
+        c.setIdEnergie(id);
+        c=c.getById(null);
+        return c;
     }
 
-    @PostMapping("/energie")
-    public void form(@RequestBody String nom)throws Exception{
-       Energie c = new Energie();
-       c.setIntitule(nom);
-       c.insert(c.getIntitule(), null);
+    @PostMapping("/energie-form")
+    public Energie form(@RequestBody Energie energie)throws Exception{
+      return energie.insert(null);
     }
 
-    @PutMapping("/energie")
-    public void update(@RequestBody Energie Energie)throws Exception{
-       Energie.update(null);
+    @PutMapping("/energie-update")
+    public void update(@RequestBody Energie energie)throws Exception{
+       energie.update(null);
     }
 
-    @DeleteMapping("/energie")
-    public void delete(@RequestBody Energie Energie)throws Exception{
-       Energie.delete(null);
+    @DeleteMapping("/energie-delete/{id}")
+    public void delete(@PathVariable String id)throws Exception{
+        Energie energie=new Energie();
+        energie.setIdEnergie(id);
+        System.out.println(energie.getIdEnergie());
+        energie.delete(null);
     }
+
 }

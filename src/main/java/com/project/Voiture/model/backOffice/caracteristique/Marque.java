@@ -11,14 +11,14 @@ import java.sql.PreparedStatement;
 import com.project.Voiture.model.connection.Connect;
 
 public class Marque {
-    Integer idMarque;
+    String idMarque;
     String intitule;
     int etat;
 
-    public Integer getIdMarque(){
+    public String getIdMarque(){
         return this.idMarque;
     }
-    public void setIdMarque(Integer idMarque)throws Exception{
+    public void setIdMarque(String idMarque)throws Exception{
         this.idMarque=idMarque;
     }
 
@@ -49,33 +49,44 @@ public class Marque {
         this.setEtat(a);
     }
     public Marque()throws Exception{}
-    public Marque(Integer id, String intitule, int etat)throws Exception{
+    public Marque(String id, String intitule, int etat)throws Exception{
         this.setIdMarque(id);
         this.setIntitule(intitule);
         this.setEtat(etat);
     }
-
-    public void insert(String intitule,  Connection con)throws Exception{
+    public Marque getById(Connection con)throws Exception{
+        Marque marque= null;
         boolean valid=true;
-        Statement stmt =null;
-        try{
+        Statement state=null;
+        ResultSet result=null;
+        try {
             if(con==null){
-                con = Connect.connectDB();
+                con=Connect.connectDB();
                 valid=false;
-            } 
-            stmt= con.createStatement();
-            this.setIntitule(intitule);
-            String sql="INSERT INTO Marque VALUES(DEFAULT, '"+this.getIntitule()+"')";
+            }
+            String sql = "SELECT * FROM marque WHERE id_marque='"+this.getIdMarque()+"'";
+            state = con.createStatement();
             System.out.println(sql);
-            stmt.executeUpdate(sql);
-        }catch(Exception e){
-            throw e;
+            result = state.executeQuery(sql);
+            while(result.next()){
+                String id= result.getString(1);
+                String intitule= result.getString(2);
+                int etat=result.getInt(3);
+                marque= new Marque(id, intitule, etat);
+            }
+        } catch (Exception e) {   
+            e.printStackTrace(); 
         }finally{
-            if(stmt!=null){ stmt.close(); }
-            if(!valid){ con.close(); }
+            try {
+                if(state!=null ){ state.close(); }
+                if(result!=null ){ result.close(); }
+                if(valid==false || con !=null){ con.close(); }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
+        return marque;
     }
-
     public Marque[] getAll(Connection con)throws Exception{
         Vector<Marque> listMarque= new Vector<Marque>();
         boolean valid=true;
@@ -86,11 +97,11 @@ public class Marque {
                 con=Connect.connectDB();
                 valid=false;
             }
-            String sql = "SELECT * FROM Marque where status != 10 ";
+            String sql = "SELECT * FROM marque WHERE etat=1";
             state = con.createStatement();
             result = state.executeQuery(sql);
             while(result.next()){
-                Integer id= result.getInt(1);
+                String id= result.getString(1);
                 String intitule= result.getString(2);
                 int etat=result.getInt(3);
                 Marque m = new Marque(id, intitule, etat);
@@ -111,7 +122,29 @@ public class Marque {
         listMarque.toArray(marques);
         return marques;
     }
-
+    public Marque insert(Connection con)throws Exception{
+        boolean valid=true;
+        Statement stmt =null;
+        ResultSet res=null;
+        try{
+            if(con==null){
+                con = Connect.connectDB();
+                valid=false;
+            } 
+            stmt= con.createStatement();
+            String sql="INSERT INTO marque VALUES(DEFAULT, '"+this.getIntitule()+"', 1) returning id_marque";
+            System.out.println(sql);
+            res=stmt.executeQuery(sql);
+            if(res.next()) this.setIdMarque(res.getString("id_marque"));
+            System.out.println(this.getIdMarque());
+        }catch(Exception e){
+            throw e;
+        }finally{
+            if(stmt!=null){ stmt.close(); }
+            if(!valid){ con.close(); }
+        }
+        return this;
+    }
     public void update(Connection con)throws Exception{
         boolean valid=true;
         Statement stmt =null;
@@ -121,7 +154,7 @@ public class Marque {
                 valid=false;
             } 
             stmt= con.createStatement();
-            String sql="UPDATE Marque SET intitule='"+this.getIntitule()+"' WHERE id_marque='"+this.getIdMarque()+"'";
+            String sql="UPDATE marque SET intitule='"+this.getIntitule()+"' WHERE id_marque='"+this.getIdMarque()+"'";
             System.out.println(sql);
             stmt.executeUpdate(sql);
         }catch(Exception e){
@@ -141,7 +174,7 @@ public class Marque {
                 valid=false;
             } 
             stmt= con.createStatement();
-            String sql="UPDATE Marque SET etat=10 WHERE id_marque='"+this.getIdMarque()+"'";
+            String sql="UPDATE marque SET etat=10 WHERE id_marque='"+this.getIdMarque()+"'";
             System.out.println(sql);
             stmt.executeUpdate(sql);
         }catch(Exception e){
@@ -151,7 +184,6 @@ public class Marque {
             if(!valid){ con.close(); }
         }
     }
-
     //Toutes les marques
     public static List<Marque> getAllMarque(Connection connection) throws Exception {
         List<Marque> models = new ArrayList<>();
@@ -165,7 +197,7 @@ public class Marque {
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
                 Marque model = new Marque();
-                model.setIdMarque(rs.getInt("id_marque"));
+                model.setIdMarque(rs.getString("id_marque"));
                 model.setIntitule(rs.getString("intitule"));
                 model.setEtat(rs.getInt("status"));
                 models.add(model);

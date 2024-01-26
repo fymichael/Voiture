@@ -59,158 +59,134 @@ public class Specification {
         this.setEtat(etat);
     }
 
-    public void insert(Connection con) throws Exception {
-        boolean valid = true;
-        Statement stmt = null;
+    public Specification getById(Connection con)throws Exception{
+        Specification specification= null;
+        boolean valid=true;
+        Statement state=null;
+        ResultSet result=null;
         try {
-            if (con == null) {
-                con = Connect.connectDB();
-                valid = false;
+            if(con==null){
+                con=Connect.connectDB();
+                valid=false;
             }
-            stmt = con.createStatement();
-            String sql = "INSERT INTO specification VALUES(DEFAULT, '" + this.getIntitule() + ",1)";
-            System.out.println(sql);
-            stmt.executeUpdate(sql);
-        } catch (Exception e) {
-            throw e;
-        } finally {
-            if (stmt != null) {
-                stmt.close();
-            }
-            if (!valid) {
-                con.close();
-            }
-        }
-    }
-
-    public Specification getById(Connection con, int idModele) throws Exception {
-        boolean valid = true;
-        Statement state = null;
-        ResultSet result = null;
-        Specification modele = null;
-        try {
-            if (con == null) {
-                con = Connect.connectDB();
-                valid = false;
-            }
-            String sql = "SELECT * FROM specification where etat != 0 and id_specification = "+idModele;
+            String sql = "SELECT * FROM specification WHERE id_specification='"+this.getIdSpecification()+"'";
             state = con.createStatement();
+            System.out.println(sql);
             result = state.executeQuery(sql);
-            while (result.next()) {
-                String id = result.getString(1);
-                String intitule = result.getString(2);
-                int etat = result.getInt(3);
-                modele = new Specification(id, intitule, etat);
+            while(result.next()){
+                String id= result.getString(1);
+                String intitule= result.getString(2);
+                int etat=result.getInt(3);
+                specification= new Specification(id, intitule, etat);
             }
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
+        } catch (Exception e) {   
+            e.printStackTrace(); 
+        }finally{
             try {
-                if (state != null) {
-                    state.close();
-                }
-                if (result != null) {
-                    result.close();
-                }
-                if (valid == false || con != null) {
-                    con.close();
-                }
+                if(state!=null ){ state.close(); }
+                if(result!=null ){ result.close(); }
+                if(valid==false || con !=null){ con.close(); }
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
-        
-        return modele;
+        return specification;
     }
-
-    public Specification[] getAll(Connection con) throws Exception {
-        Vector<Specification> listModele = new Vector<Specification>();
-        boolean valid = true;
-        Statement state = null;
-        ResultSet result = null;
+    public Specification[] getAll(Connection con)throws Exception{
+        Vector<Specification> listSpecification= new Vector<Specification>();
+        boolean valid=true;
+        Statement state=null;
+        ResultSet result=null;
         try {
-            if (con == null) {
-                con = Connect.connectDB();
-                valid = false;
+            if(con==null){
+                con=Connect.connectDB();
+                valid=false;
             }
-            String sql = "SELECT * FROM specification where etat != 0";
+            String sql = "SELECT * FROM specification WHERE etat=1";
             state = con.createStatement();
             result = state.executeQuery(sql);
-            while (result.next()) {
-                String id = result.getString(1);
-                String intitule = result.getString(2);
-                int etat = result.getInt(3);
+            while(result.next()){
+                String id= result.getString(1);
+                String intitule= result.getString(2);
+                int etat=result.getInt(3);
                 Specification m = new Specification(id, intitule, etat);
-                listModele.add(m);
+                listSpecification.add(m);
             }
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
+        } catch (Exception e) {   
+            e.printStackTrace(); 
+        }finally{
             try {
-                if (state != null) {
-                    state.close();
-                }
-                if (result != null) {
-                    result.close();
-                }
-                if (valid == false || con != null) {
-                    con.close();
-                }
+                if(state!=null ){ state.close(); }
+                if(result!=null ){ result.close(); }
+                if(valid==false || con !=null){ con.close(); }
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
-        Specification[] modeles = new Specification[listModele.size()];
-        listModele.toArray(modeles);
-        return modeles;
+        Specification[] specifications= new Specification[listSpecification.size()];
+        listSpecification.toArray(specifications);
+        return specifications;
     }
-
-    public void update(Connection con) throws Exception {
-        boolean valid = true;
-        Statement stmt = null;
-        try {
-            if (con == null) {
+    public Specification insert(Connection con)throws Exception{
+        boolean valid=true;
+        Statement stmt =null;
+        ResultSet res=null;
+        try{
+            if(con==null){
                 con = Connect.connectDB();
-                valid = false;
-            }
-            stmt = con.createStatement();
-            String sql = "UPDATE specification SET intitule='" + this.getIntitule() + "' WHERE id_specification='"
-                    + this.getIdSpecification() + "'";
+                valid=false;
+            } 
+            stmt= con.createStatement();
+            String sql="INSERT INTO specification VALUES(DEFAULT, '"+this.getIntitule()+"', 1) returning id_specification";
+            System.out.println(sql);
+            res=stmt.executeQuery(sql);
+            if(res.next()) this.setIdSpecification(res.getString("id_specification"));
+            System.out.println(this.getIdSpecification());
+        }catch(Exception e){
+            throw e;
+        }finally{
+            if(stmt!=null){ stmt.close(); }
+            if(!valid){ con.close(); }
+        }
+        return this;
+    }
+    public void update(Connection con)throws Exception{
+        boolean valid=true;
+        Statement stmt =null;
+        try{
+            if(con==null){
+                con = Connect.connectDB();
+                valid=false;
+            } 
+            stmt= con.createStatement();
+            String sql="UPDATE specification SET intitule='"+this.getIntitule()+"' WHERE id_specification='"+this.getIdSpecification()+"'";
             System.out.println(sql);
             stmt.executeUpdate(sql);
-        } catch (Exception e) {
+        }catch(Exception e){
             throw e;
-        } finally {
-            if (stmt != null) {
-                stmt.close();
-            }
-            if (!valid) {
-                con.close();
-            }
+        }finally{
+            if(stmt!=null){ stmt.close(); }
+            if(!valid){ con.close(); }
         }
     }
 
-    public void delete(Connection con) throws Exception {
-        boolean valid = true;
-        Statement stmt = null;
-        try {
-            if (con == null) {
+    public void delete(Connection con)throws Exception{
+        boolean valid=true;
+        Statement stmt =null;
+        try{
+            if(con==null){
                 con = Connect.connectDB();
-                valid = false;
-            }
-            stmt = con.createStatement();
-            String sql = "UPDATE specification SET etat=0 WHERE id_specification='" + this.getIdSpecification() + "'";
+                valid=false;
+            } 
+            stmt= con.createStatement();
+            String sql="UPDATE specification SET etat=10 WHERE id_specification='"+this.getIdSpecification()+"'";
             System.out.println(sql);
             stmt.executeUpdate(sql);
-        } catch (Exception e) {
+        }catch(Exception e){
             throw e;
-        } finally {
-            if (stmt != null) {
-                stmt.close();
-            }
-            if (!valid) {
-                con.close();
-            }
+        }finally{
+            if(stmt!=null){ stmt.close(); }
+            if(!valid){ con.close(); }
         }
     }
 
