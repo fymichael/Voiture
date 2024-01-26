@@ -36,7 +36,7 @@ public class Annonce {
             pstmt = con.prepareStatement(sql);
 
             pstmt.setDouble(1, this.getPrix());
-            pstmt.setString(5, idAnnonce); 
+            pstmt.setString(5, idAnnonce);
 
             pstmt.executeUpdate();
 
@@ -53,29 +53,34 @@ public class Annonce {
     }
 
     // fonction pour marquer une annonce deja vendus
-    public void vendre(Connection con, String idAnnonce) throws Exception {
-        boolean valid = true;
-        Statement pstmt = null;
+    public void vendre(Connection con, String idAnnonce, Date dateVente) throws Exception {
+        if (dateVente.after(this.getDate())) {
+            boolean valid = true;
+            Statement pstmt = null;
 
-        try {
-            if (con == null) {
-                con = Connect.connectDB();
-                valid = false;
-            }
+            try {
+                if (con == null) {
+                    con = Connect.connectDB();
+                    valid = false;
+                }
 
-            String sql = "update annonce set status = 10 where id_annonce = '" + idAnnonce + "'";
-            pstmt = con.createStatement();
-            pstmt.executeUpdate(sql);
+                String sql = "insert into vente values (default, '" + idAnnonce + "', " + dateVente + ")";
+                pstmt = con.createStatement();
+                pstmt.executeUpdate(sql);
 
-        } catch (Exception e) {
-            throw e;
-        } finally {
-            if (pstmt != null) {
-                pstmt.close();
+            } catch (Exception e) {
+                throw e;
+            } finally {
+                if (pstmt != null) {
+                    pstmt.close();
+                }
+                if (!valid) {
+                    con.close();
+                }
             }
-            if (!valid) {
-                con.close();
-            }
+        }
+        else {
+            throw new Exception(" La date de vente ne doit pas etre anterieur a la date d'ajout de l'annonce ");
         }
     }
 

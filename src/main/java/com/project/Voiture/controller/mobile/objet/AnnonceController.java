@@ -8,6 +8,7 @@ import com.project.Voiture.model.mobile.objet.Annonce;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.sql.Date;
 import java.util.Vector;
 
 import org.springframework.security.access.prepost.PostAuthorize;
@@ -38,8 +39,8 @@ public class AnnonceController {
 
     @PutMapping("annonce/vente/{idAnnonce}")
     @PostAuthorize("hasAuthority('ROLE_Client')")
-    public void vendre(@PathVariable String idAnnonce) throws Exception {
-        new Annonce().vendre(null, idAnnonce);
+    public void vendre(@PathVariable String idAnnonce, @RequestBody Date dateVente) throws Exception {
+        new Annonce().vendre(null, idAnnonce, dateVente);
     }
 
     @PutMapping("annonce/prix/{idAnnonce}")
