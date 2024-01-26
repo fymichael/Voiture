@@ -23,7 +23,7 @@ public class AuthController {
         a.setEmail(auth.getEmail());
         a.setMdp(auth.getMdp());
         Admin utilisateur=a.getUtilisateur(null);
-        if (a==null) {
+        if (utilisateur==null) {
             throw new Exception("Nom d'utilisateur ou mot de passe invalide !");
         }
         String token = util.creationToken(a);
