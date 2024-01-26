@@ -20,15 +20,15 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 @CrossOrigin(origins = "*", allowedHeaders ="*")
 @PostAuthorize("hasAuthority('ROLE_Administrateur')")
 public class CategorieController {
-
+   
    @GetMapping("/categories")
    public Categorie[] getListe()throws Exception{
       Categorie c = new Categorie();
       Categorie[] liste=c.getAll(null);
       return liste;
    }
-
-    @PostMapping("/categorie")
+   
+   @PostMapping("/categorie")
     public void form(@RequestBody Categorie c)throws Exception{
        c.insert(null);
     }

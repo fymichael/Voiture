@@ -80,6 +80,7 @@ public class ProfilRepository {
                     model.setContact(rs.getString("contact"));
                     model.setIdRole(rs.getInt("id_role"));
                     model.setRole(rs.getString("role"));
+                    model.setUsername(rs.getString("username"));
                 }
             }
 
