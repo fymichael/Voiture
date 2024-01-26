@@ -30,6 +30,7 @@ VALUES
     ('Camion', 1),
     ('sports', 1);
 
+
 --Couleurs
 INSERT INTO couleur (intitule, status)
 VALUES
