@@ -20,8 +20,8 @@ public class ProfilDetailsService implements UserDetailsService {
     }
 
     @Override
-    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        VProfil profil = profilRepository.findByEmail(email);
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        VProfil profil = profilRepository.findByUsername(username, null);
         List<String> roles = new ArrayList<>();
         roles.add(profil.getRole());
         UserDetails userDetails =

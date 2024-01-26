@@ -20,7 +20,7 @@ public class JwtUtils {
             throws Exception {
         System.out.println("succesfulAuthentication");
 
-        VProfil user = ProfilRepository.findByUsername(username, null, mdp);
+        VProfil user = ProfilRepository.findByUsername(username, null);
         System.out.println(user.getUsername());
         System.out.println(user.getRole());
         Algorithm algo1 = Algorithm.HMAC256(secret);
