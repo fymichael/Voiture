@@ -126,7 +126,7 @@ CREATE  TABLE "public".profil (
 	CONSTRAINT client_pkey PRIMARY KEY ( id_profil ),
 	CONSTRAINT fk_client_role FOREIGN KEY ( id_role ) REFERENCES "public"."role"( id_role )   
  );
-
+ 
 CREATE  TABLE "public".annonce ( 
 	id_annonce           varchar(7) DEFAULT ('ANO'::text || lpad((nextval('seq_annonce'::regclass))::text, 4, '0'::text)) NOT NULL  ,
 	id_voiture           varchar(7)    ,
