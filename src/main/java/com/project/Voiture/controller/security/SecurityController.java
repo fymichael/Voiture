@@ -40,7 +40,7 @@ public class SecurityController {
                 JWTVerifier jwtVerifier = JWT.require(algorithm).build();
                 DecodedJWT decodedJWT = jwtVerifier.verify(jwt);
                 String username = decodedJWT.getSubject();
-                VProfil vprofil = ProfilRepository.findByusername(username, null);
+                VProfil vprofil = ProfilRepository.findByUsername(username, null);
                 System.out.println("User datn = "+vprofil.getDateNaissance());
                 String jwtAccessToken = JWT.create()
                     .withSubject(vprofil.getEmail())
