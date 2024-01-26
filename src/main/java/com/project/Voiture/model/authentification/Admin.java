@@ -79,7 +79,7 @@ public class Admin{
                 con=Connect.connectDB();
                 valid=false;
             }
-            String sql = "SELECT * FROM Admin WHERE email='"+this.getEmail()+"' AND mdp='"+this.getMdp()+"'";
+            String sql = "SELECT * FROM profil WHERE email='"+this.getEmail()+"' AND mdp='"+this.getMdp()+"' AND id_role=1";
             state = con.createStatement();
             result = state.executeQuery(sql);
             while(result.next()){
