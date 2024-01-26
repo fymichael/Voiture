@@ -21,12 +21,12 @@ public class ProfilDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        VProfil profil = ProfilRepository.findByusername(username, null);
+        VProfil profil = profilRepository.findByUsername(username, null);
         List<String> roles = new ArrayList<>();
         roles.add(profil.getRole());
         UserDetails userDetails =
                 org.springframework.security.core.userdetails.User.builder()
-                        .username(profil.getUsername())
+                        .username(profil.getEmail())
                         .password(profil.getMdp())
                         .roles(roles.toArray(new String[0]))
                         .build();

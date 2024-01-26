@@ -19,7 +19,7 @@ public class ProfilRepository {
         this.passwordEncoder = passwordEncoder;
     }
 
-    public static VProfil findByusername(String username, Connection connection) {
+    public static VProfil findByUsername(String username, Connection connection) {
         VProfil model = new VProfil();
         try {
             boolean wasConnected = true;
@@ -56,7 +56,7 @@ public class ProfilRepository {
         return model;
     }
 
-    public static VProfil findByUsername(String username, Connection connection, String mdp) throws Exception {
+    public VProfil findByUsername(String username, Connection connection, String mdp) throws Exception {
         VProfil model = new VProfil();
         try {
             boolean wasConnected = true;
