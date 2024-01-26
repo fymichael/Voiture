@@ -32,6 +32,7 @@ public class SecurityController {
    @GetMapping(path = "/refreshToken")
    public void refreshToken(HttpServletRequest request, HttpServletResponse response) throws Exception {
         String authToken =request.getHeader("Authorization");
+        System.out.println("autorisation token : "+authToken);
         if(authToken != null && authToken.startsWith("Bearer ")) {
             try {
                 String jwt = authToken.substring(7);
