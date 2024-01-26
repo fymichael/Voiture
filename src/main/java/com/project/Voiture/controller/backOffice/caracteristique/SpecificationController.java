@@ -26,7 +26,6 @@ public class SpecificationController {
    @GetMapping("/specifications")
    public Specification[] getListe()throws Exception{
       Specification c = new Specification();
-      System.out.println("aaa");
       Specification[] liste=c.getAll(null);
       return liste;
    }
