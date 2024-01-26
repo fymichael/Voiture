@@ -11,14 +11,14 @@ import java.sql.PreparedStatement;
 import com.project.Voiture.model.connection.Connect;
 
 public class Categorie {
-    Integer idCategorie;
+    String idCategorie;
     String intitule;
     int etat;
 
-    public Integer getIdCategorie(){
+    public String getIdCategorie(){
         return this.idCategorie;
     }
-    public void setIdCategorie(Integer idCategorie)throws Exception{
+    public void setIdCategorie(String idCategorie)throws Exception{
         this.idCategorie=idCategorie;
     }
 
@@ -50,7 +50,7 @@ public class Categorie {
     }
 
     public Categorie()throws Exception{}
-    public Categorie(Integer id, String intitule, int etat)throws Exception{
+    public Categorie(String id, String intitule, int etat)throws Exception{
         this.setIdCategorie(id);
         this.setIntitule(intitule);
         this.setEtat(etat);
@@ -92,7 +92,7 @@ public class Categorie {
             state = con.createStatement();
             result = state.executeQuery(sql);
             while(result.next()){
-                Integer id= result.getInt(1);
+                String id= result.getString(1);
                 String intitule= result.getString(2);
                 int etat=result.getInt(3);
                 Categorie m = new Categorie(id, intitule, etat);
@@ -167,7 +167,7 @@ public class Categorie {
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
                 Categorie model = new Categorie();
-                model.setIdCategorie(rs.getInt("id_categorie"));
+                model.setIdCategorie(rs.getString("id_categorie"));
                 model.setIntitule(rs.getString("intitule"));
                 model.setEtat(rs.getInt("status"));
                 models.add(model);

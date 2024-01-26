@@ -22,6 +22,7 @@ public class JwtUtils {
 
         VProfil user = ProfilRepository.findByUsername(username, null, mdp);
         System.out.println(user.getUsername());
+        System.out.println(user.getRole());
         Algorithm algo1 = Algorithm.HMAC256(secret);
         String jwtAccessToken = JWT.create()
                 .withSubject(user.getUsername())
