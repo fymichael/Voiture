@@ -19,19 +19,18 @@ public class ProfilRepository {
         this.passwordEncoder = passwordEncoder;
     }
 
-    public VProfil findByEmail(String email) {
+    public static VProfil findByusername(String username, Connection connection) {
         VProfil model = new VProfil();
         try {
             boolean wasConnected = true;
-            Connection connection = null;
             if (connection == null) {
                 wasConnected = false;
-                connection = Connect.getConnection();
+                connection = Connect.connectDB();
             }
 
-            String sql = "SELECT * FROM v_profil WHERE email = ?";
+            String sql = "SELECT * FROM v_profil WHERE username = ?";
             try (PreparedStatement stmt = connection.prepareStatement(sql)) {
-                stmt.setString(1, email);
+                stmt.setString(1, username);
                 ResultSet rs = stmt.executeQuery();
                 while (rs.next()) {
                     model.setNom(rs.getString("nom"));
@@ -43,6 +42,7 @@ public class ProfilRepository {
                     model.setContact(rs.getString("contact"));
                     model.setIdRole(rs.getInt("id_role"));
                     model.setRole(rs.getString("role"));
+                    model.setUsername(rs.getString("username"));
                 }
             }
 
