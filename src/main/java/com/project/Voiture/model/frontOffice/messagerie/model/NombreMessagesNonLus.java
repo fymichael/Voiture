@@ -1,0 +1,11 @@
+package com.project.Voiture.model.frontOffice.messagerie.model;
+
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data @NoArgsConstructor @AllArgsConstructor
+public class NombreMessagesNonLus {
+        private long nombreMessagesNonLus;
+}

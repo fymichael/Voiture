@@ -123,6 +123,7 @@ CREATE  TABLE "public".profil (
 	status               integer DEFAULT 1   ,
 	contact              varchar    ,
 	id_role              integer    ,
+	username			 varchar(30),
 	CONSTRAINT client_pkey PRIMARY KEY ( id_profil ),
 	CONSTRAINT fk_client_role FOREIGN KEY ( id_role ) REFERENCES "public"."role"( id_role )   
  );
