@@ -35,7 +35,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.cors().and();
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         http.headers().frameOptions().disable();
-        http.authorizeRequests().antMatchers("/api/voiture/refreshToken/**", "/api/voiture/inscription/**", "/api/voiture/login/**").permitAll();
+        http.authorizeRequests().antMatchers("/api/voiture/**").permitAll();
 
         http.authorizeRequests().anyRequest().authenticated();
         http.addFilter(new JwtAuthenticationFilter(authenticationManagerBean()));
