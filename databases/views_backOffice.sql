@@ -4,3 +4,10 @@ CREATE OR REPLACE VIEW v_commission AS
         FROM Annonce a JOIN LATERAL ( SELECT c.id_commission, c.valeur, c.date_changement
             FROM Commission c ORDER BY ABS(c.date_changement - a."date"), c.date_changement LIMIT 1
         ) c ON true;
+
+CREATE OR REPLACE VIEW v_marque_plus_vendue AS
+    SELECT m.id_marque, m.intitule, m.etat,  COUNT(v.id_voiture) AS nombre_ventes
+        FROM voiture v JOIN marque m ON v.id_marque = m.id_marque
+                     JOIN annonce a ON v.id_voiture = a.id_voiture
+                        JOIN vente ve ON a.id_annonce = ve.id_annonce GROUP BY m.intitule
+                        ORDER BY COUNT(v.id_voiture)  DESC LIMIT 1;

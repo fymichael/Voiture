@@ -20,6 +20,9 @@ CREATE SEQUENCE "public".seq_modele START WITH 1 INCREMENT BY 1 MAXVALUE 9999;
 
 CREATE SEQUENCE "public".seq_voiture START WITH 1 INCREMENT BY 1 MAXVALUE 9999;
 
+
+CREATE SEQUENCE "public".seq_vente START WITH 1 INCREMENT BY 1 MAXVALUE 9999;
+
 CREATE  TABLE "public".categorie ( 
 	id_categorie         varchar(7) DEFAULT ('CTG'::text || lpad((nextval('seq_categorie'::regclass))::text, 4, '0'::text)) NOT NULL  ,
 	intitule             varchar(30)    ,
@@ -137,6 +140,13 @@ CREATE  TABLE "public".annonce (
 	status               integer    ,
 	CONSTRAINT annonce_pkey PRIMARY KEY ( id_annonce ),
 	CONSTRAINT fk_annonce_client FOREIGN KEY ( id_profil ) REFERENCES "public".profil( id_profil )   
+ );
+
+ CREATE  TABLE "public".vente ( 
+	id_vente           varchar(7) DEFAULT ('VNT'::text || lpad((nextval('seq_vente'::regclass))::text, 4, '0'::text)) NOT NULL  ,
+	id_annonce           varchar(7)    ,
+	"date"               timestamp DEFAULT CURRENT_TIMESTAMP   ,
+	CONSTRAINT annonce_pkey PRIMARY KEY ( id_annonce )
  );
 
 CREATE OR REPLACE VIEW v_annonce_client AS SELECT a.id_annonce,

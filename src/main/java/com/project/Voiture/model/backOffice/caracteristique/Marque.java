@@ -14,6 +14,7 @@ public class Marque {
     String idMarque;
     String intitule;
     int etat;
+    int nombreVente;
 
     public String getIdMarque(){
         return this.idMarque;
@@ -31,9 +32,13 @@ public class Marque {
         }
         this.intitule=intitule;
     }
+    public int getNbVente(){
+        return this.nombreVente;
+    }
     public int getEtat(){
         return this.etat;
     }
+    
 
     public void setEtat(int etat)throws Exception{
         if(etat<0){
@@ -48,11 +53,31 @@ public class Marque {
         }
         this.setEtat(a);
     }
+    public void setNbVente(int nombreVente)throws Exception{
+        if(nombreVente<0){
+            throw new Exception("nombreVente invalide: negatif");
+        }
+        this.nombreVente=nombreVente;
+    }
+    public void setNbVente(String nombreVente)throws Exception{
+        int a =Integer.valueOf(nombreVente);
+        if(nombreVente.length()==0){
+            throw new Exception("nombreVente invalide: null");
+        }
+        this.setNbVente(a);
+    }
+    
     public Marque()throws Exception{}
     public Marque(String id, String intitule, int etat)throws Exception{
         this.setIdMarque(id);
         this.setIntitule(intitule);
         this.setEtat(etat);
+    }
+    public Marque(String id, String intitule, int etat, int nb)throws Exception{
+        this.setIdMarque(id);
+        this.setIntitule(intitule);
+        this.setEtat(etat);
+        this.setNbVente(nb);
     }
     public Marque getById(Connection con)throws Exception{
         Marque marque= null;
@@ -208,5 +233,40 @@ public class Marque {
             connection.close();
         }
         return models;
+    }
+
+    // Marque la plus vendue
+    public Marque getMarquePusVendue(Connection con)throws Exception{
+        boolean valid=true;
+        Statement state=null;
+        ResultSet result=null;
+        Marque m=new Marque();
+        try {
+            if(con==null){
+                con=Connect.connectDB();
+                valid=false;
+            }
+            String sql = "SELECT * FROM v_marque_plus_vendue";
+            state = con.createStatement();
+            result = state.executeQuery(sql);
+            while(result.next()){
+                String id= result.getString("id_marque");
+                String intitule= result.getString("intitule");
+                int etat=result.getInt("etat");
+                int nb=result.getInt("nombres_ventes");
+                m = new Marque(id, intitule, etat, nb);
+            }
+        } catch (Exception e) {   
+            e.printStackTrace(); 
+        }finally{
+            try {
+                if(state!=null ){ state.close(); }
+                if(result!=null ){ result.close(); }
+                if(valid==false || con !=null){ con.close(); }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return m;
     }
 }

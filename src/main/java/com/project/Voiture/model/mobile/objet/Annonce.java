@@ -84,6 +84,7 @@ public class Annonce {
             throw new Exception(" La date de vente ne doit pas etre anterieur a la date d'ajout de l'annonce ");
         }
     }
+    
 
     // suppression d'une annonce
     public void delete(Connection con, String idAnnonce) throws Exception {
@@ -270,6 +271,37 @@ public class Annonce {
             if(stmt!=null){ stmt.close(); }
             if(!valid){ con.close(); }
         }
+    }
+
+    public int getNbAnnoncesVendus(Connection con) throws Exception {
+        boolean valid = true;
+        Statement pstmt = null;
+        ResultSet rs = null;
+
+        int count=0;
+        try {
+            if (con == null) {
+                con = Connect.connectDB();
+                valid = false;
+            }
+
+            String sql = " select count(*) from vente";
+            pstmt = con.createStatement();
+            rs = pstmt.executeQuery(sql);
+            while (rs.next()) {
+                count=rs.getInt(1);
+            }
+        } catch (Exception e) {
+            throw e;
+        } finally {
+            if (pstmt != null) {
+                pstmt.close();
+            }
+            if (!valid) {
+                con.close();
+            }
+        }
+        return count;
     }
 
     // fields / getter / setter / constructor
