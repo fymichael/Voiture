@@ -43,7 +43,7 @@ public class SecurityController {
                 System.out.println("User datn = "+vprofil.getDateNaissance());
                 String jwtAccessToken = JWT.create()
                     .withSubject(vprofil.getEmail())
-                    .withExpiresAt(new Date(System.currentTimeMillis()+1*60*1000))
+                    .withExpiresAt(new Date(System.currentTimeMillis()+60*60*1000))
                     .withIssuer(request.getRequestURL().toString())
                     .withClaim("roles", "ROLE_"+vprofil.getRole())
                     .sign(algorithm);
