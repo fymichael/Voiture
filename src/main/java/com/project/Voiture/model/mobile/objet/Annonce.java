@@ -251,6 +251,27 @@ public class Annonce {
         }
     }
 
+    // validation annonce
+    public void validation(Connection con)throws Exception{
+        boolean valid=true;
+        Statement stmt =null;
+        try{
+            if(con==null){
+                con = Connect.connectDB();
+                valid=false;
+            } 
+            stmt= con.createStatement();
+            String sql="UPDATE annonce SET status=10 WHERE id_annonce='"+this.getIdAnnonce()+"'";
+            System.out.println(sql);
+            stmt.executeUpdate(sql);
+        }catch(Exception e){
+            throw e;
+        }finally{
+            if(stmt!=null){ stmt.close(); }
+            if(!valid){ con.close(); }
+        }
+    }
+
     // fields / getter / setter / constructor
 
     public void setStatus(int status) {

@@ -58,4 +58,13 @@ public class AnnonceController {
     public void delete(@PathVariable String idAnnonce) throws Exception {
         new Annonce().delete(null, idAnnonce);
     }
+
+
+    @GetMapping("annonce/validation/{idAnnonce}")
+    @PostAuthorize("hasAuthority('ROLE_Administrateur')")
+    public void valider_annonce(@PathVariable String idAnnonce) throws Exception {
+        Annonce a=new Annonce();
+        a.setIdAnnonce(idAnnonce);
+        a.validation(null);
+    }
 }

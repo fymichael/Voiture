@@ -18,11 +18,11 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 
 @RestController
 @RequestMapping("api/voiture")
-@PostAuthorize("hasAuthority('ROLE_Administrateur')")
 @CrossOrigin(origins="*", allowedHeaders="*")
 public class ModeTransmissionController {
 
    @GetMapping("/modeTransmissions")
+   @PostAuthorize("hasAuthority('ROLE_Administrateur')")
    public ModeTransmission[] getListe()throws Exception{
       ModeTransmission c = new ModeTransmission();
       ModeTransmission[] liste=c.getAll(null);
@@ -30,6 +30,7 @@ public class ModeTransmissionController {
    }
 
    @GetMapping("/modeTransmission/{id}")
+   @PostAuthorize("hasAuthority('ROLE_Administrateur')")
    public ModeTransmission getById(@PathVariable String id)throws Exception{
         ModeTransmission c = new ModeTransmission();
         c.setIdModeTransmission(id);
@@ -37,17 +38,20 @@ public class ModeTransmissionController {
         return c;
     }
 
-    @PostMapping("/modeTransmission-form")
+    @PostMapping("/modeTransmission")
+    @PostAuthorize("hasAuthority('ROLE_Administrateur')")
     public ModeTransmission form(@RequestBody ModeTransmission modeTransmission)throws Exception{
       return modeTransmission.insert(null);
     }
 
-    @PutMapping("/modeTransmission-update")
+    @PutMapping("/modeTransmission")
+    @PostAuthorize("hasAuthority('ROLE_Administrateur')")
     public void update(@RequestBody ModeTransmission modeTransmission)throws Exception{
        modeTransmission.update(null);
     }
 
-    @DeleteMapping("/modeTransmission-delete/{id}")
+    @DeleteMapping("/modeTransmission/{id}")
+    @PostAuthorize("hasAuthority('ROLE_Administrateur')")
     public void delete(@PathVariable String id)throws Exception{
         ModeTransmission modeTransmission=new ModeTransmission();
         modeTransmission.setIdModeTransmission(id);

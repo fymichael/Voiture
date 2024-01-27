@@ -20,10 +20,10 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 @CrossOrigin(origins="*", allowedHeaders="*")
 @RestController
 @RequestMapping("api/voiture")
-@PostAuthorize("hasAuthority('ROLE_Administrateur')")
 public class CouleurController {
 
    @GetMapping("/couleurs")
+   @PostAuthorize("hasAuthority('ROLE_Administrateur')")
    public Couleur[] getListe()throws Exception{
       Couleur c = new Couleur();
       Couleur[] liste=c.getAll(null);
@@ -31,6 +31,7 @@ public class CouleurController {
    }
 
    @GetMapping("/couleur/{id}")
+   @PostAuthorize("hasAuthority('ROLE_Administrateur')")
    public Couleur getById(@PathVariable String id)throws Exception{
         Couleur c = new Couleur();
         c.setIdCouleur(id);
@@ -38,17 +39,20 @@ public class CouleurController {
         return c;
     }
 
-    @PostMapping("/couleur-form")
+    @PostMapping("/couleur")
+    @PostAuthorize("hasAuthority('ROLE_Administrateur')")
     public Couleur form(@RequestBody Couleur couleur)throws Exception{
       return couleur.insert(null);
     }
 
-    @PutMapping("/couleur-update")
+    @PutMapping("/couleur")
+    @PostAuthorize("hasAuthority('ROLE_Administrateur')")
     public void update(@RequestBody Couleur couleur)throws Exception{
        couleur.update(null);
     }
 
-    @DeleteMapping("/couleur-delete/{id}")
+    @DeleteMapping("/couleur/{id}")
+    @PostAuthorize("hasAuthority('ROLE_Administrateur')")
     public void delete(@PathVariable String id)throws Exception{
         Couleur couleur=new Couleur();
         couleur.setIdCouleur(id);

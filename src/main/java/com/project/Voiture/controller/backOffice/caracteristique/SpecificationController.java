@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 public class SpecificationController {
 
    @GetMapping("/specifications")
+   @PostAuthorize("hasAuthority('ROLE_Administrateur')")
    public Specification[] getListe()throws Exception{
       Specification c = new Specification();
       Specification[] liste=c.getAll(null);
@@ -31,6 +32,7 @@ public class SpecificationController {
    }
 
    @GetMapping("/specification/{id}")
+   @PostAuthorize("hasAuthority('ROLE_Administrateur')")
    public Specification getById(@PathVariable String id)throws Exception{
         Specification c = new Specification();
         c.setIdSpecification(id);
@@ -38,17 +40,20 @@ public class SpecificationController {
         return c;
     }
 
-    @PostMapping("/specification-form")
+    @PostMapping("/specification")
+    @PostAuthorize("hasAuthority('ROLE_Administrateur')")
     public Specification form(@RequestBody Specification specification)throws Exception{
       return specification.insert(null);
     }
 
-    @PutMapping("/specification-update")
+    @PutMapping("/specification")
+    @PostAuthorize("hasAuthority('ROLE_Administrateur')")
     public void update(@RequestBody Specification specification)throws Exception{
        specification.update(null);
     }
 
-    @DeleteMapping("/specification-delete/{id}")
+    @DeleteMapping("/specification/{id}")
+    @PostAuthorize("hasAuthority('ROLE_Administrateur')")
     public void delete(@PathVariable String id)throws Exception{
         Specification specification=new Specification();
         specification.setIdSpecification(id);

@@ -19,10 +19,10 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 @CrossOrigin(origins="*", allowedHeaders="*")
 @RestController
 @RequestMapping("api/voiture")
-@PostAuthorize("hasAuthority('ROLE_Administrateur')")
 public class CategorieController {
 
    @GetMapping("/categories")
+   @PostAuthorize("hasAuthority('ROLE_Administrateur')")
    public Categorie[] getListe()throws Exception{
       try {
          Categorie c = new Categorie();
@@ -35,6 +35,7 @@ public class CategorieController {
    }
 
    @GetMapping("/categorie/{id}")
+   @PostAuthorize("hasAuthority('ROLE_Administrateur')")
    public Categorie getById(@PathVariable String id)throws Exception{
         Categorie c = new Categorie();
         c.setIdCategorie(id);
@@ -42,17 +43,20 @@ public class CategorieController {
         return c;
     }
 
-    @PostMapping("/categorie-form")
+    @PostMapping("/categorie")
+    @PostAuthorize("hasAuthority('ROLE_Administrateur')")
     public Categorie form(@RequestBody Categorie categorie)throws Exception{
       return categorie.insert(null);
     }
 
-    @PutMapping("/categorie-update")
+    @PutMapping("/categorie")
+    @PostAuthorize("hasAuthority('ROLE_Administrateur')")
     public void update(@RequestBody Categorie categorie)throws Exception{
        categorie.update(null);
     }
 
-    @DeleteMapping("/categorie-delete/{id}")
+    @DeleteMapping("/categorie/{id}")
+    @PostAuthorize("hasAuthority('ROLE_Administrateur')")
     public void delete(@PathVariable String id)throws Exception{
         Categorie categorie=new Categorie();
         categorie.setIdCategorie(id);

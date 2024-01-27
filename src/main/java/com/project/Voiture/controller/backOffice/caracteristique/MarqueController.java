@@ -20,10 +20,10 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 @CrossOrigin(origins="*", allowedHeaders="*")
 @RestController
 @RequestMapping("api/voiture")
-@PostAuthorize("hasAuthority('ROLE_Administrateur')")
 public class MarqueController {
 
    @GetMapping("/marques")
+   @PostAuthorize("hasAuthority('ROLE_Administrateur')")
    public Marque[] getListe()throws Exception{
       Marque c = new Marque();
       Marque[] liste=c.getAll(null);
@@ -31,6 +31,7 @@ public class MarqueController {
    }
 
    @GetMapping("/marque/{id}")
+   @PostAuthorize("hasAuthority('ROLE_Administrateur')")
    public Marque getById(@PathVariable String id)throws Exception{
         Marque c = new Marque();
         c.setIdMarque(id);
@@ -38,17 +39,20 @@ public class MarqueController {
         return c;
     }
 
-    @PostMapping("/marque-form")
+    @PostMapping("/marque")
+    @PostAuthorize("hasAuthority('ROLE_Administrateur')")
     public Marque form(@RequestBody Marque marque)throws Exception{
       return marque.insert(null);
     }
 
-    @PutMapping("/marque-update")
+    @PutMapping("/marque")
+    @PostAuthorize("hasAuthority('ROLE_Administrateur')")
     public void update(@RequestBody Marque marque)throws Exception{
        marque.update(null);
     }
 
-    @DeleteMapping("/marque-delete/{id}")
+    @DeleteMapping("/marque/{id}")
+    @PostAuthorize("hasAuthority('ROLE_Administrateur')")
     public void delete(@PathVariable String id)throws Exception{
         Marque marque=new Marque();
         marque.setIdMarque(id);
