@@ -14,6 +14,7 @@ import com.project.Voiture.securite.service.ProfilDetailsService;
 import com.project.Voiture.securite.filter.JwtAuthenticationFilter;
 
 import com.project.Voiture.securite.filter.JwtAuthorizationFilter;
+import com.project.Voiture.securite.filter.JwtUtils;
 
 @Configuration
 @EnableWebSecurity
@@ -34,7 +35,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.csrf().disable();
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         http.headers().frameOptions().disable();
-        http.authorizeRequests().antMatchers("/api/voiture/refreshToken/**", "/api/voiture/inscription/**", "/api/voiture/login/**", "/api/voiture/allDiscussions/**").permitAll();
+        http.authorizeRequests().antMatchers(JwtUtils.getListUrls().toArray(new String[0])).permitAll();
 
         http.authorizeRequests().anyRequest().authenticated();
         http.addFilter(new JwtAuthenticationFilter(authenticationManagerBean()));

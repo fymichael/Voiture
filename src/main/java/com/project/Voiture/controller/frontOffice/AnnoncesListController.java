@@ -7,12 +7,9 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
-import org.springframework.security.access.prepost.PostAuthorize;
-
 import java.util.*;
 
 import com.project.Voiture.model.backOffice.caracteristique.*;
-import com.project.Voiture.model.backOffice.statistique.*;
 import com.project.Voiture.model.frontOffice.listeAnnonce.views.*;
 import com.project.Voiture.model.frontOffice.listeAnnonce.displays.*;
 import com.project.Voiture.util.*;
@@ -23,7 +20,6 @@ import com.project.Voiture.util.*;
 public class AnnoncesListController {
 
    @GetMapping(path = "/accueil")
-   @PostAuthorize("hasAuthority('ROLE_Client')")
    public MyJSON getAccueil() {
       AccueilPage accueilPage = new AccueilPage();
       MyJSON json = new MyJSON();
@@ -43,7 +39,6 @@ public class AnnoncesListController {
    }
 
    @GetMapping(path = "/annonces")
-   @PostAuthorize("hasAuthority('ROLE_Administrateur')")
    public MyJSON getAnnonces() {
       AnnoncePage annoncePage = new AnnoncePage();
       MyJSON json = new MyJSON();
@@ -62,13 +57,12 @@ public class AnnoncesListController {
    }
 
    @GetMapping(path = "/annonces/filter")
-   @PostAuthorize("hasAuthority('ROLE_Administrateur')")
    public MyJSON getAnnonces(@RequestParam("param") String filter, @RequestParam("value") String value) {
       AnnoncePage annoncePage = new AnnoncePage();
       MyJSON json = new MyJSON();
 
       try {
-         List<VAnnonce> allAnnonce = VAnnonce.findByFeatures(filter, Integer.valueOf(value), null);
+         List<VAnnonce> allAnnonce = VAnnonce.findByFeatures(filter, value, null);
          annoncePage = new AnnoncePage(allAnnonce);
          json.setData(annoncePage);
       } catch(Exception e) {
@@ -80,8 +74,7 @@ public class AnnoncesListController {
    }
 
    @GetMapping(path = "/annonce/{id}")
-   @PostAuthorize("hasAuthority('ROLE_Administrateur')")
-   public MyJSON getFicheAnnonce(@PathVariable("id") int id) {
+   public MyJSON getFicheAnnonce(@PathVariable("id") String id) {
       MyJSON json = new MyJSON();
 
       try {

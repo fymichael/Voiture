@@ -19,6 +19,6 @@ public class Discussion {
     private String id;
     private List<Profil> membres;
     private List<Message> messages;
-    private Date dateCreation;  
+    private String dateCreation;  
     private Integer status;  
 }

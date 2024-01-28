@@ -163,6 +163,7 @@ CREATE OR REPLACE VIEW v_detail_voiture AS SELECT v.id_voiture,
     v.id_specification,
     v.id_energie,
     v.id_couleur,
+	v.id_mode_transmission,
     v.id_lieu,
     v.anne_sortie,
     v.immatriculation,
@@ -175,13 +176,17 @@ CREATE OR REPLACE VIEW v_detail_voiture AS SELECT v.id_voiture,
     c.intitule AS categorie,
     mo.intitule AS specification,
     e.intitule AS energie,
-    co.intitule AS couleur
+    co.intitule AS couleur,
+	md.intitule AS mode_transmission,
+	l.intitule AS lieu
    FROM (((((voiture v
      JOIN marque m ON (((m.id_marque)::text = (v.id_marque)::text)))
      JOIN categorie c ON (((c.id_categorie)::text = (v.id_categorie)::text)))
      JOIN specification mo ON (((mo.id_specification)::text = (v.id_specification)::text)))
      JOIN energie e ON (((e.id_energie)::text = (v.id_energie)::text)))
      JOIN couleur co ON (((co.id_couleur)::text = (v.id_couleur)::text)))
+	 JOIN mode_transmission md ON (((md.id_mode_transmission)::text = (v.id_mode_transmission)::text))
+	 JOIN lieu l ON (((l.id_lieu)::text = (v.id_lieu)::text))
   WHERE ((m.etat <> 0) AND (c.etat <> 0) AND (mo.etat <> 0) AND (e.etat <> 0) AND (co.etat <> 0));
 
 CREATE OR REPLACE VIEW v_detail_annonce AS SELECT vdv.id_voiture,
@@ -191,6 +196,7 @@ CREATE OR REPLACE VIEW v_detail_annonce AS SELECT vdv.id_voiture,
     vdv.id_energie,
     vdv.id_couleur,
     vdv.id_lieu,
+	vdv.id_mode_transmission,
     vdv.anne_sortie,
     vdv.immatriculation,
     vdv.autonomie,
@@ -203,6 +209,8 @@ CREATE OR REPLACE VIEW v_detail_annonce AS SELECT vdv.id_voiture,
     vdv.specification,
     vdv.energie,
     vdv.couleur,
+	vdv.lieu,
+	vdv.mode_transmission,
     vac.id_annonce,
     vac.description,
     vac.date AS date_annonce,
@@ -218,6 +226,78 @@ CREATE OR REPLACE VIEW v_detail_annonce AS SELECT vdv.id_voiture,
    FROM (v_detail_voiture vdv
      JOIN v_annonce_client vac ON (((vac.id_voiture)::text = ( vdv.id_voiture)::text)));
 
+--Vue d'un profil et role
+CREATE OR REPLACE VIEW v_profil AS
+SELECT p.id_profil, p.nom, p.prenom, p.date_naissance, p.email, p.mdp, p.contact, p.id_role, 
+r.intitule role, p.username FROM profil p JOIN role r ON p.id_role = r.id_role;
+
+---Les donnees de tests
 INSERT INTO "public"."role"( id_role, intitule ) VALUES ( 1, 'Administrateur');
 INSERT INTO "public"."role"( id_role, intitule ) VALUES ( 2, 'Utilisateur');
 INSERT INTO "public"."role"( id_role, intitule ) VALUES ( 3, 'Client');
+
+--Categorie
+INSERT INTO public.categorie (id_categorie, intitule, etat) VALUES
+('CTG0001', 'Compact', 1),
+('CTG0002', 'SUV', 1),
+('CTG0003', 'Sedan', 1);
+
+--Commission
+INSERT INTO public.commission (valeur, date_changement) VALUES
+(5.0, '2022-01-01'),
+(7.5, '2022-02-01');
+
+--Couleur
+INSERT INTO public.couleur (id_couleur, intitule, etat) VALUES
+('CLR0001', 'Red', 1),
+('CLR0002', 'Blue', 1),
+('CLR0003', 'Green', 1);
+
+--Energie
+INSERT INTO public.energie (id_energie, intitule, etat) VALUES
+('ENG0001', 'Essence', 1),
+('ENG0002', 'Diesel', 1),
+('ENG0003', 'Hybride', 1);
+
+--Lieu
+INSERT INTO public.lieu (id_lieu, intitule, status) VALUES
+('LOC0001', 'Paris', 1),
+('LOC0002', 'Marseille', 1),
+('LOC0003', 'Lyon', 1);
+
+--Marque
+INSERT INTO public.marque (id_marque, intitule, etat) VALUES
+('MRQ0001', 'Toyota', 1),
+('MRQ0002', 'Ford', 1),
+('MRQ0003', 'Honda', 1);
+
+--Transmission
+INSERT INTO public.mode_transmission (id_mode_transmission, intitule, etat) VALUES
+('MTR0001', 'Automatic', 1),
+('MTR0002', 'Manual', 1);
+
+--Specification
+INSERT INTO public.specification (id_specification, intitule, etat) VALUES
+('SPC0001', 'Basic', 1),
+('SPC0002', 'Luxury', 1),
+('SPC0003', 'Sports', 1);
+
+--Voiture
+INSERT INTO public.voiture (id_voiture, id_marque, id_categorie, id_specification, id_energie, id_couleur, 
+anne_sortie, immatriculation, autonomie, id_mode_transmission, status, model, nb_porte, nb_siege, kilometrage, id_lieu)
+VALUES
+('CAR0001', 'MRQ0001', 'CTG0001', 'SPC0001', 'ENG0001', 'CLR0001', '2022', 'ABC123', 500.0, 'MTR0001', 1, 'Corolla', 4, 5, 10000.0, 'LOC0001'),
+('CAR0002', 'MRQ0002', 'CTG0002', 'SPC0002', 'ENG0002', 'CLR0002', '2021', 'XYZ456', 600.0, 'MTR0002', 1, 'Explorer', 5, 7, 15000.0, 'LOC0002'),
+('CAR0003', 'MRQ0003', 'CTG0003', 'SPC0003', 'ENG0003', 'CLR0003', '2020', 'DEF789', 400.0, 'MTR0001', 1, 'Civic', 4, 5, 12000.0, 'LOC0003');
+
+--Voiture photo
+INSERT INTO public.voiture_photo (id_voiture, photo) VALUES
+('CAR0001', 'url_photo_1'),
+('CAR0002', 'url_photo_2'),
+('CAR0003', 'url_photo_3');
+
+--Annonce
+INSERT INTO public.annonce (id_annonce, id_voiture, description, "date", prix, id_profil, status)
+VALUES
+('ANO0001', 'CAR0001', 'Good condition', '2022-01-15 12:00:00', 20000.0, 'PRF0001', 1),
+('ANO0002', 'CAR0002', 'Excellent condition', '2022-02-20 15:30:00', 30000.0, 'PRF0002', 1);

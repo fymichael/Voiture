@@ -30,10 +30,20 @@ public class HistoriqueService {
         historiqueRepository.save(historique);
     }
 
+    //Enregistrer une historique
+    public Historique isAnnonceInHistorique(String idProfil, String idAnnonce, String type) {
+        Query query = new Query(Criteria.where("idProfil").is(idProfil).and("idAnnonce").is(idAnnonce).and("type").is(type));
+        List<Historique> listHistorique = mongoTemplate.find(query, Historique.class);
+        if(listHistorique.size() <= 0) {
+            return null;
+        } 
+        return listHistorique.get(0);
+    }
+
     //Liste des historiques annonces
     public List<Historique> getHistoriqueAnnonceProfil(String idProfil) {
         Criteria criteria = new Criteria().orOperator(
-            Criteria.where("idProfil").is(idProfil).and("type").is("annonces")
+            Criteria.where("idProfil").is(idProfil).and("type").is("annonce")
         );
 
         Query query = new Query(criteria);

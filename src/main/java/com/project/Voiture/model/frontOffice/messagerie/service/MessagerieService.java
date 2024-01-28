@@ -1,8 +1,10 @@
 package com.project.Voiture.model.frontOffice.messagerie.service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
@@ -14,6 +16,7 @@ import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Service;
 import static org.springframework.data.mongodb.core.aggregation.Aggregation.*;
 
+import com.mongodb.client.model.UpdateOptions;
 import com.project.Voiture.model.frontOffice.messagerie.model.Discussion;
 import com.project.Voiture.model.frontOffice.messagerie.model.Message;
 import com.project.Voiture.model.frontOffice.messagerie.model.NombreDiscussions;
@@ -29,6 +32,8 @@ public class MessagerieService {
     @Autowired
     private MongoTemplate mongoTemplate;
 
+    public Object json;
+
     //Toutes les conversations
     public List<Discussion> getAllDiscussions() {
         return discussionRepository.findAll();
@@ -36,13 +41,21 @@ public class MessagerieService {
 
     //Conversations d'un user
     public List<Discussion> getProfilDiscussions(String idProfil) {
-        return discussionRepository.findByMembres(idProfil);
+            Query query = new Query(Criteria.where("membres.idProfil").in(idProfil));
+            return mongoTemplate.find(query, Discussion.class);
     }
 
     //Conversation d'un user et autre
-    public List<Discussion> getDiscussion(String idProfileConnected, String idProfilAutre) {
-        return discussionRepository.findByMembresIn(Arrays.asList(idProfileConnected, idProfilAutre));
+    public Discussion getDiscussionWithOtherProfile(String idProfileConnected, String idProfilAutre) {
+        Query query = new Query(Criteria.where("membres.idProfil").all(List.of(idProfileConnected, idProfilAutre)));
+        
+        return mongoTemplate.findOne(query, Discussion.class);
     }
+
+    //Discussion grace a l'id
+    public Optional<Discussion> getDiscussionById(String idDiscussion) {
+        return discussionRepository.findById(idDiscussion);
+    } 
 
     //Envoyer un message
     public void sendMessage(String idDiscussion, String emetteur, String contenu) {
@@ -61,22 +74,19 @@ public class MessagerieService {
     }
 
     //Avoir le nombre de discussion ou il y a un ou des messages non lus
-    public long nombreDiscussionsAvecMessagesNonLus(String idProfil) {
+    public List<Discussion> nombreDiscussionsAvecMessagesNonLus(String idProfil) {
         // Utilisation des opérations d'agrégation pour compter les discussions avec des messages non lus
-        Aggregation aggregation = newAggregation(
-                unwind("$messages"),  // Démêler les messages pour permettre le filtrage
-                match(
-                        Criteria.where("messages.emetteur").ne(idProfil)
-                                .and("messages.statut").is(1) // 1 pour les messages non lus
-                ),
-                group("_id").count().as("nombreDiscussions")
+        Aggregation aggregation = Aggregation.newAggregation(
+            Aggregation.unwind("messages"),
+            Aggregation.match(Criteria.where("messages.status").is(1).and("messages.emetteur").ne(idProfil)),
+            Aggregation.group("_id")
+                    .first("membres").as("membres")
+                    .addToSet("messages").as("messages")
+                    .first("dateCreation").as("dateCreation")
+                    .first("status").as("status")
         );
 
-        AggregationResults<NombreDiscussions> results = mongoTemplate.aggregate(aggregation, "discussion", NombreDiscussions.class);
-
-        List<NombreDiscussions> discussionsAvecMessagesNonLus = results.getMappedResults();
-
-        return discussionsAvecMessagesNonLus.isEmpty() ? 0 : discussionsAvecMessagesNonLus.get(0).getNombreDiscussions();
+        return mongoTemplate.aggregate(aggregation, "discussion", Discussion.class).getMappedResults();
     }
 
     //Est ce que la discussion contient des messages non lus
@@ -100,46 +110,36 @@ public class MessagerieService {
     }
 
     //Marquer toutes les messages a lus
-    public void marquerTousLesMessagesCommeLus(String conversationId, String idProfil) {
-        // Mettre à jour le statut de tous les messages non lus dans la discussion
-        Query query = new Query(
-            Criteria.where("_id").is(conversationId)
-                    .and("messages.emetteur").ne(idProfil)
-                    .and("messages.statut").is(1)
-        );
+    public void marquerTousLesMessagesCommeLus(String discussionId, String emitterId) {
+        Query query = new Query(Criteria.where("_id").is(discussionId));
+        Update update = new Update().set("messages.$[el].status", 3);
 
-        Update update = new Update().set("messages.$.statut", 3); // 3 pour "lu"
+        update.filterArray(Criteria.where("el.emetteur").ne(emitterId).and("el.status").is(1));
 
-        mongoTemplate.updateMulti(query, update, Discussion.class);
-    }
-
-    //Verifier l'existence de conversation entre deux utilisateurs
-    public String isConversationExist(String profilConnected, String profil2) {
-        // Vérifier si une conversation existe déjà entre ces deux utilisateurs
-        List<Discussion> existante = discussionRepository.findByMembresIn(List.of(profilConnected, profil2));
-
-        if (existante.size() > 0) {
-            return existante.get(0).getId(); // Une conversation existe déjà, renvoyer son ID
-        }
-
-        return "null";
+        mongoTemplate.updateMulti(query, update, "discussion");
     }
 
     //Creer une nouvelle discussion avec un utilisateur
-    public String créerNouvelleDiscussion(Profil profilConnected, Profil profil2, Message message) {
+    public Discussion créerNouvelleDiscussion(Profil profilConnected, Profil profil2, Message message) {
        if(message == null) {
-            return "null";
+            return null;
        }
 
         // Créer une nouvelle discussion
         Discussion newDiscussion = new Discussion();
-        newDiscussion.getMembres().add(profilConnected);
-        newDiscussion.getMembres().add(profil2);
-        newDiscussion.getMessages().add(message);
+        List<Profil> listMembre = new ArrayList<>();
+        List<Message> listMessage = new ArrayList<>();
+        listMembre.add(profilConnected);
+        listMembre.add(profil2);
+        listMessage.add(message);
+        newDiscussion.setMembres(listMembre);
+        newDiscussion.setMessages(listMessage);
+        newDiscussion.setDateCreation(LocalDateTime.now().toString());
+        newDiscussion.setStatus(1);
 
         // Enregistrer la nouvelle conversation
         Discussion discussionSaved = discussionRepository.save(newDiscussion);
 
-        return discussionSaved.getId();
+        return discussionSaved;
     }
 }
