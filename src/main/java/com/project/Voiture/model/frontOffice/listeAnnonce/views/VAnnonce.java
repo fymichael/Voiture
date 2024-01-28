@@ -260,7 +260,6 @@ public class VAnnonce {
                 model.setAnneeSortie(rs.getString("annee_sortie"));
                 model.setImmatriculation(rs.getString("immatriculation"));
                 model.setAutonomie(rs.getDouble("autonomie"));
-                model.setModelePlus(rs.getString("modele_plus"));
                 model.setNbPorte(rs.getInt("nb_porte"));
                 model.setNbSiege(rs.getInt("nb_siege"));
 
