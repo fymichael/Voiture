@@ -8,6 +8,8 @@ CREATE SEQUENCE "public".seq_client START WITH 1 INCREMENT BY 1 MAXVALUE 9999;
 
 CREATE SEQUENCE "public".seq_couleur START WITH 1 INCREMENT BY 1 MAXVALUE 9999;
 
+CREATE SEQUENCE "public".seq_commission START WITH 1 INCREMENT BY 1 MAXVALUE 9999;
+
 CREATE SEQUENCE "public".seq_energie START WITH 1 INCREMENT BY 1 MAXVALUE 9999;
 
 CREATE SEQUENCE "public".seq_lieu START WITH 1 INCREMENT BY 1 MAXVALUE 9999;
@@ -31,8 +33,10 @@ CREATE  TABLE "public".categorie (
  );
 
 CREATE  TABLE "public".commission ( 
+	id_commission         varchar(7) DEFAULT ('COM'::text || lpad((nextval('seq_commission'::regclass))::text, 4, '0'::text)) NOT NULL  ,
 	valeur               double precision    ,
-	date_changement      date    
+	date_changement      date  ,
+	CONSTRAINT commission_pkey PRIMARY KEY ( id_commission )  
  );
 
 CREATE  TABLE "public".couleur ( 

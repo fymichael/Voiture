@@ -105,7 +105,7 @@ public class Commission {
                 String id= result.getString(1);
                 double valeur= result.getDouble(2);
                 Date date=result.getDate(3);
-                Commission m = new Commission(id, String.valueOf(valeur), date);
+                Commission m = new Commission(id, valeur , date);
                 listCommission.add(m);
             }
         } catch (Exception e) {   
@@ -182,6 +182,40 @@ public class Commission {
                 String idC= result.getString("id_commission");
                 double valeur= result.getDouble("valeur");
                 Date date=result.getDate("date_commission");
+                commission= new Commission(idC, valeur, date);
+            }
+        } catch (Exception e) {   
+            e.printStackTrace(); 
+        }finally{
+            try {
+                if(state!=null ){ state.close(); }
+                if(result!=null ){ result.close(); }
+                if(valid==false || con !=null){ con.close(); }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return commission;
+    }
+
+    public Commission getCommission(String id, Connection con)throws Exception{
+        Commission commission= null;
+        boolean valid=true;
+        Statement state=null;
+        ResultSet result=null;
+        try {
+            if(con==null){
+                con=Connect.connectDB();
+                valid=false;
+            }
+            String sql = "SELECT * FROM commission WHERE id_commission='"+id+"'";
+            state = con.createStatement();
+            System.out.println(sql);
+            result = state.executeQuery(sql);
+            while(result.next()){
+                String idC= result.getString("id_commission");
+                double valeur= result.getDouble("valeur");
+                Date date=result.getDate("date_changement");
                 commission= new Commission(idC, valeur, date);
             }
         } catch (Exception e) {   

@@ -35,7 +35,7 @@ public class CommissionController {
    @PostAuthorize("hasAuthority('ROLE_Administrateur')")
    public Commission getById(@PathVariable String id)throws Exception{
         Commission c = new Commission();
-        c=c.getCommissionAnnonce(id, null);
+        c=c.getCommission(id, null);
         return c;
     }
 
