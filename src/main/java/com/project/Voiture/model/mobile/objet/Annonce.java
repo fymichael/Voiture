@@ -262,7 +262,7 @@ public class Annonce {
                 valid=false;
             } 
             stmt= con.createStatement();
-            String sql="UPDATE annonce SET status=10 WHERE id_annonce='"+this.getIdAnnonce()+"'";
+            String sql="UPDATE annonce SET status=5 WHERE id_annonce='"+this.getIdAnnonce()+"'";
             System.out.println(sql);
             stmt.executeUpdate(sql);
         }catch(Exception e){

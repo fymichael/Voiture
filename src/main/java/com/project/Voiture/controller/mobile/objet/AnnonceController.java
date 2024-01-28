@@ -4,11 +4,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.project.Voiture.model.frontOffice.listeAnnonce.views.VAnnonce;
 import com.project.Voiture.model.mobile.objet.Annonce;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.sql.Date;
+import java.util.List;
 import java.util.Vector;
 
 import org.springframework.security.access.prepost.PostAuthorize;
@@ -66,5 +68,12 @@ public class AnnonceController {
         Annonce a=new Annonce();
         a.setIdAnnonce(idAnnonce);
         a.validation(null);
+    }
+
+    @GetMapping("annonce/validation")
+    @PostAuthorize("hasAuthority('ROLE_Administrateur')")
+    public VAnnonce[] annonceValider() throws Exception {
+        List<VAnnonce> liste=VAnnonce.getNonValider(null);
+        return liste.toArray(new VAnnonce[liste.size()]);
     }
 }

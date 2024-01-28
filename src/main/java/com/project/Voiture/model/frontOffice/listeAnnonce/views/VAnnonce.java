@@ -221,4 +221,56 @@ public class VAnnonce {
         }
         return model;
     }
+
+     //Toutes les annonces
+     public static List<VAnnonce> getNonValider(Connection connection) throws Exception {
+        List<VAnnonce> models = new ArrayList<>();
+        boolean wasConnected = true;
+        if (connection == null) {
+            wasConnected = false;
+            connection = Connect.getConnection();
+        } 
+        String sql = "SELECT * FROM v_annonce WHERE status = 1";
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            System.out.println(stmt.toString());
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                VAnnonce model = new VAnnonce();
+                model.setIdAnnonce(rs.getInt("id_annonce"));
+                model.setIdVoiture(rs.getInt("id_voiture"));
+                model.setDescription(rs.getString("description"));
+                model.setIdProfil(rs.getInt("id_profil"));
+                model.setDateAnnonce(LocalDate.parse(rs.getDate("date_annonce").toString()));
+                model.setPrix(rs.getDouble("prix"));
+                model.setStatus(rs.getInt("status"));
+                model.setIdMarque(rs.getInt("id_marque"));
+                model.setMarque(rs.getString("marque"));
+                model.setIdCategorie(rs.getInt("id_categorie"));
+                model.setCategorie(rs.getString("categorie"));
+                model.setIdModele(rs.getInt("id_modele"));
+                model.setModele(rs.getString("modele"));
+                model.setIdEnergie(rs.getInt("id_energie"));
+                model.setEnergie(rs.getString("energie"));
+                model.setIdCouleur(rs.getInt("id_couleur"));
+                model.setCouleur(rs.getString("couleur"));
+                model.setIdModeTransmission(rs.getInt("id_mode_transmission"));
+                model.setModeTransmission(rs.getString("mode_transmission"));
+                model.setIdLieu(rs.getInt("id_lieu"));
+                model.setLieu(rs.getString("lieu"));
+                model.setAnneeSortie(rs.getString("annee_sortie"));
+                model.setImmatriculation(rs.getString("immatriculation"));
+                model.setAutonomie(rs.getDouble("autonomie"));
+                model.setModelePlus(rs.getString("modele_plus"));
+                model.setNbPorte(rs.getInt("nb_porte"));
+                model.setNbSiege(rs.getInt("nb_siege"));
+
+                models.add(model);
+            }
+        }
+
+        if (!wasConnected) {
+            connection.close();
+        }
+        return models;
+    }
 }
