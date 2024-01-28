@@ -25,7 +25,7 @@ public class AnnonceController {
 
     @GetMapping("/annonce/client/{idClient}")
     @PostAuthorize("hasAuthority('ROLE_Client')")
-    public Vector<Annonce> getClientAnnnonce(@PathVariable String idClient) throws Exception {
+    public Vector<Annonce> getClientAnnonce(@PathVariable String idClient) throws Exception {
         Vector<Annonce> clientAnnonce = new Annonce().clientAnnonces(idClient, null);
         return clientAnnonce;
 
@@ -37,10 +37,14 @@ public class AnnonceController {
         newAnnonce.insert(null);
     }
 
-    @PutMapping("annonce/vente/{idAnnonce}")
+    @PostMapping("annonce/vente/{idAnnonce}")
     @PostAuthorize("hasAuthority('ROLE_Client')")
-    public void vendre(@PathVariable String idAnnonce, @RequestBody Date dateVente) throws Exception {
-        new Annonce().vendre(null, idAnnonce, dateVente);
+    public void vendre(@PathVariable String idAnnonce, @RequestBody Date dateVente) {
+        try {
+            new Annonce().vendre(null, idAnnonce, dateVente);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @PutMapping("annonce/prix/{idAnnonce}")

@@ -6,14 +6,14 @@ VALUES
     (3, 'Client');
 
 --Utilisateurs
-INSERT INTO profil (nom, prenom, date_naissance, email, mdp, contact, id_role, status)
+INSERT INTO profil (nom, prenom, date_naissance, email, mdp, contact, id_role, status, username)
 VALUES
-    ('INSSA', 'Chalman', '19-06-2002', 'chalmanInssa1962002@gmail.com', 'chalman', '0345091434', 3, 1),
-    ('Fy', 'Michael', '10-08-2005', 'fyMichael@gmail.com', 'fy', '0341111111', 3, 1),
-    ('Arena', 'Gracia', '10-02-2003', 'arenaGracia@gmail.com', 'arena', '0340000000', 1, 1),
-    ('Rabarijaona', 'Angoty', '27-11-2003', 'angotyRabarijaona@gmail.com', 'angoty', 0342222222, 1, 1),
-    ('Bertrand', 'Luc', '18-07-1988', 'luc.bertrand@email.com', 'pass654', '111222333', 2, 1),
-    ('Moreau', 'Emma', '05-01-1993', 'emma.moreau@email.com', 'secret456', '999000111', 3, 1);
+    ('INSSA', 'Chalman', '19-06-2002', 'chalmanInssa1962002@gmail.com', 'chalman', '0345091434', 3, 1, 'chalman'),
+    ('Fy', 'Michael', '10-08-2005', 'fyMichael@gmail.com', 'fy', '0341111111', 3, 1, 'fy'),
+    ('Arena', 'Gracia', '10-02-2003', 'arenaGracia@gmail.com', 'arena', '0340000000', 1, 1, 'arena'),
+    ('Rabarijaona', 'Angoty', '27-11-2003', 'angotyRabarijaona@gmail.com', 'angoty', '0342222222', 1, 1, 'angoty'),
+    ('Bertrand', 'Luc', '18-07-1988', 'luc.bertrand@email.com', 'pass654', '111222333', 2, 1, 'bertand'),
+    ('Moreau', 'Emma', '05-01-1993', 'emma.moreau@email.com', 'secret456', '999000111', 3, 1, 'moreau');
 
 --Categories
 INSERT INTO categorie (intitule, status)

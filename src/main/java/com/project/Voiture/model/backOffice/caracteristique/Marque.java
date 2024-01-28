@@ -11,14 +11,14 @@ import java.sql.PreparedStatement;
 import com.project.Voiture.model.connection.Connect;
 
 public class Marque {
-    Integer idMarque;
+    String idMarque;
     String intitule;
     int etat;
 
-    public Integer getIdMarque(){
+    public String getIdMarque(){
         return this.idMarque;
     }
-    public void setIdMarque(Integer idMarque)throws Exception{
+    public void setIdMarque(String idMarque)throws Exception{
         this.idMarque=idMarque;
     }
 
@@ -49,7 +49,7 @@ public class Marque {
         this.setEtat(a);
     }
     public Marque()throws Exception{}
-    public Marque(Integer id, String intitule, int etat)throws Exception{
+    public Marque(String id, String intitule, int etat)throws Exception{
         this.setIdMarque(id);
         this.setIntitule(intitule);
         this.setEtat(etat);
@@ -86,11 +86,11 @@ public class Marque {
                 con=Connect.connectDB();
                 valid=false;
             }
-            String sql = "SELECT * FROM Marque where status != 10 ";
+            String sql = "SELECT * FROM Marque where etat != 10 ";
             state = con.createStatement();
             result = state.executeQuery(sql);
             while(result.next()){
-                Integer id= result.getInt(1);
+                String id= result.getString(1);
                 String intitule= result.getString(2);
                 int etat=result.getInt(3);
                 Marque m = new Marque(id, intitule, etat);
@@ -158,16 +158,16 @@ public class Marque {
         boolean wasConnected = true;
         if (connection == null) {
             wasConnected = false;
-            connection = Connect.getConnection();
+            connection = Connect.connectDB();
         } 
-        String sql = "SELECT * FROM marque WHERE status > 0";
+        String sql = "SELECT * FROM marque WHERE etat > 0";
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
                 Marque model = new Marque();
-                model.setIdMarque(rs.getInt("id_marque"));
+                model.setIdMarque(rs.getString("id_marque"));
                 model.setIntitule(rs.getString("intitule"));
-                model.setEtat(rs.getInt("status"));
+                model.setEtat(rs.getInt("etat"));
                 models.add(model);
             }
         }

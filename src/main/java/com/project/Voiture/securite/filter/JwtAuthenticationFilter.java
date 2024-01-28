@@ -31,8 +31,6 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
         String username = request.getParameter("username");
         String password = request.getParameter("password");
-        System.out.println(username);
-        System.out.println(password);
         UsernamePasswordAuthenticationToken authenticationToken = 
             new UsernamePasswordAuthenticationToken(username, password);
 
@@ -46,17 +44,17 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
         User user = (User)authResult.getPrincipal();
         System.out.println(user.getUsername());
-        Algorithm algo1 = Algorithm.HMAC256("mySecret1234");
+        Algorithm algo1 = Algorithm.HMAC256(JwtUtils.SECRET);
         String jwtAccessToken = JWT.create()
                 .withSubject(user.getUsername())
-                .withExpiresAt(new Date(System.currentTimeMillis()+1*60*1000))
+                .withExpiresAt(new Date(System.currentTimeMillis()+JwtUtils.EXPIRE_TOKEN_ACCESS))
                 .withIssuer(request.getRequestURL().toString())
                 .withClaim("roles", user.getAuthorities().stream().map(ga->ga.getAuthority()).collect(Collectors.toList()))
                 .sign(algo1);
 
         String jwtRefreshToken = JWT.create()
                 .withSubject(user.getUsername())
-                .withExpiresAt(new Date(System.currentTimeMillis()+15*60*1000))
+                .withExpiresAt(new Date(System.currentTimeMillis()+JwtUtils.EXPIRE_REFRESH_TOKEN))
                 .withIssuer(request.getRequestURL().toString())
                 .sign(algo1);
 

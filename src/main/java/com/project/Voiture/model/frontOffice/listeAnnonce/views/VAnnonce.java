@@ -9,34 +9,34 @@ import java.sql.*;
 
 @Data @NoArgsConstructor @AllArgsConstructor
 public class VAnnonce {
-    private Integer idAnnonce;
-    private Integer idVoiture;
+    private String idAnnonce;
+    private String idVoiture;
     private String description;
-    private Integer idProfil;
+    private String idProfil;
     private LocalDate dateAnnonce;
     private Double prix;
-    private Double commission;
     private Integer status;
-    private Integer idMarque;
+    private String idMarque;
     private String marque;
-    private Integer idCategorie;
+    private String idCategorie;
     private String categorie;
-    private Integer idModele;
     private String modele;
-    private Integer idEnergie;
+    private String idEnergie;
     private String energie;
-    private Integer idCouleur;
+    private String idCouleur;
     private String couleur;
-    private Integer idModeTransmission;
+    private String idModeTransmission;
     private String modeTransmission;
-    private Integer idLieu;
+    private String idLieu;
     private String lieu;
     private String anneeSortie;
     private String immatriculation;
     private Double autonomie;
-    private String modelePlus;
     private Integer nbPorte;
     private Integer nbSiege;
+    private String idPecification;
+    private String specification;
+    private Double kilometrage;
 
 ///Fonctions
      //Toutes les annonces
@@ -45,42 +45,42 @@ public class VAnnonce {
         boolean wasConnected = true;
         if (connection == null) {
             wasConnected = false;
-            connection = Connect.getConnection();
+            connection = Connect.connectDB();
         } 
-        String sql = "SELECT * FROM v_annonce WHERE status > 0";
+        String sql = "SELECT * FROM v_detail_annonce WHERE status_annonce > 0";
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             System.out.println(stmt.toString());
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
                 VAnnonce model = new VAnnonce();
-                model.setIdAnnonce(rs.getInt("id_annonce"));
-                model.setIdVoiture(rs.getInt("id_voiture"));
+                model.setIdAnnonce(rs.getString("id_annonce"));
+                model.setIdVoiture(rs.getString("id_voiture"));
                 model.setDescription(rs.getString("description"));
-                model.setIdProfil(rs.getInt("id_profil"));
+                model.setIdProfil(rs.getString("id_profil"));
                 model.setDateAnnonce(LocalDate.parse(rs.getDate("date_annonce").toString()));
                 model.setPrix(rs.getDouble("prix"));
-                model.setCommission(rs.getDouble("commission"));
-                model.setStatus(rs.getInt("status"));
-                model.setIdMarque(rs.getInt("id_marque"));
+                model.setStatus(rs.getInt("status_annonce"));
+                model.setIdMarque(rs.getString("id_marque"));
                 model.setMarque(rs.getString("marque"));
-                model.setIdCategorie(rs.getInt("id_categorie"));
+                model.setIdCategorie(rs.getString("id_categorie"));
                 model.setCategorie(rs.getString("categorie"));
-                model.setIdModele(rs.getInt("id_modele"));
-                model.setModele(rs.getString("modele"));
-                model.setIdEnergie(rs.getInt("id_energie"));
+                model.setModele(rs.getString("model"));
+                model.setIdEnergie(rs.getString("id_energie"));
                 model.setEnergie(rs.getString("energie"));
-                model.setIdCouleur(rs.getInt("id_couleur"));
+                model.setIdCouleur(rs.getString("id_couleur"));
                 model.setCouleur(rs.getString("couleur"));
-                model.setIdModeTransmission(rs.getInt("id_mode_transmission"));
+                model.setIdModeTransmission(rs.getString("id_mode_transmission"));
                 model.setModeTransmission(rs.getString("mode_transmission"));
-                model.setIdLieu(rs.getInt("id_lieu"));
+                model.setIdLieu(rs.getString("id_lieu"));
                 model.setLieu(rs.getString("lieu"));
-                model.setAnneeSortie(rs.getString("annee_sortie"));
+                model.setAnneeSortie(rs.getString("anne_sortie"));
                 model.setImmatriculation(rs.getString("immatriculation"));
                 model.setAutonomie(rs.getDouble("autonomie"));
-                model.setModelePlus(rs.getString("modele_plus"));
                 model.setNbPorte(rs.getInt("nb_porte"));
                 model.setNbSiege(rs.getInt("nb_siege"));
+                model.setIdPecification(rs.getString("id_specification"));
+                model.setSpecification(rs.getString("specification"));
+                model.setKilometrage(rs.getDouble("kilometrage"));
 
                 models.add(model);
             }
@@ -117,49 +117,50 @@ public class VAnnonce {
     }
 
     //Toutes les annonces filtres par categorie
-    public static List<VAnnonce> findByFeatures(String feature, int idFeature, Connection connection) throws Exception {
+    public static List<VAnnonce> findByFeatures(String feature, String idFeature, Connection connection) throws Exception {
         List<VAnnonce> models = new ArrayList<>();
         boolean wasConnected = true;
         if (connection == null) {
             wasConnected = false;
-            connection = Connect.getConnection();
+            connection = Connect.connectDB();
         } 
         String featureValue = VAnnonce.getIdFeature(feature);
        
-        String sql = "SELECT * FROM v_annonce WHERE status > 0 AND "+featureValue+" = ?";
+        String sql = "SELECT * FROM v_detail_annonce WHERE status_annonce > 0 AND "+featureValue+" = ?";
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
-            stmt.setInt(1, idFeature);
+            stmt.setString(1, idFeature);
+
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
                 VAnnonce model = new VAnnonce();
-                model.setIdAnnonce(rs.getInt("id_annonce"));
-                model.setIdVoiture(rs.getInt("id_voiture"));
+                model.setIdAnnonce(rs.getString("id_annonce"));
+                model.setIdVoiture(rs.getString("id_voiture"));
                 model.setDescription(rs.getString("description"));
-                model.setIdProfil(rs.getInt("id_profil"));
+                model.setIdProfil(rs.getString("id_profil"));
                 model.setDateAnnonce(LocalDate.parse(rs.getDate("date_annonce").toString()));
                 model.setPrix(rs.getDouble("prix"));
-                model.setCommission(rs.getDouble("commission"));
-                model.setStatus(rs.getInt("status"));
-                model.setIdMarque(rs.getInt("id_marque"));
+                model.setStatus(rs.getInt("status_annonce"));
+                model.setIdMarque(rs.getString("id_marque"));
                 model.setMarque(rs.getString("marque"));
-                model.setIdCategorie(rs.getInt("id_categorie"));
+                model.setIdCategorie(rs.getString("id_categorie"));
                 model.setCategorie(rs.getString("categorie"));
-                model.setIdModele(rs.getInt("id_modele"));
-                model.setModele(rs.getString("modele"));
-                model.setIdEnergie(rs.getInt("id_energie"));
+                model.setModele(rs.getString("model"));
+                model.setIdEnergie(rs.getString("id_energie"));
                 model.setEnergie(rs.getString("energie"));
-                model.setIdCouleur(rs.getInt("id_couleur"));
+                model.setIdCouleur(rs.getString("id_couleur"));
                 model.setCouleur(rs.getString("couleur"));
-                model.setIdModeTransmission(rs.getInt("id_mode_transmission"));
+                model.setIdModeTransmission(rs.getString("id_mode_transmission"));
                 model.setModeTransmission(rs.getString("mode_transmission"));
-                model.setIdLieu(rs.getInt("id_lieu"));
+                model.setIdLieu(rs.getString("id_lieu"));
                 model.setLieu(rs.getString("lieu"));
-                model.setAnneeSortie(rs.getString("annee_sortie"));
+                model.setAnneeSortie(rs.getString("anne_sortie"));
                 model.setImmatriculation(rs.getString("immatriculation"));
                 model.setAutonomie(rs.getDouble("autonomie"));
-                model.setModelePlus(rs.getString("modele_plus"));
                 model.setNbPorte(rs.getInt("nb_porte"));
                 model.setNbSiege(rs.getInt("nb_siege"));
+                model.setIdPecification(rs.getString("id_specification"));
+                model.setSpecification(rs.getString("specification"));
+                model.setKilometrage(rs.getDouble("kilometrage"));
 
                 models.add(model);
             }
@@ -172,47 +173,47 @@ public class VAnnonce {
     }
 
     //Une annonce par son id
-    public static VAnnonce findOneById(int id, Connection connection) throws Exception {
+    public static VAnnonce findOneById(String id, Connection connection) throws Exception {
         VAnnonce model = new VAnnonce();
         boolean wasConnected = true;
         if (connection == null) {
             wasConnected = false;
-            connection = Connect.getConnection();
+            connection = Connect.connectDB();
         } 
        
-        String sql = "SELECT * FROM v_annonce WHERE status > 0 AND id_annonce = ?";
+        String sql = "SELECT * FROM v_detail_annonce WHERE status_annonce > 0 AND id_annonce = ?";
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
-            stmt.setInt(1, id);
+            stmt.setString(1, id);
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
-                model.setIdAnnonce(rs.getInt("id_annonce"));
-                model.setIdVoiture(rs.getInt("id_voiture"));
+                model.setIdAnnonce(rs.getString("id_annonce"));
+                model.setIdVoiture(rs.getString("id_voiture"));
                 model.setDescription(rs.getString("description"));
-                model.setIdProfil(rs.getInt("id_profil"));
+                model.setIdProfil(rs.getString("id_profil"));
                 model.setDateAnnonce(LocalDate.parse(rs.getDate("date_annonce").toString()));
                 model.setPrix(rs.getDouble("prix"));
-                model.setCommission(rs.getDouble("commission"));
-                model.setStatus(rs.getInt("status"));
-                model.setIdMarque(rs.getInt("id_marque"));
+                model.setStatus(rs.getInt("status_annonce"));
+                model.setIdMarque(rs.getString("id_marque"));
                 model.setMarque(rs.getString("marque"));
-                model.setIdCategorie(rs.getInt("id_categorie"));
+                model.setIdCategorie(rs.getString("id_categorie"));
                 model.setCategorie(rs.getString("categorie"));
-                model.setIdModele(rs.getInt("id_modele"));
-                model.setModele(rs.getString("modele"));
-                model.setIdEnergie(rs.getInt("id_energie"));
+                model.setModele(rs.getString("model"));
+                model.setIdEnergie(rs.getString("id_energie"));
                 model.setEnergie(rs.getString("energie"));
-                model.setIdCouleur(rs.getInt("id_couleur"));
+                model.setIdCouleur(rs.getString("id_couleur"));
                 model.setCouleur(rs.getString("couleur"));
-                model.setIdModeTransmission(rs.getInt("id_mode_transmission"));
+                model.setIdModeTransmission(rs.getString("id_mode_transmission"));
                 model.setModeTransmission(rs.getString("mode_transmission"));
-                model.setIdLieu(rs.getInt("id_lieu"));
+                model.setIdLieu(rs.getString("id_lieu"));
                 model.setLieu(rs.getString("lieu"));
-                model.setAnneeSortie(rs.getString("annee_sortie"));
+                model.setAnneeSortie(rs.getString("anne_sortie"));
                 model.setImmatriculation(rs.getString("immatriculation"));
                 model.setAutonomie(rs.getDouble("autonomie"));
-                model.setModelePlus(rs.getString("modele_plus"));
                 model.setNbPorte(rs.getInt("nb_porte"));
                 model.setNbSiege(rs.getInt("nb_siege"));
+                model.setIdPecification(rs.getString("id_specification"));
+                model.setSpecification(rs.getString("specification"));
+                model.setKilometrage(rs.getDouble("kilometrage"));
             }
         }
 
