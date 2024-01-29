@@ -45,7 +45,6 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
                     SecurityContextHolder.getContext().setAuthentication(authenticationToken);
                     filterChain.doFilter(request, response);
                 } catch (Exception e) {
-                    System.out.println("Err = "+e.getMessage());
                     response.setHeader("error-message", e.getMessage());
                     response.sendError(HttpServletResponse.SC_FORBIDDEN);
                 }

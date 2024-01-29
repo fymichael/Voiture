@@ -85,11 +85,11 @@ public class AnnonceController {
         annonce.setIdAnnonce(idAnnonce);
         annonce.validation(null);
     }
-
+/*
     @GetMapping("annonce/validation")
     @PostAuthorize("hasAuthority('ROLE_Administrateur')")
     public VAnnonce[] annonceValider() throws Exception {
         List<VAnnonce> liste=VAnnonce.getNonValider(null);
         return liste.toArray(new VAnnonce[liste.size()]);
-    }
+    }*/
 }

@@ -43,7 +43,6 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         System.out.println("succesfulAuthentication");
 
         User user = (User)authResult.getPrincipal();
-        System.out.println(user.getUsername());
         Algorithm algo1 = Algorithm.HMAC256(JwtUtils.SECRET);
         String jwtAccessToken = JWT.create()
                 .withSubject(user.getUsername())

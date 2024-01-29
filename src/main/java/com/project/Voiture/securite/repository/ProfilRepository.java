@@ -16,6 +16,41 @@ public class ProfilRepository {
         this.passwordEncoder = passwordEncoder;
     }
 
+    public void insert(Profil profil, Connection con) throws Exception {
+        boolean valid = true;
+        PreparedStatement pstmt = null;
+
+        try {
+            if (con == null) {
+                con = Connect.connectDB();
+                valid = false;
+            }
+
+            String sql = "INSERT INTO profil VALUES(DEFAULT, ?, ?, ?, ?, ?, 1, ?, 3, ?)";
+            pstmt = con.prepareStatement(sql);
+
+            pstmt.setString(1, profil.getNom());
+            pstmt.setString(2, profil.getPrenom());
+            pstmt.setDate(3, Date.valueOf(profil.getDateNaissance()));
+            pstmt.setString(4, profil.getEmail());
+            pstmt.setString(5, passwordEncoder.encode(profil.getMdp()));
+            pstmt.setString(6, profil.getContact());
+            pstmt.setString(7, profil.getUsername());
+
+            pstmt.executeUpdate();
+
+        } catch (Exception e) {
+            throw e;
+        } finally {
+            if (pstmt != null) {
+                pstmt.close();
+            }
+            if (!valid) {
+                con.close();
+            }
+        }
+    }
+
     public static VProfil findByUsername(String username, Connection connection) {
         VProfil model = new VProfil();
         try {
