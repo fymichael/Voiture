@@ -7,8 +7,83 @@ import java.util.Vector;
 
 
 import com.project.Voiture.model.connection.Connect;
+import com.project.Voiture.model.backOffice.caracteristique.Marque;
+import com.project.Voiture.model.backOffice.caracteristique.Categorie;
+import com.project.Voiture.model.backOffice.caracteristique.Couleur;
+import com.project.Voiture.model.backOffice.caracteristique.Energie;
 
 public class Statistique {
+
+    Marque[] marque;
+    int nbCategorie;
+    int nbEnergie;
+    int nbCouleur;
+
+    public Marque[] getMarque(){
+        return this.marque;
+    }
+    public int getNbCategorie(){
+        return this.nbCategorie;
+    }
+    public int getNbEnergie(){
+        return this.nbEnergie;
+    }
+    public int getNbCouleur(){
+        return this.nbCouleur;
+    }
+    public void setMarque(Marque[] m) throws Exception{
+        this.marque=m;
+    }
+    public void setNbCategorie(int a) throws Exception{
+        this.nbCategorie=a;
+    }
+    public void setNbCouleur(int m) throws Exception{
+        this.nbCouleur=m;
+    }
+    public void setNbEnergie(int m) throws Exception{
+        this.nbEnergie=m;
+    }
+    public Statistique()throws Exception{}
+    public Statistique(Marque[] liste, int nbCategorie, int nbCouleur, int nbEnergie)throws Exception{
+        this.setMarque(liste);
+        this.setNbCategorie(nbCategorie);
+        this.setNbCouleur(nbCouleur);
+        this.setNbEnergie(nbEnergie);
+    }
+
+
+    public  Statistique getStatistique()throws Exception{
+        Statistique statistique= null;
+        boolean valid=true;
+        Statement state=null;
+        ResultSet result=null;
+        try {
+            if(con==null){
+                con=Connect.connectDB();
+                valid=false;
+            }
+            String sql = "SELECT * FROM v_nombre_element ";
+            state = con.createStatement();
+            System.out.println(sql);
+            result = state.executeQuery(sql);
+            while(result.next()){
+                int nombre_marque=result.getInt("")
+            }
+        } catch (Exception e) {   
+            e.printStackTrace(); 
+        }finally{
+            try {
+                if(state!=null ){ state.close(); }
+                if(result!=null ){ result.close(); }
+                if(valid==false || con !=null){ con.close(); }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return marque;
+    }
+
+
     // stat 6 : avoir les commission par mois
     // public double[] getCommission(Connection con) throws Exception {
     //     boolean valid = true;
