@@ -159,7 +159,6 @@ CREATE OR REPLACE VIEW v_annonce_client AS SELECT a.id_annonce,
     a.date,
     a.prix,
     a.id_profil,
-    a.status AS status_annonce,
     c.nom,
     c.prenom,
     c.date_naissance,
@@ -221,7 +220,6 @@ CREATE OR REPLACE VIEW v_detail_annonce AS SELECT vdv.id_voiture,
     vac.date AS date_annonce,
     vac.prix,
     vac.id_profil,
-    vac.status_annonce,
     vac.nom,
     vac.prenom,
     vac.date_naissance,
@@ -229,7 +227,21 @@ CREATE OR REPLACE VIEW v_detail_annonce AS SELECT vdv.id_voiture,
     vac.mdp,
     vac.contact
    FROM (v_detail_voiture vdv
-     JOIN v_annonce_client vac ON (((vac.id_voiture)::text = ( vdv.id_voiture)::text)));
+     JOIN v_annonce_client vac ON (((vac.id_voiture)::text = (vdv.id_voiture)::text)))
+
+CREATE OR REPLACE VIEW v_profil AS SELECT p.id_profil,
+    p.nom,
+    p.prenom,
+    p.date_naissance,
+    p.email,
+    p.mdp,
+    p.contact,
+    p.id_role,
+    p.username,
+    r.intitule AS role
+   FROM (profil p
+     JOIN role r ON ((p.id_role = r.id_role)))
+  WHERE (p.status <> 0)
 
 INSERT INTO "public"."role"( id_role, intitule ) VALUES ( 1, 'Administrateur');
 INSERT INTO "public"."role"( id_role, intitule ) VALUES ( 2, 'Utilisateur');

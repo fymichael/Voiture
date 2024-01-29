@@ -6,6 +6,9 @@ import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.time.*;
+
+import org.springframework.context.annotation.Bean;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.project.Voiture.model.connection.Connect;
@@ -23,7 +26,7 @@ public class Profil {
     private String contact;
     private String username;
     private int idRole;
-    private PasswordEncoder passwordEncoder;
+    private PasswordEncoder passwordEncoder =  new BCryptPasswordEncoder();
 
     public void insert(Connection con) throws Exception {
         boolean valid = true;
@@ -46,6 +49,7 @@ public class Profil {
             pstmt.setString(6, this.getContact());
             pstmt.setString(7, this.getUsername());
 
+            System.out.println(pstmt.toString());
             pstmt.executeUpdate();
 
         } catch (Exception e) {
