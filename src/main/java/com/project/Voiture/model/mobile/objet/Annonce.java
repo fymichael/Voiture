@@ -79,8 +79,7 @@ public class Annonce {
                     con.close();
                 }
             }
-        }
-        else {
+        } else {
             throw new Exception(" La date de vente ne doit pas etre anterieur a la date d'ajout de l'annonce ");
         }
     }
@@ -175,6 +174,46 @@ public class Annonce {
             }
         }
         return a;
+    }
+
+    // toutes les annonces non valider
+    public Vector<Annonce> AnnonceNonValider(Connection con) throws Exception {
+        boolean valid = true;
+        Statement pstmt = null;
+        ResultSet rs = null;
+
+        Vector<Annonce> annonces = new Vector<>();
+        try {
+            if (con == null) {
+                con = Connect.connectDB();
+                valid = false;
+            }
+
+            String sql = " select * from annonce where status = 1";
+            pstmt = con.createStatement();
+            rs = pstmt.executeQuery(sql);
+            while (rs.next()) {
+                Annonce a = new Annonce();
+                a.setIdProfil(rs.getString("id_profil"));
+                a.setIdVoiture(rs.getString("id_voiture"));
+                a.setDate(rs.getDate("date"));
+                a.setDescription(rs.getString("description"));
+                a.setIdAnnonce(rs.getString("id_annonce"));
+                a.setPrix(rs.getDouble("prix"));
+                a.setStatus(rs.getInt("status"));
+                annonces.add(a);
+            }
+        } catch (Exception e) {
+            throw e;
+        } finally {
+            if (pstmt != null) {
+                pstmt.close();
+            }
+            if (!valid) {
+                con.close();
+            }
+        }
+        return annonces;
     }
 
     // avoir toutes les annonces du client connecter
