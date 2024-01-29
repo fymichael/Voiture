@@ -115,6 +115,7 @@ public class JwtUtils {
             list.add("/api/voiture/accueil/**");
             list.add("/api/voiture/annonces/**");
             list.add("/api/voiture/annonce/**");
+ 	    list.add("/api/voiture/annonces/filter/**");
             list.add("/api/voiture/annonce/filter/**");
             list.add("/api/voiture/annonces/filter/prix/**");
             list.add("/api/voiture/annonces/filter/date/**");

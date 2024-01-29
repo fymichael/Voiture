@@ -51,7 +51,7 @@ public class VAnnonce {
             wasConnected = false;
             connection = Connect.connectDB();
         } 
-        String sql = "SELECT * FROM v_detail_annonce WHERE status_annonce > 0";
+        String sql = "SELECT * FROM v_detail_annonce WHERE status_annonce = 1";
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             System.out.println(stmt.toString());
             ResultSet rs = stmt.executeQuery();
@@ -130,7 +130,7 @@ public class VAnnonce {
         } 
         String featureValue = VAnnonce.getIdFeature(feature);
        
-        String sql = "SELECT * FROM v_detail_annonce WHERE status_annonce > 0 AND "+featureValue+" = ?";
+        String sql = "SELECT * FROM v_detail_annonce WHERE status_annonce = 1 AND "+featureValue+" = ?";
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setString(1, idFeature);
 
@@ -185,7 +185,7 @@ public class VAnnonce {
             connection = Connect.connectDB();
         } 
        
-        String sql = "SELECT * FROM v_detail_annonce WHERE status_annonce > 0 AND id_annonce = ?";
+        String sql = "SELECT * FROM v_detail_annonce WHERE status_annonce = 1 AND id_annonce = ?";
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setString(1, id);
             ResultSet rs = stmt.executeQuery();
@@ -253,7 +253,7 @@ public class VAnnonce {
             wasConnected = false;
             connection = Connect.connectDB();
         } 
-        String sql = "SELECT * FROM v_detail_annonce WHERE status_annonce > 0 AND prix >= ? AND prix <= ?";
+        String sql = "SELECT * FROM v_detail_annonce WHERE status_annonce = 1 AND prix >= ? AND prix <= ?";
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setDouble(1, prixMinParsed);
             stmt.setDouble(2, prixMaxParsed);
@@ -315,7 +315,7 @@ public class VAnnonce {
             wasConnected = false;
             connection = Connect.connectDB();
         } 
-        String sql = "SELECT * FROM v_detail_annonce WHERE status_annonce > 0 AND date_annonce >= ? AND date_annonce <= ?";
+        String sql = "SELECT * FROM v_detail_annonce WHERE status_annonce = 1 AND date_annonce >= ? AND date_annonce <= ?";
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setDate(1, Date.valueOf(dateMin));
             stmt.setDate(2, Date.valueOf(dateMax));
@@ -374,7 +374,7 @@ public class VAnnonce {
             wasConnected = false;
             connection = Connect.connectDB();
         } 
-        String sql = "SELECT * FROM v_detail_annonce WHERE status_annonce > 0 AND description like ?";
+        String sql = "SELECT * FROM v_detail_annonce WHERE status_annonce = 1 AND description like ?";
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setString(1, "%"+keyWord+"%");
 
@@ -457,7 +457,7 @@ public class VAnnonce {
             wasConnected = false;
             connection = Connect.connectDB();
         } 
-        String sql = "SELECT * FROM v_detail_annonce WHERE status_annonce > 0 "+requestFilter;
+        String sql = "SELECT * FROM v_detail_annonce WHERE status_annonce = 1 "+requestFilter;
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
 
             ResultSet rs = stmt.executeQuery();
