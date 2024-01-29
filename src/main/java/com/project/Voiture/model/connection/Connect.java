@@ -7,17 +7,18 @@ public class Connect {
 
     public static Connection connectDB() throws Exception
     {
+                String database = "vaika_occasion";       // Nom de la base
+                String user = "postgres";       // User dans postgres
+                String mdp = "root";       // Mot de passe
+                
         Class.forName("org.postgresql.Driver");
-        Connection con = DriverManager.getConnection("jdbc:postgresql://viaduct.proxy.rlwy.net:32444/railway", "postgres", "41d5e*5G1*B42D6CgDe4fbc2CA3Eba*3");
+        Connection con = DriverManager.getConnection("jdbc:postgresql://localhost:5432/" + database, user,  mdp);
+        //Connection con = DriverManager.getConnection("jdbc:postgresql://viaduct.proxy.rlwy.net:32444/railway", "postgres", "41d5e*5G1*B42D6CgDe4fbc2CA3Eba*3");
         return con;
     }
 
-    public static Connection getConnection() throws Exception {     
-        // Fonction qui renvoie la connection vers la base : 
-            String database = "vaika_occasion";       // Nom de la base
-            String user = "postgres";       // User dans postgres
-            String mdp = "postgres";       // Mot de passe
-            
+    /*public static Connection getConnection() throws Exception {     
+
             Class.forName("org.postgresql.Driver");
             
             // Creation de l'objet de connection
@@ -25,6 +26,6 @@ public class Connect {
             
             connection.setAutoCommit(false);
             return connection;
-    }
+    }*/
 }
 

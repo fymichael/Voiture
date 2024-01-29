@@ -29,7 +29,7 @@ public class MarqueController {
       Marque[] liste=c.getAll(null);
       return liste;
    }
-
+/*
    @GetMapping("/marque/{id}")
    @PostAuthorize("hasAuthority('ROLE_Administrateur')")
    public Marque getById(@PathVariable String id)throws Exception{
@@ -44,7 +44,7 @@ public class MarqueController {
     public Marque form(@RequestBody Marque marque)throws Exception{
       return marque.insert(null);
     }
-
+*/
     @PutMapping("/marque")
     @PostAuthorize("hasAuthority('ROLE_Administrateur')")
     public void update(@RequestBody Marque marque)throws Exception{
@@ -60,12 +60,12 @@ public class MarqueController {
         marque.delete(null);
     }
 
-    @GetMapping("/marque")
+  /*  @GetMapping("/marque")
    @PostAuthorize("hasAuthority('ROLE_Administrateur')")
    public Marque getPlusVendues()throws Exception{
       Marque c = new Marque();
       Marque marque=c.getMarquePusVendue(null);
       return marque;
    }
-
+*/
 }
