@@ -257,7 +257,7 @@ public class VAnnonce {
                 model.setModeTransmission(rs.getString("mode_transmission"));
                 model.setIdLieu(rs.getInt("id_lieu"));
                 model.setLieu(rs.getString("lieu"));
-                model.setAnneeSortie(rs.getString("annee_sortie"));
+                model.setAnneeSortie(rs.getString("anne_sortie"));
                 model.setImmatriculation(rs.getString("immatriculation"));
                 model.setAutonomie(rs.getDouble("autonomie"));
                 model.setNbPorte(rs.getInt("nb_porte"));
