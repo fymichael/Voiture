@@ -254,7 +254,7 @@ public class Marque {
                 String id= result.getString("id_marque");
                 String intitule= result.getString("intitule");
                 int etat=result.getInt("etat");
-                int nb=result.getInt("nombres_ventes");
+                int nb=result.getInt("nombre_ventes");
                 m = new Marque(id, intitule, etat, nb);
                 liste.add(m);
             }
