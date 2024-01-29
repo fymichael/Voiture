@@ -57,8 +57,8 @@ public class AnnonceController {
 
     @PutMapping("annonce/prix/{idAnnonce}")
     @PostAuthorize("hasAuthority('ROLE_Client')")
-    public void changer_prix(@PathVariable String idAnnonce) throws Exception {
-        new Annonce().changePrice(null, idAnnonce);
+    public void changer_prix(@PathVariable String idAnnonce, @RequestBody Annonce annonce) throws Exception {
+        annonce.changePrice(null, idAnnonce);
     }
 
     @DeleteMapping("annonce/prix/{idAnnonce}")
