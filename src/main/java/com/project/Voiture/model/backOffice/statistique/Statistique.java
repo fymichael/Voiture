@@ -18,6 +18,9 @@ public class Statistique {
     int nbCategorie;
     int nbEnergie;
     int nbCouleur;
+    int nbMarque;
+    int nbModeTransmission;
+    int nbSpecification;
 
     public Marque[] getMarque(){
         return this.marque;
@@ -31,44 +34,79 @@ public class Statistique {
     public int getNbCouleur(){
         return this.nbCouleur;
     }
+    public int getNbMarque(){
+        return this.nbMarque;
+    }
+    public int getNbModeTransmission(){
+        return this.nbModeTransmission;
+    }
+    public int getNbSpecification(){
+        return this.nbSpecification;
+    }
     public void setMarque(Marque[] m) throws Exception{
         this.marque=m;
     }
-    public void setNbCategorie(int a) throws Exception{
-        this.nbCategorie=a;
+    public void setNbCategorie(int categorie) throws Exception{
+        this.nbCategorie=categorie;
     }
-    public void setNbCouleur(int m) throws Exception{
-        this.nbCouleur=m;
+    public void setNbCouleur(int couleur) throws Exception{
+        this.nbCouleur=couleur;
     }
-    public void setNbEnergie(int m) throws Exception{
-        this.nbEnergie=m;
+    public void setNbEnergie(int energie) throws Exception{
+        this.nbEnergie=energie;
+    }
+    public void setNbMarque(int marque) throws Exception{
+        this.nbMarque=marque;
+    }
+    public void setNbModeTransmission(int mdt) throws Exception{
+        this.nbModeTransmission=mdt;
+    }
+    public void setNbSpecification(int s) throws Exception{
+        this.nbSpecification=s;
     }
     public Statistique()throws Exception{}
-    public Statistique(Marque[] liste, int nbCategorie, int nbCouleur, int nbEnergie)throws Exception{
+    public Statistique(Marque[] liste, int nbCategorie, int nbCouleur, int nbEnergie, int nbMarque, int nbModeTransmission, int nbSpecification)throws Exception{
         this.setMarque(liste);
         this.setNbCategorie(nbCategorie);
         this.setNbCouleur(nbCouleur);
         this.setNbEnergie(nbEnergie);
+        this.setNbMarque(nbMarque);
+        this.setNbModeTransmission(nbModeTransmission);
+        this.setNbSpecification(nbSpecification);
     }
 
-
-    public  Statistique getStatistique()throws Exception{
+    public  Statistique getStatistique(Connection con)throws Exception{
         Statistique statistique= null;
         boolean valid=true;
         Statement state=null;
         ResultSet result=null;
+        int nbCategorie=0;
+        int nbEnergie=0;
+        int nbCouleur=0;
+        int nbMarque=0;
+        int nbModeTransmission=0;
+        int nbSpecification=0;
         try {
             if(con==null){
                 con=Connect.connectDB();
                 valid=false;
             }
-            String sql = "SELECT * FROM v_nombre_element ";
+            String sql = "SELECT * FROM v_nombre_element";
             state = con.createStatement();
             System.out.println(sql);
             result = state.executeQuery(sql);
             while(result.next()){
-                int nombre_marque=result.getInt("")
+                nbCategorie=result.getInt("nb_categorie");
+                nbCouleur=result.getInt("nb_couleur");
+                nbEnergie=result.getInt("nb_energie");
+                nbMarque=result.getInt("nb_marque");
+                nbModeTransmission=result.getInt("nb_mode_transmission");
+                nbSpecification=result.getInt("nb_specification");
+                
             }
+            Marque m=new Marque();
+            Marque[] liste=m.getMarquePusVendue(null);
+            statistique = new Statistique(liste, nbCategorie, nbCouleur, nbEnergie, nbMarque, nbModeTransmission, nbSpecification);
         } catch (Exception e) {   
             e.printStackTrace(); 
         }finally{
@@ -80,7 +118,7 @@ public class Statistique {
                 e.printStackTrace();
             }
         }
-        return marque;
+        return statistique;
     }
 
 

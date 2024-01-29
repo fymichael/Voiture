@@ -192,34 +192,4 @@ public class Energie {
         }
     }
 
-    public int count(Connection con)throws Exception{
-        boolean valid=true;
-        Statement state=null;
-        ResultSet result=null;
-        int count=0;
-        try {
-            if(con==null){
-                con=Connect.connectDB();
-                valid=false;
-            }
-            String sql = "SELECT count(*) as nombre_energie FROM energie";
-            state = con.createStatement();
-            System.out.println(sql);
-            result = state.executeQuery(sql);
-            while(result.next()){
-               count=result.getInt("nombre_energie");
-            }
-        } catch (Exception e) {   
-            e.printStackTrace(); 
-        }finally{
-            try {
-                if(state!=null ){ state.close(); }
-                if(result!=null ){ result.close(); }
-                if(valid==false || con !=null){ con.close(); }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-        return count;
-    }
 }
