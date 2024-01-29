@@ -38,7 +38,7 @@ public class HistoriqueController {
             String authToken =request.getHeader("Authorization");
             VProfil profilConnected = JwtUtils.getProfil(authToken);
             VAnnonce annonce = VAnnonce.findOneById(idAnnonce, null);
-            if(!type.equals("annonce") || !type.equals("favoris")) {
+            if(!type.equals("annonce") && !type.equals("favoris")) {
                 throw new Exception("Impossible d'etablir l'operation : le type n'existe pas");
             }
             if(annonce.getIdAnnonce() == null) {

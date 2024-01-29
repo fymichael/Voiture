@@ -105,6 +105,10 @@ public class JwtUtils {
             list.add("/api/voiture/annonces/**");
             list.add("/api/voiture/annonce/**");
             list.add("/api/voiture/annonce/filter/**");
+            list.add("/api/voiture/annonces/filter/prix/**");
+            list.add("/api/voiture/annonces/filter/date/**");
+            list.add("/api/voiture/annonces/filter/keyWord/**");
+            list.add("/api/voiture/annonces/filter/multiCritere/**");
 
             return list;
     }
