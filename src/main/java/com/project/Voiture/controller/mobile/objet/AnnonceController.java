@@ -26,7 +26,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 public class AnnonceController {
 
     @GetMapping("/annonce/non-valide")
-    @PostAuthorize("hasAuthority('ROLE_Client')")
+    @PostAuthorize("hasAuthority('ROLE_Administrateur')")
     public Vector<Annonce> getAnnonceNonValider() throws Exception {
         Vector<Annonce> clientAnnonce = new Annonce().AnnonceNonValider(null);
         return clientAnnonce;
