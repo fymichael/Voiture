@@ -236,12 +236,11 @@ public class Marque {
     }
 
     // Marque la plus vendue
-    public Marque[] getMarquePusVendue(Connection con)throws Exception{
+    public Marque getMarquePusVendue(Connection con)throws Exception{
         boolean valid=true;
         Statement state=null;
         ResultSet result=null;
         Marque m=new Marque();
-        Vector<Marque> liste=new Vector<Marque>();
         try {
             if(con==null){
                 con=Connect.connectDB();
@@ -256,7 +255,6 @@ public class Marque {
                 int etat=result.getInt("etat");
                 int nb=result.getInt("nombre_ventes");
                 m = new Marque(id, intitule, etat, nb);
-                liste.add(m);
             }
         } catch (Exception e) {   
             e.printStackTrace(); 
@@ -269,8 +267,6 @@ public class Marque {
                 e.printStackTrace();
             }
         }
-        Marque[] marques= new Marque[liste.size()];
-        liste.toArray(marques);
-        return marques;
+        return m;
     }
 }
