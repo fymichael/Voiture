@@ -71,7 +71,7 @@ public class AnnonceController {
         annonce.changePrice(null, idAnnonce);
     }
 
-    @DeleteMapping("annonce/prix/{idAnnonce}")
+    @DeleteMapping("annonce/{idAnnonce}")
     @PostAuthorize("hasAuthority('ROLE_Client')")
     public void delete(@PathVariable String idAnnonce) throws Exception {
         new Annonce().delete(null, idAnnonce);
