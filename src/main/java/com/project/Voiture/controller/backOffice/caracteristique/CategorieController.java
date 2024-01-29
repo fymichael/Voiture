@@ -47,8 +47,8 @@ public class CategorieController {
     @PostAuthorize("hasAuthority('ROLE_Administrateur')")
     public Categorie form(@RequestBody Categorie categorie)throws Exception{
       return categorie.insert(null);
-    }*/
-
+    }
+*/
     @PutMapping("/categorie")
     @PostAuthorize("hasAuthority('ROLE_Administrateur')")
     public void update(@RequestBody Categorie categorie)throws Exception{
