@@ -240,7 +240,7 @@ public class VAnnonce {
                 model.setIdVoiture(rs.getInt("id_voiture"));
                 model.setDescription(rs.getString("description"));
                 model.setIdProfil(rs.getInt("id_profil"));
-                model.setDateAnnonce(LocalDate.parse(rs.getDate("date_annonce").toString()));
+                model.setDateAnnonce(LocalDate.parse(rs.getDate("date").toString()));
                 model.setPrix(rs.getDouble("prix"));
                 model.setStatus(rs.getInt("status"));
                 model.setIdMarque(rs.getInt("id_marque"));
