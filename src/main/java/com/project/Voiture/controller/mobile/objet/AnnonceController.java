@@ -26,7 +26,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 public class AnnonceController {
 
     @GetMapping("/annonce/non-valide")
-    @PostAuthorize("hasAuthority('ROLE_Client')")
+    @PostAuthorize("hasAuthority('ROLE_Administrateur')")
     public Vector<Annonce> getAnnonceNonValider() throws Exception {
         Vector<Annonce> clientAnnonce = new Annonce().AnnonceNonValider(null);
         return clientAnnonce;
@@ -70,7 +70,7 @@ public class AnnonceController {
     }
 
 
-    @GetMapping("annonce/validation/{idAnnonce}")
+    @PutMapping("annonce/validation/{idAnnonce}")
     @PostAuthorize("hasAuthority('ROLE_Administrateur')")
     public void valider_annonce(@PathVariable String idAnnonce) throws Exception {
         Annonce a=new Annonce();
