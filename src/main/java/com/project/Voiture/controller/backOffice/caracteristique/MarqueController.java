@@ -60,11 +60,11 @@ public class MarqueController {
         marque.delete(null);
     }
 
-    @GetMapping("/marque")
+   @GetMapping("/marque")
    @PostAuthorize("hasAuthority('ROLE_Administrateur')")
-   public Marque getPlusVendues()throws Exception{
+   public Marque[] getPlusVendues()throws Exception{
       Marque c = new Marque();
-      Marque marque=c.getMarquePusVendue(null);
+      Marque[] marque=c.getMarquePusVendue(null);
       return marque;
    }
 
