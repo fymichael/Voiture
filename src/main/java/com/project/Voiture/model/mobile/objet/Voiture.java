@@ -78,7 +78,7 @@ public class Voiture {
                     + this.getIdCategorie() + "', '" + this.getIdSpecification() + "', '"
                     + this.getIdEnergie() + "', '" + this.getIdCouleur() + "', '" + this.getAnneeSortie() + "', '"
                     + this.getImmatriculation() + "'," + this.getAutonomie() + ", '" + this.getIdModeTransmission()
-                    + "', 1, '"+ this.getModele() +"'', "+ this.getPorte() +", "+ this.getSiege() +", "+ this.getKilometrage() +", '"+ this.getIdLieu() + "')";
+                    + "', 1, '"+ this.getModele() +"', "+ this.getPorte() +", "+ this.getSiege() +", "+ this.getKilometrage() +", '"+ this.getIdLieu() + "')";
             System.out.println(sql);
             stmt.executeUpdate(sql);
 
