@@ -22,7 +22,7 @@ public class StatistiqueController {
 
     @GetMapping("/stat")
     @PostAuthorize("hasAuthority('ROLE_Administrateur')")
-    public Statistique stat() throws Exception {
+    public Statistique statistique() throws Exception {
       return new Statistique().getStatistique(null);
     }
 
