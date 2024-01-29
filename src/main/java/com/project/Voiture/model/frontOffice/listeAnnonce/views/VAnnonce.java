@@ -527,7 +527,6 @@ public class VAnnonce {
                     model.setMarque(rs.getString("marque"));
                     model.setIdCategorie(rs.getString("id_categorie"));
                     model.setCategorie(rs.getString("categorie"));
-                    model.setModele(rs.getString("model"));
                     model.setIdEnergie(rs.getString("id_energie"));
                     model.setEnergie(rs.getString("energie"));
                     model.setIdCouleur(rs.getString("id_couleur"));
@@ -543,7 +542,6 @@ public class VAnnonce {
                     model.setNbSiege(rs.getInt("nb_siege"));
                     model.setIdSpecification(rs.getString("id_specification"));
                     model.setSpecification(rs.getString("specification"));
-                    model.setKilometrage(rs.getDouble("kilometrage"));
     
                     models.add(model);
                 }
