@@ -25,4 +25,5 @@ public class StatistiqueController {
     public Statistique statistique() throws Exception {
       return new Statistique().getStatistique(null);
     }
+
 }
