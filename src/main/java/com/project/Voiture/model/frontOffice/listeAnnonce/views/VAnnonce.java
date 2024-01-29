@@ -228,7 +228,7 @@ public class VAnnonce {
         boolean wasConnected = true;
         if (connection == null) {
             wasConnected = false;
-            connection = Connect.getConnection();
+            connection = Connect.connectDB();
         } 
         String sql = "SELECT * FROM v_annonce WHERE status = 1";
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
