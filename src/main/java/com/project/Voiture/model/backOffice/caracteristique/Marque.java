@@ -68,11 +68,12 @@ public class Marque {
     }
     
     public Marque()throws Exception{}
-    public Marque(String id, String intitule, int etat)throws Exception{
-        this.setIdMarque(id);
-        this.setIntitule(intitule);
-        this.setEtat(etat);
-    }
+
+    // public Marque(String id, String intitule, int etat)throws Exception{
+    //     this.setIdMarque(id);
+    //     this.setIntitule(intitule);
+    //     this.setEtat(etat);
+    // }
     public Marque(String id, String intitule,  int nb)throws Exception{
         this.setIdMarque(id);
         this.setIntitule(intitule);

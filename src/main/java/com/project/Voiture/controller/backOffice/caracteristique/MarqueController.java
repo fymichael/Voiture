@@ -62,9 +62,9 @@ public class MarqueController {
 
     @GetMapping("/marque")
    @PostAuthorize("hasAuthority('ROLE_Administrateur')")
-   public Marque getPlusVendues()throws Exception{
+   public Marque[] getPlusVendues()throws Exception{
       Marque c = new Marque();
-      Marque marque=c.getMarquePusVendue(null);
+      Marque[] marque=c.getMarquePusVendue(null);
       return marque;
    }
 

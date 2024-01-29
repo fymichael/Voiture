@@ -6,15 +6,14 @@ import java.time.*;
 import java.sql.*;
 
 import org.springframework.stereotype.Repository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @Repository
 public class ProfilRepository {
-    private PasswordEncoder passwordEncoder;
 
-    public ProfilRepository(PasswordEncoder passwordEncoder) {
-        this.passwordEncoder = passwordEncoder;
-    }
+    private PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
     public void insert(Profil profil, Connection con) throws Exception {
         boolean valid = true;
@@ -127,5 +126,16 @@ public class ProfilRepository {
         }
 
         return model;
+    }
+
+    public ProfilRepository() {
+    }
+
+    public void setPasswordEncoder(PasswordEncoder passwordEncoder) {
+        this.passwordEncoder = passwordEncoder;
+    }
+
+    public PasswordEncoder getPasswordEncoder() {
+        return passwordEncoder;
     }
 }
