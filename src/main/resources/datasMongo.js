@@ -1,0 +1,5 @@
+db.createCollection("profil")
+db.createCollection("message")
+db.createCollection("discussion")
+db.createCollection("historique_annonce")
+db.createCollection("annonce_favoris")
