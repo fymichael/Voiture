@@ -197,16 +197,16 @@ public class Categorie {
         boolean wasConnected = true;
         if (connection == null) {
             wasConnected = false;
-            connection = Connect.getConnection();
+            connection = Connect.connectDB();
         } 
-        String sql = "SELECT * FROM categorie WHERE status > 0";
+        String sql = "SELECT * FROM categorie WHERE etat > 0";
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
                 Categorie model = new Categorie();
                 model.setIdCategorie(rs.getString("id_categorie"));
                 model.setIntitule(rs.getString("intitule"));
-                model.setEtat(rs.getInt("status"));
+                model.setEtat(rs.getInt("etat"));
                 models.add(model);
             }
         }

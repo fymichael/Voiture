@@ -220,16 +220,16 @@ public class Marque {
         boolean wasConnected = true;
         if (connection == null) {
             wasConnected = false;
-            connection = Connect.getConnection();
+            connection = Connect.connectDB();
         } 
-        String sql = "SELECT * FROM marque WHERE status > 0";
+        String sql = "SELECT * FROM marque WHERE etat > 0";
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
                 Marque model = new Marque();
                 model.setIdMarque(rs.getString("id_marque"));
                 model.setIntitule(rs.getString("intitule"));
-                model.setEtat(rs.getInt("status"));
+                model.setEtat(rs.getInt("etat"));
                 models.add(model);
             }
         }
