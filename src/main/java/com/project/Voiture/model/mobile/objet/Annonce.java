@@ -64,7 +64,7 @@ public class Annonce {
                     valid = false;
                 }
 
-                String sql = "insert into vente values (default, '" + idAnnonce + "', " + dateVente + ")";
+                String sql = "insert into vente values (default, '" + idAnnonce + "', '" + dateVente + "')";
                 System.out.println(sql);
                 pstmt = con.createStatement();
                 pstmt.executeUpdate(sql);
