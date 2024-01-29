@@ -70,12 +70,10 @@ public class AnnonceController {
     }
 
 
-    @PutMapping("annonce/validation/{idAnnonce}")
+    @PutMapping("annonce/validation")
     @PostAuthorize("hasAuthority('ROLE_Administrateur')")
-    public void valider_annonce(@PathVariable String idAnnonce) throws Exception {
-        Annonce a=new Annonce();
-        a.setIdAnnonce(idAnnonce);
-        a.validation(null);
+    public void valider_annonce(@RequestBody Annonce annonce) throws Exception {
+        annonce.validation(null);
     }
 
     @GetMapping("annonce/validation")
