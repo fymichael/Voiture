@@ -33,6 +33,14 @@ public class AnnonceController {
 
     }
 
+    @GetMapping("/annonce/detail/{idAnnonce}")
+    @PostAuthorize("hasAuthority('ROLE_Client')")
+    public Annonce getAnnonceDetails(@PathVariable String idAnnonce) throws Exception {
+        Annonce clientAnnonce = new Annonce().getById(idAnnonce, null);
+        return clientAnnonce;
+
+    }
+
     @GetMapping("/annonce/profil/{idClient}")
     @PostAuthorize("hasAuthority('ROLE_Client')")
     public Vector<Annonce> getClientAnnonce(@PathVariable String idClient) throws Exception {
