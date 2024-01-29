@@ -73,11 +73,6 @@ public class Marque {
         this.setIntitule(intitule);
         this.setEtat(etat);
     }
-    public Marque(String id, String intitule,  int nb)throws Exception{
-        this.setIdMarque(id);
-        this.setIntitule(intitule);
-        this.setNbVente(nb);
-    }
     public Marque(String id, String intitule, int etat, int nb)throws Exception{
         this.setIdMarque(id);
         this.setIntitule(intitule);
@@ -258,8 +253,9 @@ public class Marque {
             while(result.next()){
                 String id= result.getString("id_marque");
                 String intitule= result.getString("intitule");
+                int etat=result.getInt("etat");
                 int nb=result.getInt("nombre_ventes");
-                m = new Marque(id, intitule, nb);
+                m = new Marque(id, intitule, etat, nb);
                 liste.add(m);
             }
         } catch (Exception e) {   
