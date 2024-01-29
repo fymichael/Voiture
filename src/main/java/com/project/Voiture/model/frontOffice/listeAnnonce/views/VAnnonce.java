@@ -520,15 +520,14 @@ public class VAnnonce {
                     model.setIdVoiture(rs.getString("id_voiture"));
                     model.setDescription(rs.getString("description"));
                     model.setIdProfil(rs.getString("id_profil"));
-                    model.setDateAnnonce(LocalDate.parse(rs.getDate("date").toString()));
+                    model.setDateAnnonce(LocalDate.parse(rs.getDate("date_annonce").toString()));
                     model.setPrix(rs.getDouble("prix"));
-                    model.setStatus(rs.getInt("status"));
+                    model.setStatus(rs.getInt("status_annonce"));
                     model.setIdMarque(rs.getString("id_marque"));
                     model.setMarque(rs.getString("marque"));
                     model.setIdCategorie(rs.getString("id_categorie"));
                     model.setCategorie(rs.getString("categorie"));
-                    model.setIdSpecification(rs.getString("id_specification"));
-                    model.setSpecification(rs.getString("specification"));
+                    model.setModele(rs.getString("model"));
                     model.setIdEnergie(rs.getString("id_energie"));
                     model.setEnergie(rs.getString("energie"));
                     model.setIdCouleur(rs.getString("id_couleur"));
@@ -542,6 +541,9 @@ public class VAnnonce {
                     model.setAutonomie(rs.getDouble("autonomie"));
                     model.setNbPorte(rs.getInt("nb_porte"));
                     model.setNbSiege(rs.getInt("nb_siege"));
+                    model.setIdSpecification(rs.getString("id_specification"));
+                    model.setSpecification(rs.getString("specification"));
+                    model.setKilometrage(rs.getDouble("kilometrage"));
     
                     models.add(model);
                 }
