@@ -11,3 +11,13 @@ CREATE OR REPLACE VIEW v_marque_plus_vendue AS
                      JOIN annonce a ON v.id_voiture = a.id_voiture
                         JOIN vente ve ON a.id_annonce = ve.id_annonce GROUP BY m.intitule
                         ORDER BY COUNT(v.id_voiture)  DESC LIMIT 1;
+
+CREATE OR REPLACE VIEW v_nombre_element AS(
+    SELECT
+        (SELECT COUNT(*) FROM marque) nb_marque,
+        (SELECT COUNT(*) FROM categorie) nb_categorie,
+        (SELECT COUNT(*) FROM specification) nb_specification,
+        (SELECT COUNT(*) FROM mode_transmission) nb_mode_transmission,
+        (SELECT COUNT(*) FROM energie) nb_energie,
+        (SELECT COUNT(*) FROM couleur) nb_couleur
+);
