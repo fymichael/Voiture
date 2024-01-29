@@ -25,7 +25,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 public class AnnonceController {
 
-    @GetMapping("/annonce/client/{idClient}")
+    @GetMapping("/annonce/profil/{idClient}")
     @PostAuthorize("hasAuthority('ROLE_Client')")
     public Vector<Annonce> getClientAnnonce(@PathVariable String idClient) throws Exception {
         Vector<Annonce> clientAnnonce = new Annonce().clientAnnonces(idClient, null);

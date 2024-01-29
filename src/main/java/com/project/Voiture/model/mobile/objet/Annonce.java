@@ -17,7 +17,7 @@ public class Annonce {
     String description;
     Date date;
     double prix;
-    String idClient;
+    String idProfil;
     int status;
 
     // methods
@@ -156,7 +156,7 @@ public class Annonce {
             pstmt = con.createStatement();
             rs = pstmt.executeQuery(sql);
             while (rs.next()) {
-                a.setIdClient(rs.getString("id_client"));
+                a.setIdProfil(rs.getString("id_profil"));
                 a.setIdVoiture(rs.getString("id_voiture"));
                 a.setDate(rs.getDate("date"));
                 a.setDescription(rs.getString("description"));
@@ -178,7 +178,7 @@ public class Annonce {
     }
 
     // avoir toutes les annonces du client connecter
-    public Vector<Annonce> clientAnnonces(String idClient, Connection con) throws Exception {
+    public Vector<Annonce> clientAnnonces(String idProfil, Connection con) throws Exception {
         boolean valid = true;
         Statement pstmt = null;
         ResultSet rs = null;
@@ -190,12 +190,12 @@ public class Annonce {
                 valid = false;
             }
 
-            String sql = " select * from annonce where id_client = '" + idClient + "'";
+            String sql = " select * from annonce where id_profil = '" + idProfil + "'";
             pstmt = con.createStatement();
             rs = pstmt.executeQuery(sql);
             while (rs.next()) {
                 Annonce a = new Annonce();
-                a.setIdClient(rs.getString("id_client"));
+                a.setIdProfil(rs.getString("id_profil"));
                 a.setIdVoiture(rs.getString("id_voiture"));
                 a.setDate(rs.getDate("date"));
                 a.setDescription(rs.getString("description"));
@@ -228,15 +228,13 @@ public class Annonce {
                 valid = false;
             }
 
-            Voiture derniere = new Voiture().lastVoiture(null);
-
-            String sql = "INSERT INTO Annonce VALUES(DEFAULT, ?, ?, default, ?, ?, 1)";
+            String sql = "INSERT INTO Annonce (id_voiture, description, prix, id_profil) VALUES( ?, ?, ?, ?)";
             pstmt = con.prepareStatement(sql);
 
-            pstmt.setString(1, derniere.getIdVoiture());
+            pstmt.setString(1, this.getIdVoiture());
             pstmt.setString(2, this.getDescription());
             pstmt.setDouble(3, this.getPrix());
-            pstmt.setString(4, this.getIdClient());
+            pstmt.setString(4, this.getIdProfil());
 
             pstmt.executeUpdate();
 
@@ -322,8 +320,8 @@ public class Annonce {
         return idAnnonce;
     }
 
-    public String getIdClient() {
-        return idClient;
+    public String getIdProfil() {
+        return idProfil;
     }
 
     public String getIdVoiture() {
@@ -350,8 +348,8 @@ public class Annonce {
         this.idAnnonce = idAnnonce;
     }
 
-    public void setIdClient(String idClient) {
-        this.idClient = idClient;
+    public void setIdProfil(String idProfil) {
+        this.idProfil = idProfil;
     }
 
     public void setIdVoiture(String idVoiture) {
