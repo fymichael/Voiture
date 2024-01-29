@@ -68,20 +68,21 @@ public class Marque {
     }
     
     public Marque()throws Exception{}
-    public Marque(String id, String intitule, int etat)throws Exception{
+
+    // public Marque(String id, String intitule, int etat)throws Exception{
+    //     this.setIdMarque(id);
+    //     this.setIntitule(intitule);
+    //     this.setEtat(etat);
+    // }
+    public Marque(String id, String intitule,  int nb)throws Exception{
         this.setIdMarque(id);
         this.setIntitule(intitule);
-        this.setEtat(etat);
+        this.setNbVente(nb);
     }
     public Marque(String id, String intitule, int etat, int nb)throws Exception{
         this.setIdMarque(id);
         this.setIntitule(intitule);
         this.setEtat(etat);
-        this.setNbVente(nb);
-    }
-     public Marque(String id, String intitule, int nb, String a)throws Exception{
-        this.setIdMarque(id);
-        this.setIntitule(intitule);
         this.setNbVente(nb);
     }
     public Marque getById(Connection con)throws Exception{
@@ -220,16 +221,16 @@ public class Marque {
         boolean wasConnected = true;
         if (connection == null) {
             wasConnected = false;
-            connection = Connect.connectDB();
+            connection = Connect.getConnection();
         } 
-        String sql = "SELECT * FROM marque WHERE etat > 0";
+        String sql = "SELECT * FROM marque WHERE status > 0";
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
                 Marque model = new Marque();
                 model.setIdMarque(rs.getString("id_marque"));
                 model.setIntitule(rs.getString("intitule"));
-                model.setEtat(rs.getInt("etat"));
+                model.setEtat(rs.getInt("status"));
                 models.add(model);
             }
         }
@@ -259,7 +260,7 @@ public class Marque {
                 String id= result.getString("id_marque");
                 String intitule= result.getString("intitule");
                 int nb=result.getInt("nombre_ventes");
-                m = new Marque(id, intitule, nb, null);
+                m = new Marque(id, intitule, nb);
                 liste.add(m);
             }
         } catch (Exception e) {   

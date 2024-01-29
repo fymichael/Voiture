@@ -22,7 +22,7 @@ public class AuthController {
     @PostMapping("/login")
     public void login(@RequestBody VProfil client, HttpServletRequest request, HttpServletResponse response) throws Exception {
         try {
-            JwtUtils.createTokens(request, response, client.getUsername(), client.getMdp());
+           new JwtUtils().createTokens(request, response, client.getUsername(), client.getMdp());
         } catch(Exception e) {
             e.printStackTrace();
             throw e;
