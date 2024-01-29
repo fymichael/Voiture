@@ -21,8 +21,8 @@ public class VAnnonce {
     private String marque;
     private Integer idCategorie;
     private String categorie;
-    private Integer idModele;
-    private String modele;
+    private Integer idSpecification;
+    private String specification;
     private Integer idEnergie;
     private String energie;
     private Integer idCouleur;
@@ -34,7 +34,7 @@ public class VAnnonce {
     private String anneeSortie;
     private String immatriculation;
     private Double autonomie;
-    private String modelePlus;
+    private String specificationPlus;
     private Integer nbPorte;
     private Integer nbSiege;
 
@@ -65,8 +65,8 @@ public class VAnnonce {
                 model.setMarque(rs.getString("marque"));
                 model.setIdCategorie(rs.getInt("id_categorie"));
                 model.setCategorie(rs.getString("categorie"));
-                model.setIdModele(rs.getInt("id_modele"));
-                model.setModele(rs.getString("modele"));
+                model.setIdSpecification(rs.getInt("id_specification"));
+                model.setSpecification(rs.getString("specification"));
                 model.setIdEnergie(rs.getInt("id_energie"));
                 model.setEnergie(rs.getString("energie"));
                 model.setIdCouleur(rs.getInt("id_couleur"));
@@ -78,7 +78,7 @@ public class VAnnonce {
                 model.setAnneeSortie(rs.getString("annee_sortie"));
                 model.setImmatriculation(rs.getString("immatriculation"));
                 model.setAutonomie(rs.getDouble("autonomie"));
-                model.setModelePlus(rs.getString("modele_plus"));
+                model.setSpecificationPlus(rs.getString("specification_plus"));
                 model.setNbPorte(rs.getInt("nb_porte"));
                 model.setNbSiege(rs.getInt("nb_siege"));
 
@@ -100,8 +100,8 @@ public class VAnnonce {
         if(feature.equals("marque")) {
             return "id_marque";
         }
-        if(feature.equals("modele")) {
-            return "id_modele";
+        if(feature.equals("specification")) {
+            return "id_specification";
         }
         if(feature.equals("lieu")) {
             return "id_lieu";
@@ -144,8 +144,8 @@ public class VAnnonce {
                 model.setMarque(rs.getString("marque"));
                 model.setIdCategorie(rs.getInt("id_categorie"));
                 model.setCategorie(rs.getString("categorie"));
-                model.setIdModele(rs.getInt("id_modele"));
-                model.setModele(rs.getString("modele"));
+                model.setIdSpecification(rs.getInt("id_specification"));
+                model.setSpecification(rs.getString("specification"));
                 model.setIdEnergie(rs.getInt("id_energie"));
                 model.setEnergie(rs.getString("energie"));
                 model.setIdCouleur(rs.getInt("id_couleur"));
@@ -157,7 +157,7 @@ public class VAnnonce {
                 model.setAnneeSortie(rs.getString("annee_sortie"));
                 model.setImmatriculation(rs.getString("immatriculation"));
                 model.setAutonomie(rs.getDouble("autonomie"));
-                model.setModelePlus(rs.getString("modele_plus"));
+                model.setSpecificationPlus(rs.getString("specification_plus"));
                 model.setNbPorte(rs.getInt("nb_porte"));
                 model.setNbSiege(rs.getInt("nb_siege"));
 
@@ -197,8 +197,8 @@ public class VAnnonce {
                 model.setMarque(rs.getString("marque"));
                 model.setIdCategorie(rs.getInt("id_categorie"));
                 model.setCategorie(rs.getString("categorie"));
-                model.setIdModele(rs.getInt("id_modele"));
-                model.setModele(rs.getString("modele"));
+                model.setIdSpecification(rs.getInt("id_specification"));
+                model.setSpecification(rs.getString("specification"));
                 model.setIdEnergie(rs.getInt("id_energie"));
                 model.setEnergie(rs.getString("energie"));
                 model.setIdCouleur(rs.getInt("id_couleur"));
@@ -210,7 +210,7 @@ public class VAnnonce {
                 model.setAnneeSortie(rs.getString("annee_sortie"));
                 model.setImmatriculation(rs.getString("immatriculation"));
                 model.setAutonomie(rs.getDouble("autonomie"));
-                model.setModelePlus(rs.getString("modele_plus"));
+                model.setSpecificationPlus(rs.getString("specification_plus"));
                 model.setNbPorte(rs.getInt("nb_porte"));
                 model.setNbSiege(rs.getInt("nb_siege"));
             }
@@ -247,8 +247,8 @@ public class VAnnonce {
                 model.setMarque(rs.getString("marque"));
                 model.setIdCategorie(rs.getInt("id_categorie"));
                 model.setCategorie(rs.getString("categorie"));
-                model.setIdModele(rs.getInt("id_modele"));
-                model.setModele(rs.getString("modele"));
+                model.setIdSpecification(rs.getInt("id_specification"));
+                model.setSpecification(rs.getString("specification"));
                 model.setIdEnergie(rs.getInt("id_energie"));
                 model.setEnergie(rs.getString("energie"));
                 model.setIdCouleur(rs.getInt("id_couleur"));
