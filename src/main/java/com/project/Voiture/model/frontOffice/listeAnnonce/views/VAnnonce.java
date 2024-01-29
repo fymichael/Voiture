@@ -522,7 +522,7 @@ public class VAnnonce {
                     model.setIdProfil(rs.getString("id_profil"));
                     model.setDateAnnonce(LocalDate.parse(rs.getDate("date_annonce").toString()));
                     model.setPrix(rs.getDouble("prix"));
-                    model.setStatus(rs.getInt("status_annonce"));
+                    model.setStatus(rs.getInt("status"));
                     model.setIdMarque(rs.getString("id_marque"));
                     model.setMarque(rs.getString("marque"));
                     model.setIdCategorie(rs.getString("id_categorie"));
