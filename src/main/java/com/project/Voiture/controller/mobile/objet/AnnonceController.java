@@ -59,7 +59,8 @@ public class AnnonceController {
     @PostAuthorize("hasAuthority('ROLE_Client')")
     public void vendre(@PathVariable String idAnnonce, @RequestBody Date dateVente) {
         try {
-            new Annonce().vendre(null, idAnnonce, dateVente);
+            Annonce a = new Annonce().getById(idAnnonce, null);
+            a.vendre(null, dateVente);
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -53,7 +53,7 @@ public class Annonce {
     }
 
     // fonction pour marquer une annonce deja vendus
-    public void vendre(Connection con, String idAnnonce, Date dateVente) throws Exception {
+    public void vendre(Connection con, Date dateVente) throws Exception {
         if (dateVente.after(this.getDate())) {
             boolean valid = true;
             Statement pstmt = null;
@@ -64,7 +64,7 @@ public class Annonce {
                     valid = false;
                 }
 
-                String sql = "insert into vente values (default, '" + idAnnonce + "', '" + dateVente + "')";
+                String sql = "insert into vente values (default, '" + this.getIdAnnonce() + "', '" + dateVente + "')";
                 System.out.println(sql);
                 pstmt = con.createStatement();
                 pstmt.executeUpdate(sql);
