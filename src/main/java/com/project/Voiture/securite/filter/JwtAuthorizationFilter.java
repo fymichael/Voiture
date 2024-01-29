@@ -25,21 +25,19 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
-        if (request.getServletPath().equals("/api/voiture/refreshToken")) {
+        if (JwtUtils.isUrlInList(request.getServletPath())) {
             filterChain.doFilter(request, response);
         } else {
-            String authorizationToken = request.getHeader("Authorization");
-            if (authorizationToken != null && authorizationToken.startsWith("Bearer ")) {
-                System.out.println("slkdjfs : " + authorizationToken);
+            String authorizationToken = request.getHeader(JwtUtils.HEADER);
+            if (authorizationToken != null && authorizationToken.startsWith(JwtUtils.PREFIX)) {
                 try {
-                    String jwt = authorizationToken.substring(7);
-                    Algorithm algorithm = Algorithm.HMAC256("mySecret1234");
+                    String jwt = authorizationToken.substring(JwtUtils.PREFIX.length());
+                    Algorithm algorithm = Algorithm.HMAC256(JwtUtils.SECRET);
                     JWTVerifier jwtVerifier = JWT.require(algorithm).build();
                     DecodedJWT decodedJWT = jwtVerifier.verify(jwt);
                     String username = decodedJWT.getSubject();
                     String roles = decodedJWT.getClaim("roles").asString();
                     Collection<GrantedAuthority> authorities = new ArrayList<>();
-                    System.out.println("sldkfjsld : : :" + roles);
                     authorities.add(new SimpleGrantedAuthority(roles));
 
                     UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
@@ -47,6 +45,7 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
                     SecurityContextHolder.getContext().setAuthentication(authenticationToken);
                     filterChain.doFilter(request, response);
                 } catch (Exception e) {
+                    System.out.println("Err = "+e.getMessage());
                     response.setHeader("error-message", e.getMessage());
                     response.sendError(HttpServletResponse.SC_FORBIDDEN);
                 }

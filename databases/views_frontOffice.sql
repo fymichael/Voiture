@@ -29,4 +29,4 @@ CREATE TABLE profil(
 --Vue d'un profil et role
 CREATE OR REPLACE VIEW v_profil AS
 SELECT p.id_profil, p.nom, p.prenom, p.date_naissance, p.email, p.mdp, p.contact, p.id_role, 
-r.intitule role FROM profil p JOIN role r ON p.id_role = r.id_role;
+r.intitule role, p.username FROM profil p JOIN role r ON p.id_role = r.id_role;

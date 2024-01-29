@@ -3,7 +3,6 @@ package com.project.Voiture.util;
 import java.io.Serializable;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 
 public class MyJSON implements Serializable{
