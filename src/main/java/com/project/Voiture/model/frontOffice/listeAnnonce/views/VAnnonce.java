@@ -520,7 +520,7 @@ public class VAnnonce {
                     model.setIdVoiture(rs.getString("id_voiture"));
                     model.setDescription(rs.getString("description"));
                     model.setIdProfil(rs.getString("id_profil"));
-                    model.setDateAnnonce(LocalDate.parse(rs.getDate("date_annonce").toString()));
+                    model.setDateAnnonce(LocalDate.parse(rs.getDate("date").toString()));
                     model.setPrix(rs.getDouble("prix"));
                     model.setStatus(rs.getInt("status"));
                     model.setIdMarque(rs.getString("id_marque"));
@@ -545,11 +545,14 @@ public class VAnnonce {
     
                     models.add(model);
                 }
+            }catch(Exception e){
+                System.out.println(e.getMessage());
             }
     
             if (!wasConnected) {
                 connection.close();
             }
+            System.out.println(models.size());
             return models;
         }
     
