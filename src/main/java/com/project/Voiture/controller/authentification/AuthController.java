@@ -1,29 +1,32 @@
 package com.project.Voiture.controller.authentification;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.project.Voiture.securite.entite.VProfil;
-import com.project.Voiture.securite.filter.JwtUtils;
+import com.project.Voiture.model.authentification.Admin;
+import com.project.Voiture.model.authentification.JwtUtil;
 
 
 @RestController
-@RequestMapping("api/voiture")
+@RequestMapping("api/project")
 public class AuthController {
 
+    @Autowired
+    private JwtUtil util;
+
     @PostMapping("/login")
-    public void login(@RequestBody VProfil client, HttpServletRequest request, HttpServletResponse response) throws Exception {
-        try {
-            JwtUtils.createTokens(request, response, client.getUsername(), client.getMdp());
-        } catch(Exception e) {
-            e.printStackTrace();
-            throw e;
+    public String login(@RequestBody Admin auth) throws Exception{
+        Admin a = new Admin();
+        a.setEmail(auth.getEmail());
+        a.setMdp(auth.getMdp());
+        Admin utilisateur=a.getUtilisateur(null);
+        if (utilisateur==null) {
+            throw new Exception("Nom d'utilisateur ou mot de passe invalide !");
         }
+        String token = util.creationToken(a);
+        return token;
     }
 }

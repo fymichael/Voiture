@@ -71,7 +71,7 @@ public class AnnonceController {
         annonce.changePrice(null, idAnnonce);
     }
 
-    @DeleteMapping("annonce/{idAnnonce}")
+    @DeleteMapping("annonce/prix/{idAnnonce}")
     @PostAuthorize("hasAuthority('ROLE_Client')")
     public void delete(@PathVariable String idAnnonce) throws Exception {
         new Annonce().delete(null, idAnnonce);
@@ -85,11 +85,11 @@ public class AnnonceController {
         annonce.setIdAnnonce(idAnnonce);
         annonce.validation(null);
     }
-/*
+
     @GetMapping("annonce/validation")
     @PostAuthorize("hasAuthority('ROLE_Administrateur')")
     public VAnnonce[] annonceValider() throws Exception {
         List<VAnnonce> liste=VAnnonce.getNonValider(null);
         return liste.toArray(new VAnnonce[liste.size()]);
-    }*/
+    }
 }

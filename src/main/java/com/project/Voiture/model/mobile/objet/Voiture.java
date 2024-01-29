@@ -19,11 +19,6 @@ public class Voiture {
     double autonomie;
     String idModeTransmission;
     String[] photos;
-    String modele;
-    int porte;
-    int siege;
-    double kilometrage;
-    String idLieu;
 
     // methods
     // modifier une voiture
@@ -37,7 +32,7 @@ public class Voiture {
             }
             stmt = con.createStatement();
             String sql = " update voiture set id_marque = '" + this.getIdMarque() + "', id_categorie = '"
-                    + this.getIdCategorie() + "', id_specification = '" + this.getIdSpecification() + "', id_energie = '"
+                    + this.getIdCategorie() + "', id_modele = '" + this.getIdSpecification() + "', id_energie = '"
                     + this.getIdEnergie() + "', id_couleur = '" + this.getIdCouleur() + "', anne_sortie = '" + this.getAnneeSortie() + "', immatriculation = '"
                     + this.getImmatriculation() + "', autonomie = " + this.getAutonomie() + ", id_mode_transmission = '" + this.getIdModeTransmission()
                     + "', status = 1 where id_voiture = "+ idVoiture +")";
@@ -78,7 +73,7 @@ public class Voiture {
                     + this.getIdCategorie() + "', '" + this.getIdSpecification() + "', '"
                     + this.getIdEnergie() + "', '" + this.getIdCouleur() + "', '" + this.getAnneeSortie() + "', '"
                     + this.getImmatriculation() + "'," + this.getAutonomie() + ", '" + this.getIdModeTransmission()
-                    + "', 1, '"+ this.getModele() +"', "+ this.getPorte() +", "+ this.getSiege() +", "+ this.getKilometrage() +", '"+ this.getIdLieu() + "')";
+                    + "', 1)";
             System.out.println(sql);
             stmt.executeUpdate(sql);
 
@@ -121,17 +116,12 @@ public class Voiture {
                 v.setIdCategorie(result.getString("id_categorie"));
                 v.setIdCouleur(result.getString("id_couleur"));
                 v.setIdEnergie(result.getString("id_energie"));
-                v.setIdSpecificationgetIdSpecification(result.getString("id_specification"));
+                v.setIdSpecificationgetIdSpecification(result.getString("id_modele"));
                 v.setIdMarque(result.getString("id_marque"));
                 v.setIdModeTransmission(result.getString("id_mode_transmission"));
                 v.setAnneeSortie(result.getString("anne_sortie"));
                 v.setAutonomie(result.getDouble("autonomie"));
                 v.setImmatriculation(result.getString("immatriculation"));
-                v.setModele(result.getString("model"));
-                v.setPorte(result.getInt("nb_porte"));
-                v.setSiege(result.getInt("nb_siege"));
-                v.setKilometrage(result.getDouble("kilometrage"));
-                v.setIdLieu(result.getString("id_lieu"));
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -173,17 +163,12 @@ public class Voiture {
                 v.setIdCategorie(result.getString("id_categorie"));
                 v.setIdCouleur(result.getString("id_couleur"));
                 v.setIdEnergie(result.getString("id_energie"));
-                v.setIdSpecificationgetIdSpecification(result.getString("id_specification"));
+                v.setIdSpecificationgetIdSpecification(result.getString("id_modele"));
                 v.setIdMarque(result.getString("id_marque"));
                 v.setIdModeTransmission(result.getString("id_mode_transmission"));
                 v.setAnneeSortie(result.getString("anne_sortie"));
                 v.setAutonomie(result.getDouble("autonomie"));
                 v.setImmatriculation(result.getString("immatriculation"));
-                v.setModele(result.getString("model"));
-                v.setPorte(result.getInt("nb_porte"));
-                v.setSiege(result.getInt("nb_siege"));
-                v.setKilometrage(result.getDouble("kilometrage"));
-                v.setIdLieu(result.getString("id_lieu"));
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -225,17 +210,12 @@ public class Voiture {
                 v.setIdCategorie(result.getString("id_categorie"));
                 v.setIdCouleur(result.getString("id_couleur"));
                 v.setIdEnergie(result.getString("id_energie"));
-                v.setIdSpecificationgetIdSpecification(result.getString("id_specification"));
+                v.setIdSpecificationgetIdSpecification(result.getString("id_modele"));
                 v.setIdMarque(result.getString("id_marque"));
                 v.setIdModeTransmission(result.getString("id_mode_transmission"));
                 v.setAnneeSortie(result.getString("anne_sortie"));
                 v.setAutonomie(result.getDouble("autonomie"));
                 v.setImmatriculation(result.getString("immatriculation"));
-                v.setModele(result.getString("model"));
-                v.setPorte(result.getInt("nb_porte"));
-                v.setSiege(result.getInt("nb_siege"));
-                v.setKilometrage(result.getDouble("kilometrage"));
-                v.setIdLieu(result.getString("id_lieu"));
                 listVoiture.add(v);
             }
         } catch (Exception e) {
@@ -350,40 +330,5 @@ public class Voiture {
 
     public String getAnneeSortie() {
         return anneeSortie;
-    }
-
-    public void setSiege(int siege) {
-        this.siege = siege;
-    }
-
-    public void setPorte(int porte) {
-        this.porte = porte;
-    }
-    public void setModele(String modele) {
-        this.modele = modele;
-    }
-    public void setKilometrage(double kilometrage) {
-        this.kilometrage = kilometrage;
-    }
-    public void setIdSpecification(String idSpecification) {
-        this.idSpecification = idSpecification;
-    }
-    public void setIdLieu(String idLieu) {
-        this.idLieu = idLieu;
-    }
-    public int getSiege() {
-        return siege;
-    }
-    public int getPorte() {
-        return porte;
-    }
-    public String getModele() {
-        return modele;
-    }
-    public double getKilometrage() {
-        return kilometrage;
-    }
-    public String getIdLieu() {
-        return idLieu;
     }
 }

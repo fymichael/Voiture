@@ -56,26 +56,28 @@ public class Categorie {
         this.setEtat(etat);
     }
 
-    public void insert(Connection con)throws Exception{
+    public Categorie insert(Connection con)throws Exception{
         boolean valid=true;
         Statement stmt =null;
+        ResultSet res=null;
         try{
             if(con==null){
                 con = Connect.connectDB();
                 valid=false;
             } 
             stmt= con.createStatement();
-            this.setIntitule(intitule);
-            
-            String sql="INSERT INTO Categorie VALUES(DEFAULT, '"+this.getIntitule()+"', 1)";
+            String sql="INSERT INTO categorie VALUES(DEFAULT, '"+this.getIntitule()+"', 1) returning id_categorie";
             System.out.println(sql);
-            stmt.executeUpdate(sql);
+            res=stmt.executeQuery(sql);
+            if(res.next()) this.setIdCategorie(res.getString("id_categorie"));
+            System.out.println(this.getIdCategorie());
         }catch(Exception e){
             throw e;
         }finally{
             if(stmt!=null){ stmt.close(); }
             if(!valid){ con.close(); }
         }
+        return this;
     }
 
     public Categorie[] getAll(Connection con)throws Exception{
@@ -88,8 +90,9 @@ public class Categorie {
                 con=Connect.connectDB();
                 valid=false;
             }
-            String sql = "SELECT * FROM Categorie ";
+            String sql = "SELECT * FROM categorie WHERE etat=1";
             state = con.createStatement();
+            System.out.println(sql);
             result = state.executeQuery(sql);
             while(result.next()){
                 String id= result.getString(1);
@@ -114,6 +117,40 @@ public class Categorie {
         return categories;
     }
 
+    public Categorie getById(Connection con)throws Exception{
+        Categorie categorie= null;
+        boolean valid=true;
+        Statement state=null;
+        ResultSet result=null;
+        try {
+            if(con==null){
+                con=Connect.connectDB();
+                valid=false;
+            }
+            String sql = "SELECT * FROM categorie WHERE id_categorie='"+this.getIdCategorie()+"'";
+            state = con.createStatement();
+            System.out.println(sql);
+            result = state.executeQuery(sql);
+            while(result.next()){
+                String id= result.getString(1);
+                String intitule= result.getString(2);
+                int etat=result.getInt(3);
+                categorie= new Categorie(id, intitule, etat);
+            }
+        } catch (Exception e) {   
+            e.printStackTrace(); 
+        }finally{
+            try {
+                if(state!=null ){ state.close(); }
+                if(result!=null ){ result.close(); }
+                if(valid==false || con !=null){ con.close(); }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return categorie;
+    }
+
     public void update(Connection con)throws Exception{
         boolean valid=true;
         Statement stmt =null;
@@ -123,7 +160,7 @@ public class Categorie {
                 valid=false;
             } 
             stmt= con.createStatement();
-            String sql="UPDATE  Categorie SET intitule='"+this.getIntitule()+"' WHERE id_categorie='"+this.getIdCategorie()+"'";
+            String sql="UPDATE  categorie SET intitule='"+this.getIntitule()+"' WHERE id_categorie='"+this.getIdCategorie()+"'";
             System.out.println(sql);
             stmt.executeUpdate(sql);
         }catch(Exception e){
@@ -143,7 +180,7 @@ public class Categorie {
                 valid=false;
             } 
             stmt= con.createStatement();
-            String sql="UPDATE  Categorie SET etat=10 WHERE id_categorie='"+this.getIdCategorie()+"'";
+            String sql="UPDATE categorie SET etat=10 WHERE id_categorie='"+this.getIdCategorie()+"'";
             System.out.println(sql);
             stmt.executeUpdate(sql);
         }catch(Exception e){
@@ -160,16 +197,16 @@ public class Categorie {
         boolean wasConnected = true;
         if (connection == null) {
             wasConnected = false;
-            connection = Connect.connectDB();
+            connection = Connect.getConnection();
         } 
-        String sql = "SELECT * FROM categorie WHERE etat > 0";
+        String sql = "SELECT * FROM categorie WHERE status > 0";
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
                 Categorie model = new Categorie();
                 model.setIdCategorie(rs.getString("id_categorie"));
                 model.setIntitule(rs.getString("intitule"));
-                model.setEtat(rs.getInt("etat"));
+                model.setEtat(rs.getInt("status"));
                 models.add(model);
             }
         }
