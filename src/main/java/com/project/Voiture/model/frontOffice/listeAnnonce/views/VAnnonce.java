@@ -510,7 +510,7 @@ public class VAnnonce {
                 wasConnected = false;
                 connection = Connect.connectDB();
             } 
-            String sql = "SELECT * FROM v_annonce WHERE status = 1";
+            String sql = "SELECT * FROM v_annonce WHERE status = 1 and id_annonce not in (select id_annonce from vente)";
             try (PreparedStatement stmt = connection.prepareStatement(sql)) {
                 System.out.println(stmt.toString());
                 ResultSet rs = stmt.executeQuery();
