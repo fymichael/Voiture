@@ -79,6 +79,11 @@ public class Marque {
         this.setEtat(etat);
         this.setNbVente(nb);
     }
+     public Marque(String id, String intitule, int nb, String a)throws Exception{
+        this.setIdMarque(id);
+        this.setIntitule(intitule);
+        this.setNbVente(nb);
+    }
     public Marque getById(Connection con)throws Exception{
         Marque marque= null;
         boolean valid=true;
@@ -236,11 +241,12 @@ public class Marque {
     }
 
     // Marque la plus vendue
-    public Marque getMarquePusVendue(Connection con)throws Exception{
+    public Marque[] getMarquePusVendue(Connection con)throws Exception{
         boolean valid=true;
         Statement state=null;
         ResultSet result=null;
         Marque m=new Marque();
+        Vector<Marque> liste=new Vector<Marque>();
         try {
             if(con==null){
                 con=Connect.connectDB();
@@ -252,9 +258,9 @@ public class Marque {
             while(result.next()){
                 String id= result.getString("id_marque");
                 String intitule= result.getString("intitule");
-                int etat=result.getInt("etat");
                 int nb=result.getInt("nombre_ventes");
-                m = new Marque(id, intitule, etat, nb);
+                m = new Marque(id, intitule, nb, null);
+                liste.add(m);
             }
         } catch (Exception e) {   
             e.printStackTrace(); 
@@ -267,6 +273,8 @@ public class Marque {
                 e.printStackTrace();
             }
         }
-        return m;
+        Marque[] marques= new Marque[liste.size()];
+        liste.toArray(marques);
+        return marques;
     }
 }
