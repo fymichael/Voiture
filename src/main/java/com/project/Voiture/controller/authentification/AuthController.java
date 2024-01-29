@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.project.Voiture.securite.entite.VProfil;
 import com.project.Voiture.securite.filter.JwtUtils;
+import com.project.Voiture.util.*;
 
 
 @RestController
@@ -20,12 +21,16 @@ import com.project.Voiture.securite.filter.JwtUtils;
 public class AuthController {
 
     @PostMapping("/login")
-    public void login(@RequestBody VProfil client, HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public MyJSON login(@RequestBody VProfil client, HttpServletRequest request, HttpServletResponse response) throws Exception {
+             MyJSON json = new MyJSON();
         try {
            new JwtUtils().createTokens(request, response, client.getUsername(), client.getMdp());
+           json.setData("Authentification reussi");
         } catch(Exception e) {
-            e.printStackTrace();
-            throw e;
+              e.printStackTrace();
+              json.setError(e.getMessage());
         }
+        
+        return json;
     }
 }

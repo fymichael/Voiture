@@ -98,7 +98,7 @@ public class DiscussionController {
             System.out.println("Profil = "+profilConnected.getIdProfil());
             List<Discussion> nbMessageNoRead = messagerieService.nombreDiscussionsAvecMessagesNonLus(profilConnected.getIdProfil()); 
 
-            json.setData(nbMessageNoRead);
+            json.setData(nbMessageNoRead.size());
       } catch(Exception e) {
          e.printStackTrace();
          json.setError(e.getMessage());
