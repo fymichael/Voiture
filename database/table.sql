@@ -322,5 +322,5 @@ VALUES
 --Annonce
 INSERT INTO public.annonce (id_annonce, id_voiture, description, "date", prix, id_profil, status)
 VALUES
-('ANO0001', 'CAR0001', 'Good condition', '2022-01-15 12:00:00', 20000.0, 'PRF0001', 1),
-('ANO0002', 'CAR0002', 'Excellent condition', '2022-02-20 15:30:00', 30000.0, 'PRF0002', 1);
+('ANO0001', 'CAR0001', 'Good condition', '2022-01-15 12:00:00', 20000.0, 'PRF0012', 1),
+('ANO0002', 'CAR0002', 'Excellent condition', '2022-02-20 15:30:00', 30000.0, 'PRF0012', 1);
