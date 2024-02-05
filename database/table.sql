@@ -151,7 +151,7 @@ CREATE  TABLE "public".annonce (
 	id_vente           varchar(7) DEFAULT ('VNT'::text || lpad((nextval('seq_vente'::regclass))::text, 4, '0'::text)) NOT NULL  ,
 	id_annonce           varchar(7)    ,
 	"date"               timestamp DEFAULT CURRENT_TIMESTAMP   ,
-	CONSTRAINT annonce_pkey PRIMARY KEY ( id_annonce )
+	FOREIGN KEY (id_annonce) REFERENCES annonce(id_annonce)
  );
 
 CREATE OR REPLACE VIEW v_annonce_client AS SELECT a.id_annonce,
@@ -309,6 +309,15 @@ INSERT INTO public.voiture_photo (id_voiture, photo) VALUES
 ('CAR0001', 'url_photo_1'),
 ('CAR0002', 'url_photo_2'),
 ('CAR0003', 'url_photo_3');
+
+INSERT INTO profil (nom, prenom, date_naissance, email, mdp, contact, id_role, status, username)
+VALUES
+    ('INSSA', 'Chalman', '2002-06-19', 'chalmanInssa1962002@gmail.com', 'chalman', '0345091434', 3, 1, 'chalman'),
+    ('Fy', 'Michael', '2005-08-10', 'fyMichael@gmail.com', 'fy', '0341111111', 3, 1, 'fy'),
+    ('Arena', 'Gracia', '2003-10-02', 'arenaGracia@gmail.com', 'arena', '0340000000', 1, 1, 'arena'),
+    ('Rabarijaona', 'Angoty', '2003-02-18', 'angotyRabarijaona@gmail.com', 'angoty', '0342222222', 1, 1, 'angoty'),
+    ('Bertrand', 'Luc', '1988-18-07', 'luc.bertrand@email.com', 'pass654', '111222333', 2, 1, 'bertand'),
+    ('Moreau', 'Emma', '1993-05-01-', 'emma.moreau@email.com', 'secret456', '999000111', 3, 1, 'moreau');
 
 --Annonce
 INSERT INTO public.annonce (id_annonce, id_voiture, description, "date", prix, id_profil, status)

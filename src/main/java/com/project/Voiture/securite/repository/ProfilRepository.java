@@ -24,7 +24,7 @@ public class ProfilRepository {
                 valid = false;
             }
 
-            String sql = "INSERT INTO profil VALUES(DEFAULT, ?, ?, ?, ?, ?, 1, ?, 3, ?)";
+            String sql = "INSERT INTO profil VALUES(DEFAULT, ?, ?, ?, ?, ?, 1, ?, ?, ?)";
             pstmt = con.prepareStatement(sql);
 
             pstmt.setString(1, profil.getNom());
@@ -33,7 +33,8 @@ public class ProfilRepository {
             pstmt.setString(4, profil.getEmail());
             pstmt.setString(5, passwordEncoder.encode(profil.getMdp()));
             pstmt.setString(6, profil.getContact());
-            pstmt.setString(7, profil.getUsername());
+            pstmt.setString(8, profil.getUsername());
+            pstmt.setInt(7, profil.getIdRole());
 
             pstmt.executeUpdate();
 
