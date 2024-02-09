@@ -128,6 +128,7 @@ public class JwtUtils {
             list.add("/api/voiture/marques/**");
             list.add("/api/voiture/modeTransmissions/**");
             list.add("/api/voiture/specifications/**");
+            list.add("/api/voiture/testReact/**");
 
             return list;
     }

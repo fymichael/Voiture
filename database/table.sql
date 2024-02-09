@@ -187,6 +187,47 @@ CREATE OR REPLACE VIEW v_annonce AS SELECT "public".v_annonce,
      JOIN mode_transmission t ON (((v.id_mode_transmission)::text = (t.id_mode_transmission)::text)))
      JOIN lieu l ON (((v.id_lieu)::text = (l.id_lieu)::text)));
 
+
+CREATE OR REPLACE VIEW v_detail_annonce AS SELECT 
+       a.id_annonce,
+       a.id_voiture,
+       a.description,
+       a.id_profil,
+       a.date AS date_annonce,
+       a.prix,
+       a.status AS status_annonce,
+       v.id_marque,
+       m.intitule AS marque,
+       v.id_categorie,
+       c.intitule AS categorie,
+       v.model,
+       v.id_energie,
+       e.intitule AS energie,
+       v.id_couleur,
+       coul.intitule AS couleur,
+       v.id_mode_transmission,
+       t.intitule AS mode_transmission,
+       v.id_lieu,
+       l.intitule AS lieu,
+       v.anne_sortie,
+       v.immatriculation,
+       v.autonomie,
+       v.nb_porte,
+       v.nb_siege,
+       v.id_specification,
+       s.intitule AS specification,
+       v.kilometrage
+   FROM (((((((annonce a
+     JOIN voiture v ON (((a.id_voiture)::text = (v.id_voiture)::text)))
+     JOIN marque m ON (((v.id_marque)::text = (m.id_marque)::text)))
+     JOIN categorie c ON (((v.id_categorie)::text = (c.id_categorie)::text)))
+     JOIN energie e ON (((v.id_energie)::text = (e.id_energie)::text)))
+     JOIN couleur coul ON (((v.id_couleur)::text = (coul.id_couleur)::text)))
+     JOIN mode_transmission t ON (((v.id_mode_transmission)::text = (t.id_mode_transmission)::text)))
+     JOIN lieu l ON (((v.id_lieu)::text = (l.id_lieu)::text)))
+     JOIN specification s ON (((v.id_specification)::text = (s.id_specification)::text));
+
+
 CREATE OR REPLACE VIEW v_commission AS SELECT "public".v_commission,
     a.id_voiture,
     a.date AS date_annonce,

@@ -11,6 +11,8 @@ import java.time.LocalDate;
 import java.sql.*;
 import java.sql.Date;
 
+import com.project.Voiture.model.frontOffice.listeAnnonce.displays.*;
+
 @Data @NoArgsConstructor @AllArgsConstructor
 public class VAnnonce {
     private String idAnnonce;
@@ -421,47 +423,63 @@ public class VAnnonce {
     }
 
     //Former la requete sql
-    public static String getRequestSql(HttpServletRequest request) throws Exception {
+    public static String getRequestSql(FilterObject filterObject) throws Exception {
         String requestSql = "";
-        if(request.getParameter("dateMin") != null && request.getParameter("dateMax") != null) {
-            requestSql = requestSql + " AND date_min >= '"+request.getParameter("dateMin")+"' AND date_annonce <= '"+request.getParameter("dateMax")+"'";
+        if(filterObject.getDateMin() != null && filterObject.getDateMax() != null && !filterObject.getDateMin().trim().equals("") && !filterObject.getDateMax().trim().equals("")) {
+            requestSql = requestSql + " AND date_annonce >= '"+filterObject.getDateMin()+"' AND date_annonce <= '"+filterObject.getDateMax()+"'";
         }
-        if(request.getParameter("prixMin") != null && request.getParameter("prixMax") != null) {
-            requestSql = requestSql + " AND prix >= "+request.getParameter("prixMin")+" AND prix <= "+request.getParameter("prixMax");
+        if(filterObject.getAnneeMin() != null && filterObject.getAnneeMax() != null && !filterObject.getAnneeMin() .trim().equals("") && !filterObject.getAnneeMax().trim().equals("")) {
+            requestSql = requestSql + " AND anne_sortie >= '"+filterObject.getAnneeMin() +"' AND anne_sortie <= '"+filterObject.getAnneeMax() +"'";
         }
-        if(request.getParameter("categorie") != null) {
-            requestSql = requestSql + " AND id_categorie = '"+request.getParameter("categorie")+"'";
+        if(filterObject.getPrixMin() != null && filterObject.getPrixMax() != null && !filterObject.getPrixMin().trim().equals("") && !filterObject.getPrixMax().trim().equals("")) {
+            requestSql = requestSql + " AND prix >= "+filterObject.getPrixMin()+" AND prix <= "+filterObject.getPrixMax();
         }
-        if(request.getParameter("marque") != null) {
-            requestSql = requestSql + " AND id_marque = '"+request.getParameter("marque")+"'";
+        if(filterObject.getLieu() != null && !filterObject.getLieu().trim().equals("")) {
+            requestSql = requestSql + " AND id_lieu = '"+filterObject.getLieu()+"'";
         }
-        if(request.getParameter("lieu") != null) {
-            requestSql = requestSql + " AND id_lieu = '"+request.getParameter("lieu")+"'";
+        if(filterObject.getCategorie() != null && !filterObject.getCategorie().trim().equals("")) {
+            requestSql = requestSql + " AND id_categorie = '"+filterObject.getCategorie()+"'";
         }
-        if(request.getParameter("mode_tranmsission") != null) {
-            requestSql = requestSql + " AND id_mode_transmission = '"+request.getParameter("mode_transmission")+"'";
+        if(filterObject.getMarque() != null && !filterObject.getMarque().trim().equals("")) {
+            requestSql = requestSql + " AND id_marque = '"+filterObject.getMarque()+"'";
         }
-        if(request.getParameter("energie") != null) {
-            requestSql = requestSql + " AND id_energie = '"+request.getParameter("energie")+"'";
+        if(filterObject.getEnergie() != null && !filterObject.getEnergie().trim().equals("")) {
+            requestSql = requestSql + " AND id_energie = '"+filterObject.getEnergie()+"'";
         }
+        if(filterObject.getModeTransmission() != null && !filterObject.getModeTransmission().trim().equals("")) {
+            requestSql = requestSql + " AND id_mode_transmission = '"+filterObject.getModeTransmission()+"'";
+        }
+        if(filterObject.getCouleur() != null && !filterObject.getCouleur().trim().equals("")) {
+            requestSql = requestSql + " AND id_couleur = '"+filterObject.getCouleur()+"'";
+        }
+        if(filterObject.getSpecification() != null && !filterObject.getSpecification().trim().equals("")) {
+            requestSql = requestSql + " AND id_specification = '"+filterObject.getSpecification()+"'";
+        }
+        if(filterObject.getModele() != null && !filterObject.getModele().trim().equals("")) {
+            requestSql = requestSql + " AND modele like '%"+filterObject.getModele()+"%'";
+        }
+      
         return requestSql;
     } 
 
     //Recheche multicritere
-     public static List<VAnnonce> findByMultiCritere(HttpServletRequest request, Connection connection) throws Exception {
+     public static List<VAnnonce> findByMultiCritere(FilterObject filterObject, Connection connection) throws Exception {
         List<VAnnonce> models = new ArrayList<>();
         boolean wasConnected = true;
-        
-        String requestFilter = VAnnonce.getRequestSql(request);
+        String requestFilter = VAnnonce.getRequestSql(filterObject);
         if (connection == null) {
             wasConnected = false;
             connection = Connect.connectDB();
         } 
         String sql = "SELECT * FROM v_detail_annonce WHERE status_annonce = 5 "+requestFilter;
+
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            System.out.println("Requete = "+stmt.toString());
 
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
+                System.out.println("Tafa");
+                System.out.println("Prix = "+rs.getDouble("prix"));
                 VAnnonce model = new VAnnonce();
                 model.setIdAnnonce(rs.getString("id_annonce"));
                 model.setIdVoiture(rs.getString("id_voiture"));
@@ -495,7 +513,7 @@ public class VAnnonce {
                 models.add(model);
             }
         }
-
+        System.out.println("Annonce size = "+models.size());
         if (!wasConnected) {
             connection.close();
         }
