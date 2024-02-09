@@ -208,7 +208,7 @@ public class Voiture {
     return v;
 }
 
-public Voiture[] getAvailableCarByClient(String idClient, Connection con) throws Exception {
+public Voiture[] getAvailableCarByClient(Connection con) throws Exception {
     Vector<Voiture> listVoiture = new Vector<Voiture>();
     boolean valid = true;
     Statement state = null;
@@ -218,7 +218,7 @@ public Voiture[] getAvailableCarByClient(String idClient, Connection con) throws
             con = Connect.connectDB();
             valid = false;
         }
-        String sql = "SELECT * FROM v_annonce where status != 0 and id_profil = '"+ idClient +"' and id_voiture not in (select id_voiture from annonce where status !=0)";
+        String sql = "SELECT * FROM voiture where status != 0 and id_voiture not in (select id_voiture from annonce where status !=0)";
         System.out.println(sql);
         state = con.createStatement();
         result = state.executeQuery(sql);
