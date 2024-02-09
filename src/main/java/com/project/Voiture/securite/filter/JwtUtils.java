@@ -121,6 +121,7 @@ public class JwtUtils {
             list.add("/api/voiture/annonces/filter/date/**");
             list.add("/api/voiture/annonces/filter/keyWord/**");
             list.add("/api/voiture/annonces/filter/multiCritere/**");
+            list.add("/api/voiture/testReact/**");
 
             return list;
     }
