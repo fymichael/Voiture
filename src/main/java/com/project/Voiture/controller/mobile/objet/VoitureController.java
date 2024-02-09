@@ -39,7 +39,7 @@ public class VoitureController {
 
     @GetMapping("/voiture/valide")
     @PostAuthorize("hasAuthority('ROLE_Client')")
-    public Voiture[] getValable(@PathVariable String idClient) throws Exception {
+    public Voiture[] getValable() throws Exception {
         Voiture[] voitures = new Voiture().getAvailableCarByClient(null);
         return voitures;
     }
