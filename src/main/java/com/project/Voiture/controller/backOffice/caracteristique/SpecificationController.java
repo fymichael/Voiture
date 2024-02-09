@@ -20,20 +20,17 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 @CrossOrigin(origins="*", allowedHeaders="*")
 @RestController
 @RequestMapping("api/voiture")
-@PostAuthorize("hasAuthority('ROLE_Administrateur')")
 public class SpecificationController {
 
    @GetMapping("/specifications")
-   @PostAuthorize("hasAuthority('ROLE_Administrateur')")
-   public Specification[] getListe()throws Exception{
+      public Specification[] getListe()throws Exception{
       Specification c = new Specification();
       Specification[] liste=c.getAll(null);
       return liste;
    }
 
    @GetMapping("/specification/{id}")
-   @PostAuthorize("hasAuthority('ROLE_Administrateur')")
-   public Specification getById(@PathVariable String id)throws Exception{
+      public Specification getById(@PathVariable String id)throws Exception{
         Specification c = new Specification();
         c.setIdSpecification(id);
         c=c.getById(null);
@@ -41,20 +38,17 @@ public class SpecificationController {
     }
 
     @PostMapping("/specification")
-    @PostAuthorize("hasAuthority('ROLE_Administrateur')")
-    public Specification form(@RequestBody Specification specification)throws Exception{
+        public Specification form(@RequestBody Specification specification)throws Exception{
       return specification.insert(null);
     }
 
     @PutMapping("/specification")
-    @PostAuthorize("hasAuthority('ROLE_Administrateur')")
-    public void update(@RequestBody Specification specification)throws Exception{
+        public void update(@RequestBody Specification specification)throws Exception{
        specification.update(null);
     }
 
     @DeleteMapping("/specification/{id}")
-    @PostAuthorize("hasAuthority('ROLE_Administrateur')")
-    public void delete(@PathVariable String id)throws Exception{
+        public void delete(@PathVariable String id)throws Exception{
         Specification specification=new Specification();
         specification.setIdSpecification(id);
         System.out.println(specification.getIdSpecification());

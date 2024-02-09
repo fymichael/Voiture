@@ -23,7 +23,6 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 public class EnergieController {
 
    @GetMapping("/energies")
-   @PostAuthorize("hasAuthority('ROLE_Administrateur')")
    public Energie[] getListe()throws Exception{
       Energie c = new Energie();
       Energie[] liste=c.getAll(null);
@@ -31,7 +30,6 @@ public class EnergieController {
    }
 
    @GetMapping("/energie/{id}")
-   @PostAuthorize("hasAuthority('ROLE_Administrateur')")
    public Energie getById(@PathVariable String id)throws Exception{
         Energie c = new Energie();
         c.setIdEnergie(id);
@@ -40,20 +38,17 @@ public class EnergieController {
     }
 
     @PostMapping("/energie")
-    @PostAuthorize("hasAuthority('ROLE_Administrateur')")
-    public Energie form(@RequestBody Energie energie)throws Exception{
+     public Energie form(@RequestBody Energie energie)throws Exception{
       return energie.insert(null);
     }
 
     @PutMapping("/energie")
-    @PostAuthorize("hasAuthority('ROLE_Administrateur')")
-    public void update(@RequestBody Energie energie)throws Exception{
+     public void update(@RequestBody Energie energie)throws Exception{
        energie.update(null);
     }
 
     @DeleteMapping("/energie/{id}")
-    @PostAuthorize("hasAuthority('ROLE_Administrateur')")
-    public void delete(@PathVariable String id)throws Exception{
+     public void delete(@PathVariable String id)throws Exception{
         Energie energie=new Energie();
         energie.setIdEnergie(id);
         System.out.println(energie.getIdEnergie());

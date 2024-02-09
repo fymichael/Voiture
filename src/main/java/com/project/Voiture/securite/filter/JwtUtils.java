@@ -121,6 +121,13 @@ public class JwtUtils {
             list.add("/api/voiture/annonces/filter/date/**");
             list.add("/api/voiture/annonces/filter/keyWord/**");
             list.add("/api/voiture/annonces/filter/multiCritere/**");
+            list.add("/api/voiture/categories/**");
+            list.add("/api/voiture/couleurs/**");
+            list.add("/api/voiture/energies/**");
+            list.add("/api/voiture/lieux/**");
+            list.add("/api/voiture/marques/**");
+            list.add("/api/voiture/modeTransmissions/**");
+            list.add("/api/voiture/specifications/**");
 
             return list;
     }

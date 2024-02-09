@@ -129,6 +129,7 @@ public class Lieux {
                 valid=false;
             }
             String sql = "SELECT * FROM Lieu WHERE status=1";
+            System.out.println(sql);
             state = con.createStatement();
             result = state.executeQuery(sql);
             while(result.next()){

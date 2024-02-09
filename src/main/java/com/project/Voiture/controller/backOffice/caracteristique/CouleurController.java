@@ -23,7 +23,6 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 public class CouleurController {
 
    @GetMapping("/couleurs")
-   @PostAuthorize("hasAuthority('ROLE_Administrateur')")
    public Couleur[] getListe()throws Exception{
       Couleur c = new Couleur();
       Couleur[] liste=c.getAll(null);
@@ -31,7 +30,6 @@ public class CouleurController {
    }
 
    @GetMapping("/couleur/{id}")
-   @PostAuthorize("hasAuthority('ROLE_Administrateur')")
    public Couleur getById(@PathVariable String id)throws Exception{
         Couleur c = new Couleur();
         c.setIdCouleur(id);
@@ -40,20 +38,17 @@ public class CouleurController {
     }
 
     @PostMapping("/couleur")
-    @PostAuthorize("hasAuthority('ROLE_Administrateur')")
-    public Couleur form(@RequestBody Couleur couleur)throws Exception{
+     public Couleur form(@RequestBody Couleur couleur)throws Exception{
       return couleur.insert(null);
     }
 
     @PutMapping("/couleur")
-    @PostAuthorize("hasAuthority('ROLE_Administrateur')")
-    public void update(@RequestBody Couleur couleur)throws Exception{
+     public void update(@RequestBody Couleur couleur)throws Exception{
        couleur.update(null);
     }
 
     @DeleteMapping("/couleur/{id}")
-    @PostAuthorize("hasAuthority('ROLE_Administrateur')")
-    public void delete(@PathVariable String id)throws Exception{
+     public void delete(@PathVariable String id)throws Exception{
         Couleur couleur=new Couleur();
         couleur.setIdCouleur(id);
         System.out.println(couleur.getIdCouleur());
