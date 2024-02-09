@@ -1,8 +1,11 @@
 package com.project.Voiture.model.mobile.objet;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Vector;
 
 import com.project.Voiture.model.connection.Connect;
@@ -155,55 +158,56 @@ public class Voiture {
 
     // avoir les voitures par son id
     public Voiture getById(Connection con, String idVoiture) throws Exception {
-        boolean valid = true;
-        Statement state = null;
-        ResultSet result = null;
-        Voiture v = null;
-        try {
-            if (con == null) {
-                con = Connect.connectDB();
-                valid = false;
-            }
-            String sql = "SELECT * FROM Voiture where status != 0 and id_voiture = '" + idVoiture + "'";
-            state = con.createStatement();
-            result = state.executeQuery(sql);
-            while (result.next()) {
+    Voiture v = null;
+    try {
+        if (con == null) {
+            con = Connect.connectDB();
+        }
+        String sql = "SELECT * FROM Voiture WHERE status != 0 AND id_voiture = ?";
+        String sql1 = "SELECT * FROM voiture_photo WHERE id_voiture = ?";
+        
+        try (PreparedStatement ps = con.prepareStatement(sql);
+             PreparedStatement ps1 = con.prepareStatement(sql1)) {
+            ps.setString(1, idVoiture);
+            ps1.setString(1, idVoiture);
+            
+            try (ResultSet result = ps.executeQuery();
+                 ResultSet result1 = ps1.executeQuery()) {
+                
+                List<String> photos = new ArrayList<>();
+                
                 v = new Voiture();
-                v.setIdVoiture(result.getString("id_voiture"));
-                v.setIdCategorie(result.getString("id_categorie"));
-                v.setIdCouleur(result.getString("id_couleur"));
-                v.setIdEnergie(result.getString("id_energie"));
-                v.setIdSpecificationgetIdSpecification(result.getString("id_specification"));
-                v.setIdMarque(result.getString("id_marque"));
-                v.setIdModeTransmission(result.getString("id_mode_transmission"));
-                v.setAnneeSortie(result.getString("anne_sortie"));
-                v.setAutonomie(result.getDouble("autonomie"));
-                v.setImmatriculation(result.getString("immatriculation"));
-                v.setModele(result.getString("model"));
-                v.setPorte(result.getInt("nb_porte"));
-                v.setSiege(result.getInt("nb_siege"));
-                v.setKilometrage(result.getDouble("kilometrage"));
-                v.setIdLieu(result.getString("id_lieu"));
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                if (state != null) {
-                    state.close();
+                while (result.next() && result1.next()) {
+                    v.setIdVoiture(result.getString("id_voiture"));
+                    v.setIdCategorie(result.getString("id_categorie"));
+                    v.setIdCouleur(result.getString("id_couleur"));
+                    v.setIdEnergie(result.getString("id_energie"));
+                    v.setIdSpecificationgetIdSpecification(result.getString("id_specification"));
+                    v.setIdMarque(result.getString("id_marque"));
+                    v.setIdModeTransmission(result.getString("id_mode_transmission"));
+                    v.setAnneeSortie(result.getString("anne_sortie"));
+                    v.setAutonomie(result.getDouble("autonomie"));
+                    v.setImmatriculation(result.getString("immatriculation"));
+                    v.setModele(result.getString("model"));
+                    v.setPorte(result.getInt("nb_porte"));
+                    v.setSiege(result.getInt("nb_siege"));
+                    v.setKilometrage(result.getDouble("kilometrage"));
+                    v.setIdLieu(result.getString("id_lieu"));
+                    photos.add(result1.getString("photo"));
                 }
-                if (result != null) {
-                    result.close();
-                }
-                if (valid == false || con != null) {
-                    con.close();
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
+                v.setPhotos(photos.toArray(new String[0]));
             }
         }
-        return v;
+    } catch (Exception e) {
+        e.printStackTrace();
+    } finally {
+        if (con != null) {
+            con.close();
+        }
     }
+    return v;
+}
+
 
     // avoir toutes les voitures
     public Voiture[] getAll(Connection con) throws Exception {
