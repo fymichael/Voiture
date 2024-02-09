@@ -9,6 +9,7 @@ import com.project.Voiture.model.mobile.objet.Voiture;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
@@ -27,5 +28,10 @@ public class VoitureController {
     @PostAuthorize("hasAuthority('ROLE_Client')")
     public void update(@PathVariable String idVoiture, @RequestBody Voiture voiture) throws Exception {
         voiture.update(null, idVoiture);
+    }
+    @GetMapping("/voiture/{idVoiture}")
+    @PostAuthorize("hasAuthority('ROLE_Client')")
+    public Voiture getByIdVoiture(@PathVariable String idVoiture) throws Exception {
+        return new Voiture().getById(null, idVoiture);
     }
 }
