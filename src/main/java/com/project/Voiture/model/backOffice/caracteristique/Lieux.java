@@ -95,7 +95,7 @@ public class Lieux {
                 con=Connect.connectDB();
                 valid=false;
             }
-            String sql = "SELECT * FROM Lieux WHERE id_Lieux='"+this.getIdLieux()+"'";
+            String sql = "SELECT * FROM Lieu WHERE id_Lieu='"+this.getIdLieux()+"'";
             state = con.createStatement();
             System.out.println(sql);
             result = state.executeQuery(sql);
@@ -128,7 +128,7 @@ public class Lieux {
                 con=Connect.connectDB();
                 valid=false;
             }
-            String sql = "SELECT * FROM Lieux WHERE etat=1";
+            String sql = "SELECT * FROM Lieu WHERE etat=1";
             state = con.createStatement();
             result = state.executeQuery(sql);
             while(result.next()){
@@ -163,10 +163,10 @@ public class Lieux {
                 valid=false;
             } 
             stmt= con.createStatement();
-            String sql="INSERT INTO Lieux VALUES(DEFAULT, '"+this.getIntitule()+"', 1) returning id_Lieux";
+            String sql="INSERT INTO Lieu VALUES(DEFAULT, '"+this.getIntitule()+"', 1) returning id_Lieu";
             System.out.println(sql);
             res=stmt.executeQuery(sql);
-            if(res.next()) this.setIdLieux(res.getString("id_Lieux"));
+            if(res.next()) this.setIdLieux(res.getString("id_Lieu"));
             System.out.println(this.getIdLieux());
         }catch(Exception e){
             throw e;
@@ -185,7 +185,7 @@ public class Lieux {
                 valid=false;
             } 
             stmt= con.createStatement();
-            String sql="UPDATE Lieux SET intitule='"+this.getIntitule()+"' WHERE id_Lieux='"+this.getIdLieux()+"'";
+            String sql="UPDATE Lieu SET intitule='"+this.getIntitule()+"' WHERE id_Lieu='"+this.getIdLieux()+"'";
             System.out.println(sql);
             stmt.executeUpdate(sql);
         }catch(Exception e){
@@ -205,7 +205,7 @@ public class Lieux {
                 valid=false;
             } 
             stmt= con.createStatement();
-            String sql="UPDATE Lieux SET etat=10 WHERE id_Lieux='"+this.getIdLieux()+"'";
+            String sql="UPDATE Lieu SET etat=10 WHERE id_Lieu='"+this.getIdLieux()+"'";
             System.out.println(sql);
             stmt.executeUpdate(sql);
         }catch(Exception e){
@@ -223,12 +223,12 @@ public class Lieux {
             wasConnected = false;
             connection = Connect.connectDB();
         } 
-        String sql = "SELECT * FROM Lieux WHERE etat > 0";
+        String sql = "SELECT * FROM Lieu WHERE etat > 0";
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
                 Lieux model = new Lieux();
-                model.setIdLieux(rs.getString("id_Lieux"));
+                model.setIdLieux(rs.getString("id_Lieu"));
                 model.setIntitule(rs.getString("intitule"));
                 model.setEtat(rs.getInt("etat"));
                 models.add(model);
