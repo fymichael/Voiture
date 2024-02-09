@@ -18,6 +18,8 @@ import com.project.Voiture.model.frontOffice.listeAnnonce.views.*;
 import com.project.Voiture.model.frontOffice.listeAnnonce.displays.*;
 import com.project.Voiture.util.*;
 
+import org.springframework.web.bind.annotation.RequestBody;
+
 
 @RestController
 @RequestMapping("api/voiture")
@@ -48,9 +50,18 @@ public class AnnoncesListController {
       MyJSON json = new MyJSON();
 
       try {
-         List<VAnnonce> allAnnonce = allAnnonce = VAnnonce.findAll(null);
+         List<VAnnonce> allAnnonce = VAnnonce.findAll(null);
+         Lieu [] allLieu = new Lieu().getAll(null);
+         List<Categorie> allCategorie = Categorie.getAllCategorie(null);
+         Couleur [] allCouleur = new Couleur().getAll(null);
+         Energie [] allEnergie = new Energie().getAll(null);
+         Marque [] allMarque = new Marque().getAll(null);
+         ModeTransmission [] allModeTransmission = new ModeTransmission().getAll(null);
+         Specification [] allSpecification = new Specification().getAll(null);
         
-         annoncePage = new AnnoncePage(allAnnonce);
+         DatasForFilter datasForFilter = new DatasForFilter(allLieu, allCategorie, allCouleur, allEnergie, allMarque, allModeTransmission, allSpecification);
+         annoncePage = new AnnoncePage(allAnnonce, datasForFilter);
+         
          json.setData(annoncePage);
       } catch(Exception e) {
          e.printStackTrace();
@@ -67,7 +78,17 @@ public class AnnoncesListController {
 
       try {
          List<VAnnonce> allAnnonce = VAnnonce.findByFeatures(filter, value, null);
-         annoncePage = new AnnoncePage(allAnnonce);
+         Lieu [] allLieu = new Lieu().getAll(null);
+         List<Categorie> allCategorie = Categorie.getAllCategorie(null);
+         Couleur [] allCouleur = new Couleur().getAll(null);
+         Energie [] allEnergie = new Energie().getAll(null);
+         Marque [] allMarque = new Marque().getAll(null);
+         ModeTransmission [] allModeTransmission = new ModeTransmission().getAll(null);
+         Specification [] allSpecification = new Specification().getAll(null);
+        
+         DatasForFilter datasForFilter = new DatasForFilter(allLieu, allCategorie, allCouleur, allEnergie, allMarque, allModeTransmission, allSpecification);
+         annoncePage = new AnnoncePage(allAnnonce, datasForFilter);
+         
          json.setData(annoncePage);
       } catch(Exception e) {
          e.printStackTrace();
@@ -99,7 +120,17 @@ public class AnnoncesListController {
 
       try {
          List<VAnnonce> allAnnonce = VAnnonce.findByPrix(prixMin, prixMax, null);
-         annoncePage = new AnnoncePage(allAnnonce);
+         Lieu [] allLieu = new Lieu().getAll(null);
+         List<Categorie> allCategorie = Categorie.getAllCategorie(null);
+         Couleur [] allCouleur = new Couleur().getAll(null);
+         Energie [] allEnergie = new Energie().getAll(null);
+         Marque [] allMarque = new Marque().getAll(null);
+         ModeTransmission [] allModeTransmission = new ModeTransmission().getAll(null);
+         Specification [] allSpecification = new Specification().getAll(null);
+        
+         DatasForFilter datasForFilter = new DatasForFilter(allLieu, allCategorie, allCouleur, allEnergie, allMarque, allModeTransmission, allSpecification);
+         annoncePage = new AnnoncePage(allAnnonce, datasForFilter);
+
          json.setData(annoncePage);
       } catch(Exception e) {
          e.printStackTrace();
@@ -116,7 +147,17 @@ public class AnnoncesListController {
 
       try {
          List<VAnnonce> allAnnonce = VAnnonce.findByDateAnnonce(dateMin, dateMax, null);
-         annoncePage = new AnnoncePage(allAnnonce);
+         Lieu [] allLieu = new Lieu().getAll(null);
+         List<Categorie> allCategorie = Categorie.getAllCategorie(null);
+         Couleur [] allCouleur = new Couleur().getAll(null);
+         Energie [] allEnergie = new Energie().getAll(null);
+         Marque [] allMarque = new Marque().getAll(null);
+         ModeTransmission [] allModeTransmission = new ModeTransmission().getAll(null);
+         Specification [] allSpecification = new Specification().getAll(null);
+        
+         DatasForFilter datasForFilter = new DatasForFilter(allLieu, allCategorie, allCouleur, allEnergie, allMarque, allModeTransmission, allSpecification);
+         annoncePage = new AnnoncePage(allAnnonce, datasForFilter);
+
          json.setData(annoncePage);
       } catch(Exception e) {
          e.printStackTrace();
@@ -133,7 +174,17 @@ public class AnnoncesListController {
 
       try {
          List<VAnnonce> allAnnonce = VAnnonce.findByKeyWord(keyWord, null);
-         annoncePage = new AnnoncePage(allAnnonce);
+         Lieu [] allLieu = new Lieu().getAll(null);
+         List<Categorie> allCategorie = Categorie.getAllCategorie(null);
+         Couleur [] allCouleur = new Couleur().getAll(null);
+         Energie [] allEnergie = new Energie().getAll(null);
+         Marque [] allMarque = new Marque().getAll(null);
+         ModeTransmission [] allModeTransmission = new ModeTransmission().getAll(null);
+         Specification [] allSpecification = new Specification().getAll(null);
+        
+         DatasForFilter datasForFilter = new DatasForFilter(allLieu, allCategorie, allCouleur, allEnergie, allMarque, allModeTransmission, allSpecification);
+         annoncePage = new AnnoncePage(allAnnonce, datasForFilter);
+
          json.setData(annoncePage);
       } catch(Exception e) {
          e.printStackTrace();
@@ -144,13 +195,32 @@ public class AnnoncesListController {
    }
 
    @PostMapping(path = "/annonces/filter/multiCritere")
-   public MyJSON getAnnoncesByMultiCritere(HttpServletRequest request, HttpServletResponse response) {
+   public MyJSON getAnnoncesByMultiCritere(@RequestBody FilterObject datasFilter, HttpServletRequest request) {
       AnnoncePage annoncePage = new AnnoncePage();
       MyJSON json = new MyJSON();
 
       try {
-         List<VAnnonce> allAnnonce = VAnnonce.findByMultiCritere(request, null);
-         annoncePage = new AnnoncePage(allAnnonce);
+         System.out.println("Prix min = "+datasFilter.getPrixMin());
+         System.out.println("Prix max = "+datasFilter.getPrixMax());
+         System.out.println("categorie = "+datasFilter.getCategorie());
+         System.out.println("Marque = "+datasFilter.getMarque());
+         System.out.println("Energie = "+datasFilter.getEnergie());
+         System.out.println("Transmission = "+datasFilter.getModeTransmission());
+         System.out.println("Couleur = "+datasFilter.getCouleur());
+
+         List<VAnnonce> allAnnonce = VAnnonce.findByMultiCritere(datasFilter, null);
+         System.out.println("anonce size = "+allAnnonce.size());
+         Lieu [] allLieu = new Lieu().getAll(null);
+         List<Categorie> allCategorie = Categorie.getAllCategorie(null);
+         Couleur [] allCouleur = new Couleur().getAll(null);
+         Energie [] allEnergie = new Energie().getAll(null);
+         Marque [] allMarque = new Marque().getAll(null);
+         ModeTransmission [] allModeTransmission = new ModeTransmission().getAll(null);
+         Specification [] allSpecification = new Specification().getAll(null);
+        
+         DatasForFilter datasForFilter = new DatasForFilter(allLieu, allCategorie, allCouleur, allEnergie, allMarque, allModeTransmission, allSpecification);
+         annoncePage = new AnnoncePage(allAnnonce, datasForFilter);
+
          json.setData(annoncePage);
       } catch(Exception e) {
          e.printStackTrace();
