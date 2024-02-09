@@ -127,13 +127,26 @@ public class Annonce {
     // fonction pour avoir l'equivalent du status de l'annonce en string
     public String getStringStatus() {
         if (this.getStatus() == 1) {
-            return "<IonBadge color=\"warning\" className='ion-float-right'> En attente de validation </IonBadge>";
+            return "En attente de validation";
         } else if (this.getStatus() == 10) {
-            return "<IonBadge color=\"secondary\" className='ion-float-right'> Vendu </IonBadge> ";
+            return "Vendu";
         } else if (this.getStatus() == 0) {
-            return "<IonBadge color=\"danger\" className='ion-float-right'> Refuser </IonBadge>";
+            return "Refuser";
         } else if (this.getStatus() == 5) {
-            return "<IonBadge color=\"success\" className='ion-float-right'> Disponible </IonBadge>";
+            return "Disponible";
+        }
+        return "status annonce inconnue";
+    }
+
+    public String getStatusCss() {
+        if (this.getStatus() == 1) {
+            return "warning";
+        } else if (this.getStatus() == 10) {
+            return "success";
+        } else if (this.getStatus() == 0) {
+            return "danger";
+        } else if (this.getStatus() == 5) {
+            return "primary";
         }
         return "status annonce inconnue";
     }
