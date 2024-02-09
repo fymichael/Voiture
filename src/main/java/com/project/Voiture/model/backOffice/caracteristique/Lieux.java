@@ -13,7 +13,7 @@ import com.project.Voiture.model.connection.Connect;
 public class Lieux {
     String idLieux;
     String intitule;
-    int etat;
+    int status;
     int nombreVente;
 
     public String getIdLieux(){
@@ -35,23 +35,23 @@ public class Lieux {
     public int getNbVente(){
         return this.nombreVente;
     }
-    public int getEtat(){
-        return this.etat;
+    public int getstatus(){
+        return this.status;
     }
     
 
-    public void setEtat(int etat)throws Exception{
-        if(etat<0){
-            throw new Exception("etat invalide: negatif");
+    public void setstatus(int status)throws Exception{
+        if(status<0){
+            throw new Exception("status invalide: negatif");
         }
-        this.etat=etat;
+        this.status=status;
     }
-    public void setEtat(String etat)throws Exception{
-        int a =Integer.valueOf(etat);
-        if(etat.length()==0){
-            throw new Exception("etat invalide: null");
+    public void setstatus(String status)throws Exception{
+        int a =Integer.valueOf(status);
+        if(status.length()==0){
+            throw new Exception("status invalide: null");
         }
-        this.setEtat(a);
+        this.setstatus(a);
     }
     public void setNbVente(int nombreVente)throws Exception{
         if(nombreVente<0){
@@ -69,20 +69,20 @@ public class Lieux {
     
     public Lieux()throws Exception{}
 
-    // public Lieux(String id, String intitule, int etat)throws Exception{
+    // public Lieux(String id, String intitule, int status)throws Exception{
     //     this.setIdLieux(id);
     //     this.setIntitule(intitule);
-    //     this.setEtat(etat);
+    //     this.setstatus(status);
     // }
     public Lieux(String id, String intitule,  int nb)throws Exception{
         this.setIdLieux(id);
         this.setIntitule(intitule);
         this.setNbVente(nb);
     }
-    public Lieux(String id, String intitule, int etat, int nb)throws Exception{
+    public Lieux(String id, String intitule, int status, int nb)throws Exception{
         this.setIdLieux(id);
         this.setIntitule(intitule);
-        this.setEtat(etat);
+        this.setstatus(status);
         this.setNbVente(nb);
     }
     public Lieux getById(Connection con)throws Exception{
@@ -102,8 +102,8 @@ public class Lieux {
             while(result.next()){
                 String id= result.getString(1);
                 String intitule= result.getString(2);
-                int etat=result.getInt(3);
-                Lieux= new Lieux(id, intitule, etat);
+                int status=result.getInt(3);
+                Lieux= new Lieux(id, intitule, status);
             }
         } catch (Exception e) {   
             e.printStackTrace(); 
@@ -128,14 +128,14 @@ public class Lieux {
                 con=Connect.connectDB();
                 valid=false;
             }
-            String sql = "SELECT * FROM Lieu WHERE etat=1";
+            String sql = "SELECT * FROM Lieu WHERE status=1";
             state = con.createStatement();
             result = state.executeQuery(sql);
             while(result.next()){
                 String id= result.getString(1);
                 String intitule= result.getString(2);
-                int etat=result.getInt(3);
-                Lieux m = new Lieux(id, intitule, etat);
+                int status=result.getInt(3);
+                Lieux m = new Lieux(id, intitule, status);
                 listLieux.add(m);
             }
         } catch (Exception e) {   
@@ -205,7 +205,7 @@ public class Lieux {
                 valid=false;
             } 
             stmt= con.createStatement();
-            String sql="UPDATE Lieu SET etat=10 WHERE id_Lieu='"+this.getIdLieux()+"'";
+            String sql="UPDATE Lieu SET status=10 WHERE id_Lieu='"+this.getIdLieux()+"'";
             System.out.println(sql);
             stmt.executeUpdate(sql);
         }catch(Exception e){
@@ -223,14 +223,14 @@ public class Lieux {
             wasConnected = false;
             connection = Connect.connectDB();
         } 
-        String sql = "SELECT * FROM Lieu WHERE etat > 0";
+        String sql = "SELECT * FROM Lieu WHERE status > 0";
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
                 Lieux model = new Lieux();
                 model.setIdLieux(rs.getString("id_Lieu"));
                 model.setIntitule(rs.getString("intitule"));
-                model.setEtat(rs.getInt("etat"));
+                model.setstatus(rs.getInt("status"));
                 models.add(model);
             }
         }
