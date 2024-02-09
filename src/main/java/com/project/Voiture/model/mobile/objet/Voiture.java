@@ -218,7 +218,8 @@ public Voiture[] getAvailableCarByClient(String idClient, Connection con) throws
             con = Connect.connectDB();
             valid = false;
         }
-        String sql = "SELECT * FROM Voiture where status != 0 and id_profil='"+ idClient +"' and id_voiture not in (select id_voiture from annonce where status !=0)";
+        String sql = "SELECT * FROM v_annonce where status != 0 and id_profil = '"+ idClient +"' and id_voiture not in (select id_voiture from annonce where status !=0)";
+        System.out.println(sql);
         state = con.createStatement();
         result = state.executeQuery(sql);
         while (result.next()) {
