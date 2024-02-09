@@ -208,6 +208,59 @@ public class Voiture {
     return v;
 }
 
+public Voiture[] getAvailableCarByClient(String idClient, Connection con) throws Exception {
+    Vector<Voiture> listVoiture = new Vector<Voiture>();
+    boolean valid = true;
+    Statement state = null;
+    ResultSet result = null;
+    try {
+        if (con == null) {
+            con = Connect.connectDB();
+            valid = false;
+        }
+        String sql = "SELECT * FROM Voiture where status != 0 and id_profil='"+ idClient +"' and id_voiture not in (select id_voiture from annonce where status !=0)";
+        state = con.createStatement();
+        result = state.executeQuery(sql);
+        while (result.next()) {
+            Voiture v = new Voiture();
+            v.setIdVoiture(result.getString("id_voiture"));
+            v.setIdCategorie(result.getString("id_categorie"));
+            v.setIdCouleur(result.getString("id_couleur"));
+            v.setIdEnergie(result.getString("id_energie"));
+            v.setIdSpecificationgetIdSpecification(result.getString("id_specification"));
+            v.setIdMarque(result.getString("id_marque"));
+            v.setIdModeTransmission(result.getString("id_mode_transmission"));
+            v.setAnneeSortie(result.getString("anne_sortie"));
+            v.setAutonomie(result.getDouble("autonomie"));
+            v.setImmatriculation(result.getString("immatriculation"));
+            v.setModele(result.getString("model"));
+            v.setPorte(result.getInt("nb_porte"));
+            v.setSiege(result.getInt("nb_siege"));
+            v.setKilometrage(result.getDouble("kilometrage"));
+            v.setIdLieu(result.getString("id_lieu"));
+            listVoiture.add(v);
+        }
+    } catch (Exception e) {
+        e.printStackTrace();
+    } finally {
+        try {
+            if (state != null) {
+                state.close();
+            }
+            if (result != null) {
+                result.close();
+            }
+            if (valid == false || con != null) {
+                con.close();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    Voiture[] Voitures = new Voiture[listVoiture.size()];
+    listVoiture.toArray(Voitures);
+    return Voitures;
+}
 
     // avoir toutes les voitures
     public Voiture[] getAll(Connection con) throws Exception {

@@ -24,14 +24,23 @@ public class VoitureController {
     public void form(@RequestBody Voiture newVoiture) throws Exception {
         newVoiture.insert(null);
     }
+
     @PutMapping("/voiture/{idVoiture}")
     @PostAuthorize("hasAuthority('ROLE_Client')")
     public void update(@PathVariable String idVoiture, @RequestBody Voiture voiture) throws Exception {
         voiture.update(null, idVoiture);
     }
+
     @GetMapping("/voiture/{idVoiture}")
     @PostAuthorize("hasAuthority('ROLE_Client')")
     public Voiture getByIdVoiture(@PathVariable String idVoiture) throws Exception {
         return new Voiture().getById(null, idVoiture);
+    }
+
+    @GetMapping("/voiture/client/{idClient}")
+    @PostAuthorize("hasAuthority('ROLE_Client')")
+    public Voiture[] getValable(@PathVariable String idClient) throws Exception {
+        Voiture[] voitures = new Voiture().getAvailableCarByClient(idClient, null);
+        return voitures;
     }
 }
