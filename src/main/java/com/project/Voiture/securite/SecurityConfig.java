@@ -17,8 +17,6 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import com.project.Voiture.securite.service.ProfilDetailsService;
 
-import io.jsonwebtoken.lang.Arrays;
-
 import com.project.Voiture.securite.filter.JwtAuthenticationFilter;
 
 import com.project.Voiture.securite.filter.JwtAuthorizationFilter;
